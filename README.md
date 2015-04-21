@@ -1,9 +1,12 @@
 #X.Ray
 ####A Sina Weibo Client
 
+学习项目，感谢之前的大神
+
 Feature
 -----
   * Material Design
+  * Black Magic
   
 Snapshots
 -----
