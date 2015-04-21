@@ -17,4 +17,4 @@ Thanks
 
 Lisence
 ------
-  GPL v3 License 
+  [GPL v3 License](https://github.com/jas0nchen/X.Ray/blob/master/LICENSE)
