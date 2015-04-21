@@ -1,0 +1,459 @@
+<resources>
+    <string name="app_name">X.Ray</string>
+    <string name="simple_description">一个简单的微博</string>
+    <string name="devloper">撕嗒滴兔呆</string>
+    <string name="action_settings">设置</string>
+    <string name="applicationId">com.jasonchen.microlang</string>
+    <string name="microlangOfficalWeiboName">com.jasonchen.mention://@撕嗒滴兔呆</string>
+
+
+    <!-- Update -->
+    <string name="check_update_url">http://192.168.1.124:8080/update.html</string>
+    <string name="update_title">版本更新</string>
+    <string name="update_description">发现新版本，是否立即更新？</string>
+
+    <!-- System -->
+    <string name="timeout">网络出错啦～重新试一下吧～^_^</string>
+    <string name="jason_error">JSON解析出错了诶～</string>
+    <string name="unknown_error_error_code">不知道是什么错误诶～让小浪再浪一下～</string>
+    <string name="unknown_sina_network_error">网络出现问题了～换个网络试试吧！^_^</string>
+    <string name="sd_card_in_not_mounted">没有发现SD卡哦～</string>
+    <string name="something_error">出问题啦！-_-</string>
+    <string name="please_deleted_cache_dir">出问题啦！请手动删除SD卡下的/Android/data/com.jasonchen.microlang目录～</string>
+
+    <!-- Main Tab bar -->
+    <string name="all">全 部</string>
+    <string name="bilterial">相互关注</string>
+    <string name="home">首 页</string>
+    <string name="mention">提 及</string>
+    <string name="comment_me">评 论</string>
+    <string name="fav">收 藏</string>
+    <string name="search">搜 索</string>
+    <string name="setting">设 置</string>
+    <string name="about">关 于</string>
+
+    <string name="copy_link">复制链接</string>
+
+    <!-- listview -->
+    <string name="empty">没有内容了哦～</string>
+    <string name="no_more_comment">没有更多的评论了哦～</string>
+    <string name="no_more_repost">没有更多转发了哦～</string>
+
+    <!-- Account -->
+    <string name="oauth">授 权</string>
+    <string name="oauthing">授权中</string>
+    <string name="sina_server_error">网络出问题了哦～请下拉刷新页面，或者检查您的网络哦～</string>
+    <string name="token_expires_in_time">请注意，根据新浪微博的平台政策，刚添加的帐号会在 %s
+        天后过期，到时需要重新登录，在授权过期之前重复登陆不会刷新剩余天数</string>
+    <string name="your_token_is_expired">授权过期了哦～重新授权吧！小浪也无能为力呀～=_=</string>
+    <string name="logout_to_login_again">返回授权页面重新授权吧～</string>
+    <string name="dialog_title_error">出现错误了呀！</string>
+    <string name="login_again">重新授权</string>
+    <string name="have_account_whose_token_is_expired">有账号授权过期了哦，您将无法接受该账号的消息了</string>
+    <string name="token_has_expired">已过期</string>
+    <string name="currentaccount_token_has_expired">当前账号授权过期了哦～重新授权吧！</string>
+    <string name="account_token_has_expired">%s 的授权已经过期了哦～重新授权吧！</string>
+    <string name="dont_have_other_account">没有更多的账号了哦～</string>
+    <string name="delete_account_confirm">确定删除该账户吗？喵</string>
+    <string name="first_message">第一条消息</string>
+    <string name="next_message">下一条消息</string>
+    <string name="update">更新</string>
+
+    <!-- OAuth -->
+    <string name="you_cancel_login">取消授权了哦</string>
+    <string name="login_success">授权成功啦！</string>
+    <string name="update_account_success">更新账号信息成功啦！</string>
+    <string name="account_management">帐号管理</string>
+    <string name="account_exchange">切换账号</string>
+    <string name="remove_successfully">删除成功</string>
+    <string name="remove_fail">删除失败</string>
+    <string name="add_account">添加</string>
+    <string name="oauth_login">网页授权</string>
+    <string name="hack_login">黑魔法授权</string>
+    <string name="official_app_login">官方客户端授权</string>
+    <string name="login">授权</string>
+    <string name="logining">授权中</string>
+    <string name="email_cant_be_empty">登录邮箱不能为空</string>
+    <string name="password_cant_be_empty">密码不能为空</string>
+    <string name="login_email">登录邮箱</string>
+    <string name="login_password">密码</string>
+    <string name="app_key">尾巴</string>
+    <string name="login_failed">授权失败：</string>
+
+    <!-- userinfo -->
+    <string name="noboringactionbar_title">X.Ray</string>
+    <string name="modify_remark">修改备注</string>
+    <string name="remark">备注</string>
+    <string name="new_remark">新备注</string>
+    <string name="modify">修改</string>
+    <string name="add_to_app_filter">过滤</string>
+    <string name="filter_successfully">你以后都不会再见到这家伙了哦</string>
+    <string name="ten_thousand">万</string>
+    <string name="follows">关注</string>
+    <string name="fans">粉丝</string>
+
+    <!-- Time -->
+    <string name="year">年前</string>
+    <string name="month">月前</string>
+    <string name="day">天前</string>
+    <string name="hour">小时前</string>
+    <string name="min">分钟前</string>
+    <string name="sec">秒前</string>
+    <string name="justnow">刚刚</string>
+    <string name="yesterday">昨天</string>
+    <string name="the_day_before_yesterday">前天</string>
+    <string name="today">今天</string>
+    <string name="date_format">M.d HH:mm</string>
+    <string name="year_format">yyyy.M.d HH:mm</string>
+
+    <!-- Menu -->
+    <string name="something_wrong">出问题啦～</string>
+    <string name="askdelete">删除?</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
+    <string name="ok">确定</string>
+    <string name="cancel_draft">不用</string>
+    <string name="askdeletemessage">永久删除这条消息?</string>
+    <string name="open_with_other_browser">浏览器打开</string>
+
+    <!-- timeline -->
+    <string name="refresh">刷新</string>
+    <string name="refreshing">刷新中……</string>
+    <string name="no_new_message">没有新微博了哦～</string>
+    <string name="total">共计</string>
+    <string name="new_messages_count">更新%s条微博</string>
+    <string name="old_messages_count">加载%s条微博</string>
+    <string name="new_messages">条新消息</string>
+    <string name="old_messages">条旧消息</string>
+    <string name="weibos">条微博</string>
+    <string name="status_count">微博</string>
+    <string name="loading">载入中……</string>
+    <string name="click_to_load_old_msg">点击加载更多...</string>
+    <string name="click_to_load_some_older_msg">点击载入中间数据</string>
+    <string name="loading_middle_msg">载入中间数据……</string>
+    <string name="click_to_load_older_message">网络有问题，点击重新载入</string>
+    <string name="older_message_empty">没有更早的微博了哦～</string>
+    <string name="load_complete">加载完成</string>
+    <string name="more">载入更多</string>
+    <string name="browser_all_messages">浏览全部微博</string>
+    <string name="message_list">消息列表</string>
+    <string name="message_number">微博消息</string>
+    <string name="following_list">关注列表</string>
+    <string name="fan_list">粉丝列表</string>
+    <string name="topic_number">话题数</string>
+    <string name="fetch_topic">正在解析话题...</string>
+    <string name="topic_list">话题列表</string>
+    <string name="weibo_number">微博数</string>
+    <string name="follow_him">关注TA</string>
+    <string name="at_him">\@TA</string>
+    <string name="manage_group">管理分组</string>
+    <string name="unfollow_him">取消关注</string>
+    <string name="follow_successfully">关注成功</string>
+    <string name="follow_failed">关注失败</string>
+    <string name="unfollow_successfully">已经取消关注</string>
+    <string name="unfollow_failed">取消关注失败</string>
+    <string name="modify_successfully">修改完成</string>
+    <string name="remove_fan_successfully">Ta 已经不再关注你了</string>
+    <string name="m">男</string>
+    <string name="f">女</string>
+    <string name="verified_user">认证账户</string>
+    <string name="verified_reason">新浪认证</string>
+    <string name="is_following_me">正在关注</string>
+
+    <!-- gallery -->
+    <string name="download_finished_but_cant_read_picture_file">下载成功，但是无法读取图片呀～</string>
+    <string name="picture_is_too_large_to_read_so_gallery_load_thumbnails_of_this_picture">原图太大无法显示，载入缩略图</string>
+    <string name="picture_is_too_large_so_enable_software_layer">图片太大，启用软件渲染模式，滚动会掉帧……</string>
+    <string name="picture_read_failed">图片解析失败</string>
+    <string name="wait_for_download_picture">等待图片下载……</string>
+    <string name="picture_cant_download_or_sd_cant_read">图片下载失败了啊～</string>
+
+    <!-- Weibo -->
+    <string name="status">微博</string>
+    <string name="user">用户</string>
+    <string name="repost">转发</string>
+    <string name="comment">评论</string>
+    <string name="favorite">收藏</string>
+    <string name="unfavorite">取消收藏</string>
+    <string name="favorite_success">收藏成功</string>
+    <string name="unfavorite_success">取消收藏成功</string>
+    <string name="favorite_fail">收藏失败</string>
+    <string name="unfavorite_fail">取消收藏失败</string>
+    <string name="weibo_detail">微博正文</string>
+    <string name="weibo_detail_repost">转发 0</string>
+    <string name="weibo_detail_comment">评论 0</string>
+    <string name="ori_picture">原图</string>
+    <string name="browser_part_picture">查看局部图片</string>
+    <string name="browser_picture">查看图片</string>
+    <string name="save_pic_album">保存到图片文件夹</string>
+    <string name="force_download">重新下载</string>
+    <string name="already_saved">已经保存过了</string>
+    <string name="cant_save_pic">发生错误，无法保存</string>
+    <string name="save_to_album_successfully">保存成功</string>
+    <string name="switch_to_middle_pic">中等图</string>
+    <string name="switch_to_ori_pic">原图</string>
+    <string name="cant_open_deleted_weibo">原微博已经被删除，看不懂中文吗？</string>
+    <string name="retry_download_pic">重新下载图片</string>
+    <string name="fetching_weibo_info">获取微博信息……</string>
+    <string name="comment_is_empty">没有评论</string>
+    <string name="repost_is_empty">没有转发</string>
+    <string name="your_device_dont_have_any_map_app_to_open_gps_info">你的设备没有可以打开坐标的地图应用</string>
+
+    <!-- write status -->
+    <string name="delete">删除</string>
+    <string name="write_status">发微博</string>
+    <string name="say_something">在干嘛？来分享一下吧～</string>
+    <string name="at_other">添加好友</string>
+    <string name="only_at_char">"@</string>
+    <string name="emoticon">表情</string>
+    <string name="word_emoticon">颜文字</string>
+    <string name="topic">话题</string>
+    <string name="txt_to_pic">文字转图片</string>
+    <string name="clear_content">清空内容</string>
+    <string name="are_you_sure">确定吗？</string>
+    <string name="ask_clear">清空内容？</string>
+    <string name="short_content_middle">精简中间\@</string>
+    <string name="short_content_right">精简右侧\@</string>
+    <string name="clear">清空</string>
+    <string name="add_gps">添加GPS</string>
+    <string name="add_pic">添加照片</string>
+    <string name="add_emoticon">添加表情</string>
+    <string name="view_gps">查看</string>
+    <string name="delete_gps">删除</string>
+    <string name="comment_cant_be_empty">评论不能为空</string>
+    <string name="send_successfully">发送成功</string>
+    <string name="send_failed">发送失败</string>
+    <string name="cancel_send">取消上传</string>
+    <string name="retry_send">重新发送</string>
+    <string name="send_faile_click_to_open">发送失败，点击打开</string>
+    <string name="send_failed_and_save_to_draft">发送失败，已保存到草稿箱</string>
+    <string name="cancel_send_and_save_to_draft">取消上传，已保存到草稿箱</string>
+    <string name="click_to_open_draft">点击打开草稿箱</string>
+    <string name="click_to_open">点击打开</string>
+    <string name="background_sending">发送中</string>
+    <string name="wait_server_response">发送完，等结果</string>
+    <string name="send_photo">发送照片</string>
+    <string name="dont_have_account">没用可用的发微博帐号</string>
+    <string name="content_cant_be_empty">内容不能为空</string>
+    <string name="content_cant_be_empty_and_dont_have_account">内容不能为空，当前也没可用的发微博帐号</string>
+    <string name="content_words_number_too_many">字数太多了</string>
+    <string name="enable_comment_when_repost">评论给当前微博</string>
+    <string name="enable_comment_to_ori_when_repost">评论给原微博</string>
+    <string name="enable_comment_to_ori_when_comment">评论给原微博</string>
+    <string name="enable_repost">转发到我的微博</string>
+    <string name="comment_detail">评论</string>
+    <string name="cant_insert_album">发生意外，无法写入相册</string>
+    <string name="dont_have_camera_app">该设备没有拍照应用</string>
+    <string name="select">选择</string>
+    <string name="get_the_last_picture">刚拍的照片</string>
+    <string name="dont_have_the_last_picture">没有找到拍过的照片</string>
+    <string name="take_camera">拍照</string>
+    <string name="select_pic">图库</string>
+    <string name="send">发送</string>
+    <string name="sending">发送中</string>
+    <string name="photo">照片</string>
+    <string name="left">剩余</string>
+    <string name="share_pic">分享图片</string>
+    <string name="save_to_draft">保存到草稿箱</string>
+    <string name="do_you_want_to_save">要保存到草稿箱吗？</string>
+    <string name="save">保存</string>
+    <string name="convert_successfully">转换成功，你可以精简文字了</string>
+    <string name="convert_failed">转换失败</string>
+    <string name="failed_reason">发送失败：%s</string>
+    <string name="share_failed_because_of_no_account">请先登陆再发微博哦</string>
+    <string name="fetch_picture_from_other_apps">提取图片……</string>
+    <string name="fetch_picture_from_other_apps_failed">提取图片失败</string>
+    <string name="at">At</string>
+    <string name="at_hint">请输入TA的名字</string>
+    <string name="write_comment">评论微博</string>
+    <string name="write_repost">转发微博</string>
+    <string name="write_reply">回复评论</string>
+    <string name="repost_msg_same">同时转发微博</string>
+    <string name="comment_msg_same">同时评论微博</string>
+    <string name="comment_ori_msg">同时评论原微博</string>
+    <string name="ori_status">原微博</string>
+
+    <!-- write comment -->
+    <string name="sending_comment">发送评论</string>
+
+    <!-- write repost -->
+    <string name="sending_repost">发送转发</string>
+
+    <!-- reply comment -->
+    <string name="reply">回复</string>
+    <string name="show_ori_message">查看原微博</string>
+
+    <!-- token dialog -->
+    <string name="token_notification">通知</string>
+
+    <!-- browser web -->
+    <string name="web">网页</string>
+    <string name="open_with_other_app">用外部应用打开</string>
+    <string name="copy_link_to_clipboard">复制链接</string>
+    <string name="share_link">分享链接</string>
+    <string name="share_sum">微博统计的分享次数</string>
+    <string name="total_share_count">累计分享了%s次</string>
+    <string name="cant_not_convert_to_weibo_id">链接地址无法解析成微博地址</string>
+    <string name="converting_weibo_link">正在转换微博链接……</string>
+
+    <!-- Setting Notification -->
+    <string name="pref_new_message_title">未读消息</string>
+    <string name="pref_disable_notification_at_night_title">深夜勿扰</string>
+    <string name="pref_disable_notification_at_night_summary">凌晨1点到早上8点暂停</string>
+    <string name="pref_new_message_type_title">类型</string>
+    <string name="pref_mention_to_me_title">\@我的微博</string>
+    <string name="pref_comment_to_me_title">收到的评论</string>
+    <string name="pref_mention_comment_to_me_title">\@我的评论</string>
+    <string name="pref_notification_feedback_title">提醒方式</string>
+    <string name="pref_vibrate_title">振动</string>
+    <string name="pref_led_title">呼吸灯</string>
+    <string name="pref_ringtone_title">铃声</string>
+    <string name="new_unread_messages">%s 条消息</string>
+    <string name="new_comments">%s 条评论</string>
+    <string name="new_mentions">%s 条@</string>
+    <string name="new_mentions_weibo">%s 条@微博</string>
+    <string name="new_mentions_comment">%s 条@评论</string>
+    <string name="notification">后台通知</string>
+    <string name="silent">静音</string>
+    <string name="enable_fetch_new_msg">获取未读的消息</string>
+    <string name="start_fetch_msg">开始后台自动获取……</string>
+    <string name="frequency">间隔</string>
+    <string name="stopped">已终止</string>
+    <string name="you_have_new_unread_count">你有 %s 条新未读消息</string>
+
+
+    <!-- button -->
+    <string name="close">关闭</string>
+    <string name="big_pic">原图</string>
+    <string name="share">分享</string>
+    <string name="share_to">分享到</string>
+    <string name="copy_to_clipboard">复制</string>
+    <string name="copy_successfully">复制完成</string>
+    <string name="have_copied">已经复制 %s</string>
+    <string name="open">打开</string>
+    <string name="switch_to_another_theme">切换主题</string>
+
+    <!-- topic -->
+    <string name="search_topic">搜索话题</string>
+    <string name="follow_topic">关注话题</string>
+    <string name="unfollow_topic">取消关注该话题</string>
+    <string name="follow_topic_failed">关注失败</string>
+    <string name="follow_topic_successfully">关注成功</string>
+    <string name="unfollow_topic_failed">取消失败</string>
+    <string name="unfollow_topic_successfully">取消成功</string>
+    <string name="add_topic">添加话题</string>
+    <string name="add_topic_hint">不需要#号</string>
+
+    <!-- Tag -->
+    <string name="listview_index_tag">XRay</string>
+    <string name="listview_tag">"Coledepstr</string>
+    <string name="copy">复制</string>
+
+
+    <string name="cube_ptr_pull_down">下拉</string>
+    <string name="cube_ptr_pull_down_to_refresh">下拉刷新</string>
+    <string name="cube_ptr_release_to_refresh">释放刷新</string>
+    <string name="cube_ptr_refreshing">加载中...</string>
+    <string name="cube_ptr_refresh_complete">更新完成.</string>
+
+    <string name="cube_ptr_last_update">上次更新:&#160;</string>
+    <string name="cube_ptr_seconds_ago">&#160;秒之前</string>
+    <string name="cube_ptr_minutes_ago">&#160;分钟之前</string>
+    <string name="cube_ptr_hours_ago">&#160;小时之前</string>
+
+    <!-- XListView -->
+    <string name="xlistview_header_hint_normal">下拉刷新</string>
+    <string name="xlistview_header_hint_ready">松开刷新数据</string>
+    <string name="xlistview_header_hint_loading">正在加载...</string>
+    <string name="xlistview_header_last_time">上次更新时间：</string>
+    <string name="xlistview_footer_hint_normal">查看更多</string>
+    <string name="xlistview_footer_hint_ready">松开载入更多</string>
+
+    <string name="nothing"></string>
+    <string name="notice">提示</string>
+    <string name="delete_status">确定删除该条微博？</string>
+    <string name="delete_reply">确定删除该条回复？</string>
+    <string name="delete_picture">确定删除该图片？</string>
+    <string name="confirm_unfollow_him">确定不再关注TA吗？</string>
+
+    <string name="fech_user_info">正在解析用户信息...</string>
+    <string name="fech_user_info_error">获取用户信息失败，请稍后再试</string>
+    <string name="fech_message">正在解析微博信息...</string>
+
+    <string name="at_user_title">"@微博用户"</string>
+    <string name="pref_normal_title">基本设置</string>
+    <string name="pref_sound_title">音效</string>
+    <string name="pref_auto_refresh_title">自动刷新</string>
+    <string name="pref_internal_web_browser">内置浏览器</string>
+    <string name="pref_auto_refresh_summary">首次进入首页自动刷新微博</string>
+    <string name="pref_invert_read">逆序阅读</string>
+    <string name="pref_invert_read_summary">主页微博逆序阅读开关，开启后微博阅读方式将是逆序，刷新微博后将显示刷新的最后一条微博</string>
+    <string name="pref_msg_detail_show_big_pic">大图显示</string>
+    <string name="pref_msg_detail_show_big_pic_summary">微博大图显示开关，建议wifi网络开启</string>
+    <string name="pref_intelligence_pic">智能无图</string>
+    <string name="pref_intelligence_pic_summary">移动网络下不显示微博图片，wifi网络下自动显示图片</string>
+    <string name="pref_advanced_title">高级设置</string>
+    <string name="have_selected">已经选择了%s项</string>
+    <string name="pref_other_title">其他</string>
+    <string name="pref_about_title">关于</string>
+    <string name="pref_right_hand">大屏模式</string>
+    <string name="pref_right_hand_summary">开启大屏模式，抽屉菜单将在右侧显示，方便大屏手机操作,需重启应用生效</string>
+
+    <string name="pref_normal_about">常规</string>
+
+    <string name="pref_data_control_title">流量控制</string>
+    <string name="pref_pic_category_title">图片</string>
+    <string name="pref_disable_download_pic_title">关闭图片</string>
+    <string name="pref_disable_download_pic_summary">同时暂停头像的下载</string>
+    <string name="pref_upload_pic_quality_title">上传图片质量</string>
+    <string name="pref_close_comment_repost_list_avatar_title">关闭评论/转发列表的头像</string>
+    <string name="pref_msg_count_title">每次获取数据条数</string>
+    <string name="pref_comment_repost_list_avatar_title">评论/转发列表的头像</string>
+    <string name="pref_enable_wifi_unlimited_msg_count_title">Wifi下尽可能获取数据</string>
+    <string name="pref_enable_wifi_unlimited_msg_count_summary">可一次性载入344条新数据</string>
+    <string name="pref_data_category_title">数据</string>
+    <string name="pref_enable_wifi_auto_download_pic_title">Wifi下预先载入图片</string>
+    <string name="pref_enable_wifi_auto_download_pic_summary">只适用大图模式，加快图片获取速度</string>
+
+    <!-- Setting About -->
+    <string name="pref_general_title">常规</string>
+    <string name="pref_support_title">支持</string>
+    <string name="pref_version_title">版本信息</string>
+    <string name="pref_thanks_title">感谢</string>
+    <string name="pref_storage_title">存储信息</string>
+    <string name="pref_official_weibo_title">开发者</string>
+    <string name="official_weibo_link">\@撕嗒滴兔呆</string>
+    <string name="pref_suggest_title">反馈意见</string>
+    <string name="pref_recommend_title">推荐给微博好友</string>
+    <string name="pref_donate_title">捐赠支持开发</string>
+    <string name="pref_donate_summary">捐之前想清楚，下个版本不一定会支持你的设备</string>
+    <string name="donate_summary2">没钱好痛苦……_(:3」∠)_</string>
+    <string name="pref_play_store_address_title">Google Play</string>
+    <string name="pref_play_store_address_summary">打分支持该应用</string>
+    <string name="pref_github_title">Github</string>
+    <string name="pref_author_title">开发者</string>
+    <string name="pref_author_summary">撕嗒滴兔呆</string>
+    <string name="pref_icon_design_title">图标</string>
+    <string name="pref_cache_path_title">缓存文件路径</string>
+    <string name="pref_saved_pic_path_title">图片保存路径</string>
+    <string name="pref_saved_log_path_title">崩溃日志保存路径</string>
+    <string name="pref_open_source_license_title">开源协议</string>
+    <string name="pref_google_plus_group_title">Google+ 社群</string>
+    <string name="pref_google_plus_group_summary">获取最新测试版</string>
+    <string name="pref_debug_title">调试</string>
+    <string name="pref_debug_mem_title">内存信息</string>
+    <string name="print_license">打印协议</string>
+    <string name="pref_make_a_app_crash_title">立刻崩溃</string>
+    <string name="pref_make_a_app_crash_summary">用于检测崩溃统计平台是否能成功收集到崩溃</string>
+    <string name="getting_cache_size">正在统计缓存大小…</string>
+    <string name="pref_max_file_cache_size_is_300mb_current_size_is">当前缓存 %s，点击清理后，需重新下载微博图片</string>
+    <string name="clean_cache_will_be_done_sure">清理缓存之后，微博图片需要重新下载，确定清理缓存？</string>
+    <string name="start_clean_cache">开始清理缓存</string>
+    <string name="clean_cache_finish">清理完成</string>
+    <string name="please_insert_sd_card">请插入SD卡</string>
+    <string name="pref_click_to_clean_cache">点击清理缓存图片</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

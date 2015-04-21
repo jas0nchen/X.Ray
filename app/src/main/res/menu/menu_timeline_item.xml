@@ -1,0 +1,30 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- This group uses the default category. -->
+    <item
+        android:id="@+id/copy"
+        android:title="@string/copy" />
+
+    <item
+        android:id="@+id/fav"
+        android:title="@string/favorite"
+        android:visible="false" />
+
+    <item
+        android:id="@+id/unfav"
+        android:title="@string/unfavorite"
+        android:visible="false" />
+
+    <item
+        android:id="@+id/repost"
+        android:title="@string/repost" />
+
+    <item
+        android:id="@+id/comment"
+        android:title="@string/comment" />
+
+    <item
+        android:id="@+id/delete"
+        android:title="@string/delete"
+        android:visible="false" />
+
+</menu>

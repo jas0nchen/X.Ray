@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jasonchen.microlang">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:name=".utils.GlobalContext"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".activitys.SplashActivity"
+            android:label="@string/app_name"
+            android:theme="@style/SplashActivityTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activitys.OAuthActivity" />
+        <activity android:name=".activitys.AccountActivity" />
+        <activity
+            android:name=".activitys.MainActivity"
+            android:theme="@style/MainActivityTheme" />
+        <activity
+            android:name=".gallery.GalleryAnimationActivity"
+            android:theme="@style/GalleryTheme" />
+        <activity
+            android:name=".activitys.WriteWeiboActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateVisible|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activitys.WriteCommentActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity
+            android:name=".activitys.WriteRepostActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity
+            android:name=".activitys.WriteReplyActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity android:name=".activitys.AtUserActivity" />
+        <activity android:name=".activitys.WeiboDetailActivity" />
+        <activity android:name=".activitys.BrowserActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="e.weibo.com"
+                    android:scheme="http" />
+                <data
+                    android:host="weibo.com"
+                    android:scheme="http" />
+                <data
+                    android:host="www.weibo.com"
+                    android:scheme="http" />
+                <data
+                    android:host="www.weibo.cn"
+                    android:scheme="http" />
+                <data
+                    android:host="weibo.cn"
+                    android:scheme="http" />
+                <data
+                    android:host="t.cn"
+                    android:scheme="http" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activitys.UserActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.VIEW" />
+                <data android:scheme="com.jasonchen.mention" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activitys.FanListActivity" />
+        <activity android:name=".activitys.FollowerListActivity" />
+        <activity android:name=".activitys.TopicActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.VIEW" />
+                <data android:scheme="com.jasonchen.topic" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activitys.SearchActivity"/>
+
+        <!-- services -->
+        <service android:name=".services.SendWeiboService" />
+        <service android:name=".services.SendCommentService"></service>
+        <service android:name=".services.SendRepostService"></service>
+        <service android:name=".services.SendReplyToCommentService"></service>
+    </application>
+
+</manifest>

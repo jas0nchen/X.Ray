@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_gray"
+    android:orientation="vertical">
+
+    <com.jasonchen.microlang.gallery.ViewPagerFixed
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/left_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="1dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/ic_smilepicker_viewpager_point"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/center_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/ic_smilepicker_viewpager_point"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/right_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/ic_smilepicker_viewpager_point"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</LinearLayout>

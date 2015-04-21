@@ -1,0 +1,106 @@
+package com.jasonchen.microlang.smilepicker;
+
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Rect;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.View;
+import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
+
+import com.jasonchen.microlang.debug.AppLogger;
+import com.jasonchen.microlang.settings.SettingUtility;
+import com.jasonchen.microlang.utils.GlobalContext;
+import com.jasonchen.microlang.utils.ThemeUtility;
+import com.jasonchen.microlang.utils.Utility;
+
+/**
+ * jasonchen
+ * 2015/04/10
+ */
+public class SmileyPickerUtility {
+
+	public static void hideSoftInput(View paramEditText) {
+		((InputMethodManager) GlobalContext.getInstance().getSystemService(
+				Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
+				paramEditText.getWindowToken(), 0);
+	}
+
+	public static void showKeyBoard(final View paramEditText) {
+		paramEditText.requestFocus();
+		paramEditText.post(new Runnable() {
+			@Override
+			public void run() {
+				((InputMethodManager) GlobalContext.getInstance()
+						.getSystemService(Context.INPUT_METHOD_SERVICE))
+						.showSoftInput(paramEditText, 0);
+			}
+		});
+	}
+
+	public static int getScreenHeight(Activity paramActivity) {
+		Display display = paramActivity.getWindowManager().getDefaultDisplay();
+		DisplayMetrics metrics = new DisplayMetrics();
+		display.getMetrics(metrics);
+		return metrics.heightPixels;
+	}
+
+	public static int getStatusBarHeight(Activity paramActivity) {
+		Rect localRect = new Rect();
+		paramActivity.getWindow().getDecorView()
+				.getWindowVisibleDisplayFrame(localRect);
+		return localRect.top;
+	}
+
+	public static int getActionBarHeight(Activity paramActivity) {
+		// test on samsung 9300 android 4.1.2, this value is 96px
+		// but on galaxy nexus android 4.2, this value is 146px
+		// statusbar height is 50px
+		// I guess 4.1 Window.ID_ANDROID_CONTENT contain statusbar
+		int contentViewTop = paramActivity.getWindow()
+				.findViewById(Window.ID_ANDROID_CONTENT).getTop();
+		AppLogger.e("contentViewTop=" + contentViewTop);
+
+		// return contentViewTop - getStatusBarHeight(paramActivity);
+
+		return ThemeUtility.getDimensionPixelSize(paramActivity,
+				android.R.attr.actionBarSize, Utility.dip2px(48));
+	}
+
+	// below status bar,include actionbar, above softkeyboard
+	public static int getAppHeight(Activity paramActivity) {
+		Rect localRect = new Rect();
+		paramActivity.getWindow().getDecorView()
+				.getWindowVisibleDisplayFrame(localRect);
+		return localRect.height();
+	}
+
+	// below actionbar, above softkeyboard
+	public static int getAppContentHeight(Activity paramActivity) {
+		return SmileyPickerUtility.getScreenHeight(paramActivity)
+				- SmileyPickerUtility.getStatusBarHeight(paramActivity)
+				- SmileyPickerUtility.getKeyboardHeight(paramActivity);
+	}
+
+	public static int getKeyboardHeight(Activity paramActivity) {
+
+		int height = SmileyPickerUtility.getScreenHeight(paramActivity)
+				- SmileyPickerUtility.getStatusBarHeight(paramActivity)
+				- SmileyPickerUtility.getAppHeight(paramActivity);
+		if (height == 0) {
+			height = SettingUtility.getDefaultSoftKeyBoardHeight();
+		}
+
+		SettingUtility.setDefaultSoftKeyBoardHeight(height);
+
+		return height;
+	}
+
+	public static boolean isKeyBoardShow(Activity paramActivity) {
+		int height = SmileyPickerUtility.getScreenHeight(paramActivity)
+				- SmileyPickerUtility.getStatusBarHeight(paramActivity)
+				- SmileyPickerUtility.getAppHeight(paramActivity);
+		return height != 0;
+	}
+}

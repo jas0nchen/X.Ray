@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="16dp"
+        android:orientation="horizontal">
+
+        <com.jasonchen.microlang.view.TimeLineRoundAvatarImageView
+            android:id="@+id/avatar"
+            android:layout_width="@dimen/browser_msg_avatar_width"
+            android:layout_height="@dimen/browser_msg_avatar_height"
+            android:layout_margin="16dp"
+            android:src="@drawable/avatar_default" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="test"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/primaryText"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="test"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:visibility="gone"
+                android:textColor="@color/secondaryText"
+                android:textIsSelectable="false"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/dividerColor" />
+
+</LinearLayout>

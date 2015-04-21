@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:addStatesFromChildren="true"
+    android:foreground="@drawable/timelineimageview_cover">
+
+    <com.jasonchen.microlang.view.PerformanceImageView
+        android:id="@+id/imageview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+
+    <ProgressBar
+        android:id="@+id/imageview_pb"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="false"
+        android:visibility="invisible" />
+</merge>

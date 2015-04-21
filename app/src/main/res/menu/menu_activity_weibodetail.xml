@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/menu_repost"
+        android:icon="@drawable/ic_menu_repost"
+        android:title="@string/repost"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menu_comment"
+        android:icon="@drawable/ic_menu_comment"
+        android:title="@string/comment"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menu_copy"
+        android:title="@string/copy"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_fav"
+        android:visible="false"
+        android:title="@string/favorite"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_unfav"
+        android:visible="false"
+        android:title="@string/unfavorite"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_delete"
+        android:visible="false"
+        app:showAsAction="never"
+        android:title="@string/delete"/>
+
+</menu>

@@ -1,0 +1,16 @@
+<com.jasonchen.microlang.swiperefresh.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/refreshLayout"
+    android:background="@color/light_gray"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jasonchen.microlang.fragments.TimeLineBaseFragment">
+
+    <com.jasonchen.microlang.swiperefresh.LoadListView
+        android:id="@+id/listView"
+        android:divider="@null"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></com.jasonchen.microlang.swiperefresh.LoadListView>
+
+</com.jasonchen.microlang.swiperefresh.SwipeRefreshLayout>
+

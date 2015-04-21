@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="5dp"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="16dp"
+        android:orientation="horizontal">
+
+        <com.jasonchen.microlang.view.TimeLineRoundAvatarImageView
+            android:id="@+id/avatar"
+            android:layout_width="@dimen/browser_msg_avatar_width"
+            android:layout_height="@dimen/browser_msg_avatar_height"
+            android:layout_margin="16dp"
+            android:layout_rowSpan="2"
+            android:src="@drawable/avatar_default" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="test"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_marginTop="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.jasonchen.microlang.view.TimeTextView
+                    android:id="@+id/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="test"
+                    android:textIsSelectable="false"
+                    android:textSize="9sp" />
+
+                <TextView
+                    android:id="@+id/source"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="test"
+                    android:textColor="@color/white"
+                    android:textIsSelectable="false"
+                    android:textSize="9sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:clickable="true"
+        android:paddingLeft="72dp"
+        android:paddingRight="16dp">
+
+        <com.jasonchen.microlang.view.HackyTextView
+            android:id="@+id/content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingMultiplier="1.3"
+            android:text="testcontenttestcontenttestcontenttestcontenttestcontenttestcontenttestcontent"
+            android:textColor="@color/white"
+            android:textIsSelectable="true"
+            android:textSize="13sp" />
+
+        <com.jasonchen.microlang.view.WeiboDetailImageView
+            android:id="@+id/content_pic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:adjustViewBounds="true"
+            android:clickable="true"
+            android:minHeight="0dp"
+            android:visibility="gone" />
+
+        <GridLayout
+            android:id="@+id/content_pic_multi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center_horizontal"
+            android:clickable="false"
+            android:columnCount="3"
+            android:orientation="horizontal"
+            android:rowCount="3"
+            android:useDefaultMargins="false"
+            android:visibility="gone">
+
+            <com.jasonchen.microlang.view.MultiPicturesChildImageView style="@style/listViewMultiImageView" />
+
+            <com.jasonchen.microlang.view.MultiPicturesChildImageView style="@style/listViewMultiImageView" />
+
+            <com.jasonchen.microlang.view.MultiPicturesChildImageView style="@style/listViewMultiImageView" />
+
+            <com.jasonchen.microlang.view.MultiPicturesChildImageView style="@style/listViewMultiImageView" />
+
+            <com.jasonchen.microlang.view.MultiPicturesChildImageView style="@style/listViewMultiImageView" />
+
+            <com.jasonchen.microlang.view.MultiPicturesChildImageView style="@style/listViewMultiImageView" />
+
+            <com.jasonchen.microlang.view.MultiPicturesChildImageView style="@style/listViewMultiImageView" />
+
+            <com.jasonchen.microlang.view.MultiPicturesChildImageView style="@style/listViewMultiImageView" />
+
+            <com.jasonchen.microlang.view.MultiPicturesChildImageView style="@style/listViewMultiImageView" />
+        </GridLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/repost_layout"
+        android:orientation="vertical"
+        android:layout_marginLeft="72dp"
+        android:layout_marginTop="5dp"
+        android:clickable="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/white" />
+
+        <com.jasonchen.microlang.view.HackyTextView
+            android:id="@+id/repost_content"
+            android:layout_marginTop="5dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest"
+            android:lineSpacingMultiplier="1.3"
+            android:textColor="@color/white"
+            android:textSize="11sp"
+            android:visibility="visible" />
+
+        <com.jasonchen.microlang.view.WeiboDetailImageView
+            android:id="@+id/repost_content_pic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:adjustViewBounds="true"
+            android:clickable="true"
+            android:minHeight="0dp"
+            android:visibility="visible" />
+
+        <GridLayout
+            android:id="@+id/repost_content_pic_multi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center_horizontal"
+            android:clickable="false"
+            android:columnCount="3"
+            android:orientation="horizontal"
+            android:rowCount="3"
+            android:useDefaultMargins="false"
+            android:visibility="gone">
+
+            <com.jasonchen.microlang.view.MultiPicturesChildImageView style="@style/listViewMultiImageView" />
+
+            <com.jasonchen.microlang.view.MultiPicturesChildImageView style="@style/listViewMultiImageView" />
+
+            <com.jasonchen.microlang.view.MultiPicturesChildImageView style="@style/listViewMultiImageView" />
+
+            <com.jasonchen.microlang.view.MultiPicturesChildImageView style="@style/listViewMultiImageView" />
+
+            <com.jasonchen.microlang.view.MultiPicturesChildImageView style="@style/listViewMultiImageView" />
+
+            <com.jasonchen.microlang.view.MultiPicturesChildImageView style="@style/listViewMultiImageView" />
+
+            <com.jasonchen.microlang.view.MultiPicturesChildImageView style="@style/listViewMultiImageView" />
+
+            <com.jasonchen.microlang.view.MultiPicturesChildImageView style="@style/listViewMultiImageView" />
+
+            <com.jasonchen.microlang.view.MultiPicturesChildImageView style="@style/listViewMultiImageView" />
+        </GridLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:id="@+id/count_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="5dp"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/repost"
+                android:textColor="@color/white"
+                android:textSize="9sp" />
+
+            <TextView
+                android:id="@+id/repost_msg_repost_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="000"
+                android:textColor="@color/white"
+                android:textSize="9sp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_marginLeft="5dp"
+                android:layout_height="match_parent"
+                android:background="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="@string/comment"
+                android:textColor="@color/white"
+                android:textSize="9sp" />
+
+            <TextView
+                android:id="@+id/repost_msg_comment_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="000"
+                android:textColor="@color/white"
+                android:textSize="9sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:textColor="@color/white"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="4dp"
+        android:scaleType="centerCrop"
+        android:visibility="gone" />
+
+</LinearLayout>

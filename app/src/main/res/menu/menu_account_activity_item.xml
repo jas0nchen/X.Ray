@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".AccountActivity">
+    <item
+        android:id="@+id/update"
+        android:title="@string/update"/>
+    <item
+        android:id="@+id/delete"
+        android:title="@string/delete"/>
+</menu>
