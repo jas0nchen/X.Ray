@@ -6,6 +6,7 @@ import com.google.gson.JsonSyntaxException;
 import com.jasonchen.microlang.beans.UserListBean;
 import com.jasonchen.microlang.debug.AppLogger;
 import com.jasonchen.microlang.exception.WeiboException;
+import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.SettingUtility;
 import com.jasonchen.microlang.utils.http.HttpMethod;
 import com.jasonchen.microlang.utils.http.HttpUtility;
@@ -52,7 +53,7 @@ public class FriendListDao {
         String url = URLHelper.FRIENDS_LIST_BYID;
 
         Map<String, String> map = new HashMap<String, String>();
-        map.put("access_token", access_token);
+        map.put("access_token", GlobalContext.getInstance().getSpecialBlackToken());
         map.put("uid", uid);
         map.put("cursor", cursor);
         map.put("trim_status", trim_status);

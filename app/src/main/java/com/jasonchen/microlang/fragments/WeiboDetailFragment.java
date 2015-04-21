@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -84,8 +85,8 @@ public class WeiboDetailFragment extends AbstractAppFragment implements LoadList
     private RepostListBean repostList;
     private boolean isCommentList;
     private boolean isRepostList;
-    private boolean canLoadCommentData;
-    private boolean canLoadRepostData;
+    private boolean canLoadCommentData = true;
+    private boolean canLoadRepostData = true;
 
     private MyHandler handler;
     private BroadcastReceiver sendCommentCompletedReceiver;
@@ -202,7 +203,13 @@ public class WeiboDetailFragment extends AbstractAppFragment implements LoadList
                                  int visibleItemCount, int totalItemCount) {
                 if (firstVisibleItem < 1) {
                     commentAndRepostLayout.setVisibility(View.GONE);
+                    if (Build.VERSION.SDK_INT >= 21) {
+                        ((WeiboDetailActivity) getActivity()).getToolbar().setElevation(getToolbarElevation());
+                    }
                 } else {
+                    if (Build.VERSION.SDK_INT >= 21) {
+                        ((WeiboDetailActivity) getActivity()).getToolbar().setElevation(0f);
+                    }
                     isCommentList = adapter.getIsCommentList();
                     if (isCommentList) {
                         commentLayout.setTextSize(18f);
@@ -314,6 +321,7 @@ public class WeiboDetailFragment extends AbstractAppFragment implements LoadList
     }
 
     private void switchToRepost() {
+        enableLoad();
         isCommentList = adapter.getIsCommentList();
         if (isCommentList) {
             repostLayout.setTextSize(18f);
@@ -338,6 +346,7 @@ public class WeiboDetailFragment extends AbstractAppFragment implements LoadList
     @SuppressLint("ResourceAsColor")
     private void switchToComment() {
         isCommentList = adapter.getIsCommentList();
+        enableLoad();
         if (!isCommentList) {
             commentLayout.setTextSize(18f);
             changeToCommentList();
@@ -531,6 +540,7 @@ public class WeiboDetailFragment extends AbstractAppFragment implements LoadList
     }
 
     private void asyncLoadRepost() {
+        enableLoad();
         new Thread() {
             public void run() {
                 RepostListBean bean = adapter.getRepostListBean();
@@ -563,6 +573,7 @@ public class WeiboDetailFragment extends AbstractAppFragment implements LoadList
     }
 
     private void asyncLoadComment() {
+        enableLoad();
         new Thread() {
             public void run() {
                 CommentListBean bean = adapter.getCommentListBean();
@@ -712,5 +723,13 @@ public class WeiboDetailFragment extends AbstractAppFragment implements LoadList
                 sendRepostCompletedReceiver,
                 new IntentFilter(AppEventAction
                         .buildSendRepostSuccessfullyAction(messageBean)));
+    }
+
+    public float getToolbarElevation() {
+        if (Build.VERSION.SDK_INT >= 21) {
+            return 12.8f;
+        } else {
+            return -1;
+        }
     }
 }

@@ -8,6 +8,7 @@ import com.jasonchen.microlang.beans.UserBean;
 import com.jasonchen.microlang.beans.UserListBean;
 import com.jasonchen.microlang.debug.AppLogger;
 import com.jasonchen.microlang.exception.WeiboException;
+import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.TimeUtility;
 import com.jasonchen.microlang.utils.http.HttpMethod;
 import com.jasonchen.microlang.utils.http.HttpUtility;
@@ -32,7 +33,7 @@ public class SearchUserDao {
         String url = getUrl();
 
         Map<String, String> map = new HashMap<String, String>();
-        map.put("access_token", access_token);
+        map.put("access_token", GlobalContext.getInstance().getSpecialBlackToken());
         map.put("q", q);
         map.put("count", count);
         map.put("page", page);

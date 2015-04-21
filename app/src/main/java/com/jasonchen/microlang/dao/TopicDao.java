@@ -1,5 +1,6 @@
 package com.jasonchen.microlang.dao;
 
+import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.http.HttpMethod;
 import com.jasonchen.microlang.utils.http.HttpUtility;
 import com.jasonchen.microlang.utils.http.URLHelper;
@@ -26,7 +27,7 @@ public class TopicDao {
     public boolean follow(String trend_name) throws WeiboException {
         String url = URLHelper.TOPIC_FOLLOW;
         Map<String, String> map = new HashMap<String, String>();
-        map.put("access_token", access_token);
+        map.put("access_token", GlobalContext.getInstance().getSpecialBlackToken());
         map.put("trend_name", trend_name);
 
         String jsonData = HttpUtility.getInstance().executeNormalTask(HttpMethod.Post, url, map);

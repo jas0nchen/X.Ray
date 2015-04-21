@@ -118,7 +118,7 @@ public class AbstractAppActivity extends ActionBarActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if(!(GlobalContext.getInstance().getActivity() instanceof BrowserActivity)){
+            if(!(GlobalContext.getInstance().getCurrentRunningActivity() instanceof BrowserActivity)){
                 finish();
                 overridePendingTransition(R.anim.stay, R.anim.push_right_out);
             }

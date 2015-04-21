@@ -2,6 +2,7 @@ package com.jasonchen.microlang.dao;
 
 import com.jasonchen.microlang.beans.UnreadBean;
 import com.jasonchen.microlang.debug.AppLogger;
+import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.http.HttpMethod;
 import com.jasonchen.microlang.utils.http.HttpUtility;
 import com.jasonchen.microlang.utils.http.URLHelper;
@@ -36,7 +37,7 @@ public class ClearUnreadDao {
         String url = getUrl();
 
         Map<String, String> map = new HashMap<String, String>();
-        map.put("access_token", access_token);
+        map.put("access_token", GlobalContext.getInstance().getSpecialBlackToken());
         map.put("type", type);
 
         String jsonData = HttpUtility.getInstance().executeNormalTask(HttpMethod.Get, url, map);

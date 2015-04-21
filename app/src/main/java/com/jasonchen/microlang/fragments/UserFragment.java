@@ -332,7 +332,8 @@ public class UserFragment extends AbstractAppFragment implements SwipeRefreshLay
             super.handleMessage(msg);
             switch (msg.what) {
                 case REFRESH_COMPLETE:
-                    MessageListBean result = (MessageListBean) msg.obj;
+                    MessageListBean result = new MessageListBean();
+                    result.replaceData((MessageListBean) msg.obj);
                     adapter.setList(result.getItemList());
                     list.clear();
                     list.addAll(result.getItemList());

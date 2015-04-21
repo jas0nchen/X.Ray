@@ -74,6 +74,8 @@ public class WeiboDetailAdapter extends BaseAdapter {
 	private MessageBean msgBean;
 	private Handler handler;
 	private LoadListView listView;
+	private boolean canLoadComment = true;
+	private boolean canLoadRepost = true;
 
 	private TextView repost;
 	private TextView comment;

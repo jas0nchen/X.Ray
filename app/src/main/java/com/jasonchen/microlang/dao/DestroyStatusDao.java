@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.jasonchen.microlang.beans.MessageBean;
 import com.jasonchen.microlang.debug.AppLogger;
+import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.http.HttpMethod;
 import com.jasonchen.microlang.utils.http.HttpUtility;
 import com.jasonchen.microlang.utils.http.URLHelper;

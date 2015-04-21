@@ -7,6 +7,7 @@ import com.jasonchen.microlang.beans.FavListBean;
 import com.jasonchen.microlang.beans.MessageBean;
 import com.jasonchen.microlang.debug.AppLogger;
 import com.jasonchen.microlang.settings.SettingUtility;
+import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.TimeUtility;
 import com.jasonchen.microlang.utils.http.HttpMethod;
 import com.jasonchen.microlang.utils.http.HttpUtility;

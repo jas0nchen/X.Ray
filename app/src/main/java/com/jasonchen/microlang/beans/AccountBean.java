@@ -16,6 +16,9 @@ public class AccountBean implements Parcelable {
 	// 用户的access_token、expires_time信息
 	private String access_token;
 	private long expires_time;
+	// 黑魔法access_token、expires_time信息
+	private String access_token_secret;
+	private long expires_time_secret;
 	// 用户信息Bean
 	private UserBean info;
 	private boolean black_magic;
@@ -47,6 +50,22 @@ public class AccountBean implements Parcelable {
 
 	public void setExpires_time(long expires_time) {
 		this.expires_time = expires_time;
+	}
+
+	public String getAccess_token_secret() {
+		return access_token_secret;
+	}
+
+	public void setAccess_token_secret(String access_token) {
+		this.access_token_secret = access_token;
+	}
+
+	public long getExpires_time_secret() {
+		return expires_time_secret;
+	}
+
+	public void setExpires_time_secret(long expires_time) {
+		this.expires_time_secret = expires_time;
 	}
 
 	public UserBean getInfo() {
@@ -87,6 +106,8 @@ public class AccountBean implements Parcelable {
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(access_token);
 		dest.writeLong(expires_time);
+		dest.writeString(access_token_secret);
+		dest.writeLong(expires_time_secret);
 		dest.writeInt(navigationPosition);
 		dest.writeBooleanArray(new boolean[] { this.black_magic });
 		dest.writeParcelable(info, flags);
@@ -97,6 +118,8 @@ public class AccountBean implements Parcelable {
 			AccountBean accountBean = new AccountBean();
 			accountBean.access_token = in.readString();
 			accountBean.expires_time = in.readLong();
+			accountBean.access_token_secret = in.readString();
+			accountBean.expires_time_secret = in.readLong();
 			accountBean.navigationPosition = in.readInt();
 
 			boolean[] booleans = new boolean[1];

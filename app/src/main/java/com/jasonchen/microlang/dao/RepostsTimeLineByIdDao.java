@@ -6,6 +6,7 @@ import com.jasonchen.microlang.beans.MessageBean;
 import com.jasonchen.microlang.beans.RepostListBean;
 import com.jasonchen.microlang.debug.AppLogger;
 import com.jasonchen.microlang.settings.SettingUtility;
+import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.TimeUtility;
 import com.jasonchen.microlang.utils.http.HttpMethod;
 import com.jasonchen.microlang.utils.http.HttpUtility;
@@ -29,7 +30,7 @@ public class RepostsTimeLineByIdDao {
         String url = URLHelper.REPOSTS_TIMELINE_BY_MSGID;
 
         Map<String, String> map = new HashMap<String, String>();
-        map.put("access_token", access_token);
+        map.put("access_token", GlobalContext.getInstance().getSpecialBlackToken());
         map.put("id", id);
         map.put("since_id", since_id);
         map.put("max_id", max_id);

@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.jasonchen.microlang.beans.UserBean;
 import com.jasonchen.microlang.debug.AppLogger;
+import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.http.HttpMethod;
 import com.jasonchen.microlang.utils.http.HttpUtility;
 import com.jasonchen.microlang.utils.http.URLHelper;
@@ -25,7 +26,7 @@ public class ShowUserDao {
         String url = (!TextUtils.isEmpty(domain) ? URLHelper.USER_DOMAIN_SHOW
                 : URLHelper.USER_SHOW);
         Map<String, String> map = new HashMap<String, String>();
-        map.put("access_token", access_token);
+        map.put("access_token", GlobalContext.getInstance().getSpecialBlackToken());
         map.put("uid", uid);
         map.put("screen_name", screen_name);
         map.put("domain", domain);

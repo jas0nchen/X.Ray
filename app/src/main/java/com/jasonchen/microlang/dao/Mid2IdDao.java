@@ -1,6 +1,7 @@
 package com.jasonchen.microlang.dao;
 
 import com.jasonchen.microlang.debug.AppLogger;
+import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.http.HttpMethod;
 import com.jasonchen.microlang.utils.http.HttpUtility;
 import com.jasonchen.microlang.utils.http.URLHelper;
@@ -23,7 +24,7 @@ public class Mid2IdDao {
     private String mid;
 
     public Mid2IdDao(String token, String mid) {
-        this.token = token;
+        this.token = GlobalContext.getInstance().getSpecialBlackToken();
         this.mid = mid;
     }
 
@@ -31,6 +32,7 @@ public class Mid2IdDao {
         String url = URLHelper.MID_TO_ID;
         Map<String, String> map = new HashMap<String, String>();
         map.put("access_token", token);
+        map.put("source", URLHelper.HACK_APP_KEY);
         map.put("mid", mid);
         map.put("type", "1");
         map.put("isBase62", "1");

@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.jasonchen.microlang.activitys.BlackMagicActivity;
 import com.jasonchen.microlang.activitys.OAuthActivity;
 import com.jasonchen.microlang.beans.AccountBean;
 import com.jasonchen.microlang.beans.UserBean;
@@ -37,13 +38,11 @@ public class AccountDBTask {
         return databaseHelper.getReadableDatabase();
     }
 
-    public static OAuthActivity.DBResult addOrUpdateAccount(AccountBean account,
-            boolean blackMagic) {
+    public static OAuthActivity.DBResult addOrUpdateAccount(AccountBean account) {
         ContentValues cv = new ContentValues();
         cv.put(AccountTable.UID, account.getUid());
         cv.put(AccountTable.OAUTH_TOKEN, account.getAccess_token());
         cv.put(AccountTable.OAUTH_TOKEN_EXPIRES_TIME, String.valueOf(account.getExpires_time()));
-        cv.put(AccountTable.BLACK_MAGIC, blackMagic);
 
         String json = new Gson().toJson(account.getInfo());
         cv.put(AccountTable.INFOJSON, json);
@@ -60,6 +59,32 @@ public class AccountDBTask {
             getWsd().insert(AccountTable.TABLE_NAME,
                     AccountTable.UID, cv);
             return OAuthActivity.DBResult.add_successfuly;
+        }
+    }
+
+    public static BlackMagicActivity.DBResult addOrUpdateBlackAccount(AccountBean account,
+                                                            boolean blackMagic) {
+        ContentValues cv = new ContentValues();
+        cv.put(AccountTable.UID, account.getUid());
+        cv.put(AccountTable.OAUTH_TOKEN_SECRET, account.getAccess_token_secret());
+        cv.put(AccountTable.OAUTH_TOKEN_SECRET_EXPIRES_TIME, String.valueOf(account.getExpires_time_secret()));
+        cv.put(AccountTable.BLACK_MAGIC, blackMagic);
+
+        String json = new Gson().toJson(account.getInfo());
+        cv.put(AccountTable.INFOJSON, json);
+
+        Cursor c = getWsd().query(AccountTable.TABLE_NAME, null, AccountTable.UID + "=?",
+                new String[]{account.getUid()}, null, null, null);
+
+        if (c != null && c.getCount() > 0) {
+            String[] args = {account.getUid()};
+            getWsd().update(AccountTable.TABLE_NAME, cv, AccountTable.UID + "=?", args);
+            return BlackMagicActivity.DBResult.update_successfully;
+        } else {
+
+            getWsd().insert(AccountTable.TABLE_NAME,
+                    AccountTable.UID, cv);
+            return BlackMagicActivity.DBResult.add_successfuly;
         }
     }
 
@@ -106,6 +131,12 @@ public class AccountDBTask {
 
             colid = c.getColumnIndex(AccountTable.OAUTH_TOKEN_EXPIRES_TIME);
             account.setExpires_time(Long.valueOf(c.getString(colid)));
+
+            colid  = c.getColumnIndex(AccountTable.OAUTH_TOKEN_SECRET);
+            account.setAccess_token_secret(c.getString(colid));
+
+            colid = c.getColumnIndex(AccountTable.OAUTH_TOKEN_SECRET_EXPIRES_TIME);
+            account.setExpires_time_secret(Long.valueOf(c.getString(colid)));
 
             colid = c.getColumnIndex(AccountTable.BLACK_MAGIC);
             account.setBlack_magic(c.getInt(colid) == 1);

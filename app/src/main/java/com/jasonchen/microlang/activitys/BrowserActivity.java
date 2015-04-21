@@ -11,12 +11,11 @@ import android.provider.Browser;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -27,6 +26,7 @@ import com.jasonchen.microlang.swipeback.app.SwipeBackActivity;
 import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.Utility;
 import com.jasonchen.microlang.utils.ViewUtility;
+import com.jasonchen.microlang.view.FloatingActionButton;
 
 import me.drakeet.materialdialog.MaterialDialog;
 
@@ -71,18 +71,6 @@ public class BrowserActivity extends SwipeBackActivity implements SwipeRefreshLa
         webView = ViewUtility.findViewById(this, R.id.webView);
         webView.setWebViewClient(new WeiboWebViewClient());
         getSupportActionBar().setTitle(getString(R.string.app_name));
-        webView.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if(i == KeyEvent.KEYCODE_BACK){
-                    if(webView.canGoBack()){
-                        webView.goBack();
-                    }
-                    return true;
-                }
-                return false;
-            }
-        });
 
         container.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         container.setOnRefreshListener(this);
@@ -239,6 +227,16 @@ public class BrowserActivity extends SwipeBackActivity implements SwipeRefreshLa
 
     public WebView getWebView(){
         return webView;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if(webView.canGoBack()){
+                webView.goBack();
+            }
+        }
+        return false;
     }
 }
 

@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "weibo.db";
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
 
     //账户表
     static final String CREATE_ACCOUNT_TABLE_SQL = "create table " + AccountTable.TABLE_NAME
@@ -34,6 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + AccountTable.OAUTH_TOKEN + " text,"
             + AccountTable.OAUTH_TOKEN_EXPIRES_TIME + " text,"
             + AccountTable.OAUTH_TOKEN_SECRET + " text,"
+            + AccountTable.OAUTH_TOKEN_SECRET_EXPIRES_TIME + " text,"
             + AccountTable.BLACK_MAGIC + " boolean,"
             + AccountTable.NAVIGATION_POSITION + " integer,"
             + AccountTable.INFOJSON + " text"
@@ -355,6 +356,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     	if(oldVersion <= 1){
             db.execSQL(CREATE_ATUSERS_TABLE_SQL);
+        }
+
+        if(oldVersion <= 3){
+            deleteAllTable(db);
+            db.execSQL(CREATE_ACCOUNT_TABLE_SQL);
         }
     }
 

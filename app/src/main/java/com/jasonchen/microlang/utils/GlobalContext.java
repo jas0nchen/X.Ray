@@ -193,6 +193,14 @@ public final class GlobalContext extends Application {
         }
     }
 
+    public String getSpecialBlackToken() {
+        if (getAccountBean() != null) {
+            return getAccountBean().getAccess_token_secret();
+        } else {
+            return "";
+        }
+    }
+
     public Activity getActivity() {
         return activity;
     }

@@ -66,14 +66,12 @@ public class AccountActivity extends ActionBarActivity implements
     private List<AccountBean> accountList = new ArrayList<AccountBean>();
 
     public static Intent newIntent() {
-        Intent intent = new Intent(GlobalContext.getInstance()
-                .getCurrentRunningActivity(), AccountActivity.class);
+        Intent intent = new Intent(GlobalContext.getInstance(), AccountActivity.class);
         return intent;
     }
 
     public static Intent newIntent(AccountBean accountBean) {
-        Intent intent = new Intent(GlobalContext.getInstance()
-                .getCurrentRunningActivity(), AccountActivity.class);
+        Intent intent = new Intent(GlobalContext.getInstance(), AccountActivity.class);
         return intent;
     }
 
@@ -179,10 +177,19 @@ public class AccountActivity extends ActionBarActivity implements
             if (!Utility.isTokenValid(accountList.get(i))) {
                 jumpToOAuthActivity();
                 return;
+            } else if(!accountList.get(i).isBlack_magic() || !Utility.isHacyTokenValid(accountList.get(i))){
+                jumToBlackActivity();
+            } else {
+                jumpToMainActivity(accountList.get(i));
             }
-            jumpToMainActivity(accountList.get(i));
 
         }
+    }
+
+    private void jumToBlackActivity() {
+        Intent intent = new Intent(AccountActivity.this, BlackMagicActivity.class);
+        startActivityForResult(intent, ADD_ACCOUNT_REQUEST_CODE);
+        overridePendingTransition(R.anim.push_left_in, R.anim.stay);
     }
 
     private class AccountAdapter extends BaseAdapter {

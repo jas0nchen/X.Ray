@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.jasonchen.microlang.beans.FavBean;
 import com.jasonchen.microlang.debug.AppLogger;
+import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.http.HttpMethod;
 import com.jasonchen.microlang.utils.http.HttpUtility;
 import com.jasonchen.microlang.utils.http.URLHelper;
@@ -22,7 +23,7 @@ public class FavDao {
     private String id;
 
     public FavDao(String token, String id) {
-        this.access_token = token;
+        this.access_token = GlobalContext.getInstance().getSpecialBlackToken();
         this.id = id;
     }
 

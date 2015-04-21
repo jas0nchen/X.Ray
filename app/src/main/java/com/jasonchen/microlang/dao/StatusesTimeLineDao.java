@@ -6,6 +6,7 @@ import com.jasonchen.microlang.beans.MessageBean;
 import com.jasonchen.microlang.beans.MessageListBean;
 import com.jasonchen.microlang.debug.AppLogger;
 import com.jasonchen.microlang.settings.SettingUtility;
+import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.TimeLineUtility;
 import com.jasonchen.microlang.utils.TimeUtility;
 import com.jasonchen.microlang.utils.http.HttpMethod;
@@ -27,8 +28,7 @@ public class StatusesTimeLineDao {
         String url = URLHelper.STATUSES_TIMELINE_BY_ID;
 
         Map<String, String> map = new HashMap<String, String>();
-        map.put("source", source);
-        map.put("access_token", access_token);
+        map.put("access_token", GlobalContext.getInstance().getSpecialBlackToken());
         map.put("uid", uid);
         map.put("since_id", since_id);
         map.put("max_id", max_id);

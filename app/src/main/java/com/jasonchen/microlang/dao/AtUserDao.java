@@ -5,6 +5,7 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.jasonchen.microlang.beans.AtUserBean;
 import com.jasonchen.microlang.debug.AppLogger;
+import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.http.HttpMethod;
 import com.jasonchen.microlang.utils.http.HttpUtility;
 import com.jasonchen.microlang.utils.http.URLHelper;
@@ -24,7 +25,7 @@ public class AtUserDao {
     public List<AtUserBean> getUserInfo() throws WeiboException {
         String url = URLHelper.AT_USER;
         Map<String, String> map = new HashMap<String, String>();
-        map.put("access_token", access_token);
+        map.put("access_token", GlobalContext.getInstance().getSpecialBlackToken());
         map.put("q", q);
         map.put("count", count);
         map.put("type", type);

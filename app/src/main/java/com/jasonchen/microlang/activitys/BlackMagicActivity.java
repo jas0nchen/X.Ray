@@ -1,43 +1,34 @@
 package com.jasonchen.microlang.activitys;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.Toast;
 
 import com.jasonchen.microlang.R;
 import com.jasonchen.microlang.beans.AccountBean;
 import com.jasonchen.microlang.beans.UserBean;
+import com.jasonchen.microlang.dao.BlackOAuthDao;
 import com.jasonchen.microlang.dao.OAuthDao;
 import com.jasonchen.microlang.database.AccountDBTask;
 import com.jasonchen.microlang.debug.AppLogger;
 import com.jasonchen.microlang.exception.WeiboException;
 import com.jasonchen.microlang.swipeback.app.SwipeBackActivity;
 import com.jasonchen.microlang.tasks.MyAsyncTask;
-import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.StreamUtility;
 import com.jasonchen.microlang.utils.Utility;
 import com.jasonchen.microlang.utils.ViewUtility;
@@ -62,7 +53,7 @@ import me.drakeet.materialdialog.MaterialDialog;
  * jasonchen
  * 2015/04/10
  */
-public class OAuthActivity extends SwipeBackActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class BlackMagicActivity extends SwipeBackActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private SwipeRefreshLayout container;
     private WebView webView;
@@ -137,15 +128,15 @@ public class OAuthActivity extends SwipeBackActivity implements SwipeRefreshLayo
 
     static class MyHandler extends Handler {
 
-        WeakReference<OAuthActivity> mActivity;
+        WeakReference<BlackMagicActivity> mActivity;
 
-        MyHandler(OAuthActivity activity) {
-            mActivity = new WeakReference<OAuthActivity>(activity);
+        MyHandler(BlackMagicActivity activity) {
+            mActivity = new WeakReference<BlackMagicActivity>(activity);
         }
 
         @Override
         public void handleMessage(Message msg) {
-            final OAuthActivity activity = mActivity.get();
+            final BlackMagicActivity activity = mActivity.get();
             super.handleMessage(msg);
             if (START_OAUTH_TASK == msg.what) {
                 @SuppressWarnings("unchecked")
@@ -160,9 +151,9 @@ public class OAuthActivity extends SwipeBackActivity implements SwipeRefreshLayo
 
     private String getWeiboOAuthUrl() {
         Map<String, String> parameters = new HashMap<String, String>();
-        parameters.put("client_id", URLHelper.APP_KEY);
+        parameters.put("client_id", URLHelper.HACK_APP_KEY);
         parameters.put("response_type", "code");
-        parameters.put("redirect_uri", URLHelper.DIRECT_URL);
+        parameters.put("redirect_uri", URLHelper.HACK_DIRECT_URL);
         parameters.put("display", "mobile");
         return URLHelper.URL_OAUTH2_ACCESS_AUTHORIZE + "?"
                 + Utility.encodeUrl(parameters)
@@ -171,10 +162,10 @@ public class OAuthActivity extends SwipeBackActivity implements SwipeRefreshLayo
 
     private String getWeiboTokenUrl() {
         Map<String, String> parameters = new HashMap<String, String>();
-        parameters.put("client_id", URLHelper.APP_KEY);
-        parameters.put("client_secret", URLHelper.APP_SECRET);
+        parameters.put("client_id", URLHelper.HACK_APP_KEY);
+        parameters.put("client_secret", URLHelper.HACK_APP_SECRET);
         parameters.put("grant_type", "authorization_code");
-        parameters.put("redirect_uri", URLHelper.DIRECT_URL);
+        parameters.put("redirect_uri", URLHelper.HACK_DIRECT_URL);
         parameters.put("code", code);
         return URLHelper.ACESS_TOKEN + "?" + Utility.encodeUrl(parameters);
     }
@@ -189,7 +180,7 @@ public class OAuthActivity extends SwipeBackActivity implements SwipeRefreshLayo
 
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            if (url.startsWith(URLHelper.DIRECT_URL)) {
+            if (url.startsWith(URLHelper.HACK_DIRECT_URL)) {
                 handleRedirectUrl(view, url);
                 view.stopLoading();
                 return;
@@ -201,7 +192,7 @@ public class OAuthActivity extends SwipeBackActivity implements SwipeRefreshLayo
         public void onReceivedError(WebView view, int errorCode,
                                     String description, String failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
-            final MaterialDialog showErrorDialog = new MaterialDialog(OAuthActivity.this);
+            final MaterialDialog showErrorDialog = new MaterialDialog(BlackMagicActivity.this);
             showErrorDialog.setTitle(getString(R.string.notice));
             showErrorDialog.setMessage(getString(R.string.sina_server_error))
                     .setPositiveButton(getString(R.string.confirm), new View.OnClickListener() {
@@ -280,7 +271,7 @@ public class OAuthActivity extends SwipeBackActivity implements SwipeRefreshLayo
 
             System.out.println("code:" + code);
         } else {
-            Toast.makeText(OAuthActivity.this,
+            Toast.makeText(BlackMagicActivity.this,
                     getString(R.string.you_cancel_login), Toast.LENGTH_SHORT)
                     .show();
             finish();
@@ -294,7 +285,7 @@ public class OAuthActivity extends SwipeBackActivity implements SwipeRefreshLayo
         if (webView.canGoBack()) {
             webView.goBack();
         } else {
-            Toast.makeText(OAuthActivity.this,
+            Toast.makeText(BlackMagicActivity.this,
                     getString(R.string.you_cancel_login), Toast.LENGTH_SHORT)
                     .show();
             finish();
@@ -303,42 +294,42 @@ public class OAuthActivity extends SwipeBackActivity implements SwipeRefreshLayo
     }
 
     private static class OAuthTask extends
-            MyAsyncTask<String, UserBean, DBResult> {
+            MyAsyncTask<String, UserBean, BlackMagicActivity.DBResult> {
 
         private WeiboException e;
         private ProgressFragment progressFragment = ProgressFragment
                 .newInstance();
-        private WeakReference<OAuthActivity> oAuthActivityWeakReference;
+        private WeakReference<BlackMagicActivity> oAuthActivityWeakReference;
 
-        private OAuthTask(OAuthActivity activity) {
-            oAuthActivityWeakReference = new WeakReference<OAuthActivity>(
+        private OAuthTask(BlackMagicActivity activity) {
+            oAuthActivityWeakReference = new WeakReference<BlackMagicActivity>(
                     activity);
         }
 
         @Override
         protected void onPreExecute() {
             progressFragment.setAsyncTask(this);
-            OAuthActivity activity = oAuthActivityWeakReference.get();
+            BlackMagicActivity activity = oAuthActivityWeakReference.get();
             if (activity != null) {
                 progressFragment.show(activity.getSupportFragmentManager(), "");
             }
         }
 
         @Override
-        protected DBResult doInBackground(String... params) {
+        protected BlackMagicActivity.DBResult doInBackground(String... params) {
             String token = params[0];
             long expiresInSeconds = Long.valueOf(params[1]);
 
             try {
-                UserBean user = new OAuthDao(token).getOAuthUserInfo();
+                UserBean user = new BlackOAuthDao(token).getOAuthUserInfo();
                 AccountBean account = new AccountBean();
-                account.setAccess_token(token);
-                account.setExpires_time(System.currentTimeMillis()
+                account.setAccess_token_secret(token);
+                account.setExpires_time_secret(System.currentTimeMillis()
                         + expiresInSeconds * 1000);
                 account.setInfo(user);
                 AppLogger.e("token expires in "
                         + Utility.calcTokenExpiresInDays(account) + " days");
-                return AccountDBTask.addOrUpdateAccount(account);
+                return AccountDBTask.addOrUpdateBlackAccount(account, true);
             } catch (WeiboException e) {
                 AppLogger.e(e.getError());
                 this.e = e;
@@ -348,13 +339,13 @@ public class OAuthActivity extends SwipeBackActivity implements SwipeRefreshLayo
         }
 
         @Override
-        protected void onCancelled(DBResult dbResult) {
+        protected void onCancelled(BlackMagicActivity.DBResult dbResult) {
             super.onCancelled(dbResult);
             if (progressFragment != null) {
                 progressFragment.dismissAllowingStateLoss();
             }
 
-            OAuthActivity activity = oAuthActivityWeakReference.get();
+            BlackMagicActivity activity = oAuthActivityWeakReference.get();
             if (activity == null) {
                 return;
             }
@@ -367,11 +358,11 @@ public class OAuthActivity extends SwipeBackActivity implements SwipeRefreshLayo
         }
 
         @Override
-        protected void onPostExecute(DBResult dbResult) {
+        protected void onPostExecute(BlackMagicActivity.DBResult dbResult) {
             if (progressFragment.isVisible()) {
                 progressFragment.dismissAllowingStateLoss();
             }
-            OAuthActivity activity = oAuthActivityWeakReference.get();
+            BlackMagicActivity activity = oAuthActivityWeakReference.get();
             if (activity == null) {
                 return;
             }

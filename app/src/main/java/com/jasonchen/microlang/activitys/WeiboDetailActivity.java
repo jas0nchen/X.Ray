@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,9 +23,7 @@ import com.jasonchen.microlang.database.FriendsTimeLineDBTask;
 import com.jasonchen.microlang.exception.WeiboException;
 import com.jasonchen.microlang.fragments.WeiboDetailFragment;
 import com.jasonchen.microlang.swipeback.app.SwipeBackActivity;
-import com.jasonchen.microlang.tasks.FavAsyncTask;
 import com.jasonchen.microlang.tasks.MyAsyncTask;
-import com.jasonchen.microlang.tasks.UnFavAsyncTask;
 import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.Utility;
 
@@ -121,6 +120,10 @@ public class WeiboDetailActivity extends SwipeBackActivity{
                 }
             }
         });
+    }
+
+    public Toolbar getToolbar(){
+        return mToolbar;
     }
 
     private void fetchMessage() {

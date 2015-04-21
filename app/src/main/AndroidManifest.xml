@@ -25,12 +25,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".activitys.OAuthActivity" />
+        <activity android:name=".activitys.BlackMagicActivity" />
         <activity android:name=".activitys.AccountActivity" />
         <activity
             android:name=".activitys.MainActivity"
             android:theme="@style/MainActivityTheme" />
         <activity
             android:name=".gallery.GalleryAnimationActivity"
+            android:launchMode="singleTask"
             android:theme="@style/GalleryTheme" />
         <activity
             android:name=".activitys.WriteWeiboActivity"
@@ -65,6 +67,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:host="e.weibo.com"
                     android:scheme="http" />
@@ -101,7 +104,7 @@
                 <data android:scheme="com.jasonchen.topic" />
             </intent-filter>
         </activity>
-        <activity android:name=".activitys.SearchActivity"/>
+        <activity android:name=".activitys.SearchActivity" />
 
         <!-- services -->
         <service android:name=".services.SendWeiboService" />

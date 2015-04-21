@@ -918,6 +918,12 @@ public class Utility {
                 .currentTimeMillis()) < account.getExpires_time());
     }
 
+    public static boolean isHacyTokenValid(AccountBean account) {
+        return !TextUtils.isEmpty(account.getAccess_token_secret())
+                && (account.getExpires_time_secret() == 0 || (System
+                .currentTimeMillis()) < account.getExpires_time_secret());
+    }
+
     public static boolean isTokenExpiresInThreeDay(AccountBean account) {
         long days = TimeUnit.MILLISECONDS.toDays(account.getExpires_time()
                 - System.currentTimeMillis());
