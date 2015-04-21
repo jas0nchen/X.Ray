@@ -142,6 +142,7 @@ public class AccountDBTask {
 
             colid = c.getColumnIndex(AccountTable.BLACK_MAGIC);
             account.setBlack_magic(c.getInt(colid) == 1);
+            //test
 
             colid = c.getColumnIndex(AccountTable.NAVIGATION_POSITION);
             account.setNavigationPosition(c.getInt(colid));
