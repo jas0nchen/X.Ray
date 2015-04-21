@@ -136,7 +136,9 @@ public class AccountDBTask {
             account.setAccess_token_secret(c.getString(colid));
 
             colid = c.getColumnIndex(AccountTable.OAUTH_TOKEN_SECRET_EXPIRES_TIME);
-            account.setExpires_time_secret(Long.valueOf(c.getString(colid)));
+            if(c.getString(colid) != null) {
+                account.setExpires_time_secret(Long.valueOf(c.getString(colid)));
+            }
 
             colid = c.getColumnIndex(AccountTable.BLACK_MAGIC);
             account.setBlack_magic(c.getInt(colid) == 1);

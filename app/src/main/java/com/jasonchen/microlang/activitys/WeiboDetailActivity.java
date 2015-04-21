@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.jasonchen.microlang.beans.MessageBean;
 import com.jasonchen.microlang.dao.DestroyStatusDao;
 import com.jasonchen.microlang.dao.FavDao;
 import com.jasonchen.microlang.database.FriendsTimeLineDBTask;
+import com.jasonchen.microlang.debug.AppLogger;
 import com.jasonchen.microlang.exception.WeiboException;
 import com.jasonchen.microlang.fragments.WeiboDetailFragment;
 import com.jasonchen.microlang.swipeback.app.SwipeBackActivity;
@@ -344,7 +346,6 @@ public class WeiboDetailActivity extends SwipeBackActivity{
                     Toast.makeText(context, getResources().getString(R.string.remove_successfully), Toast.LENGTH_SHORT).show();
                     FriendsTimeLineDBTask.deleteMsg(GlobalContext.getInstance()
                             .getAccountBean().getUid(), messageId);
-
                     break;
 
                 case failed:
@@ -358,4 +359,17 @@ public class WeiboDetailActivity extends SwipeBackActivity{
         success, failed
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
+            if (getSupportFragmentManager().findFragmentByTag(WeiboDetailFragment.class.getName()) != null) {
+                messageBean = ((WeiboDetailFragment) getSupportFragmentManager().findFragmentByTag(WeiboDetailFragment.class.getName())).getMessageBean();
+                Intent data = new Intent();
+                data.putExtra("msg", messageBean);
+                AppLogger.d("评论数 " + messageBean.getCommentscountString());
+                setResult(1, data);
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

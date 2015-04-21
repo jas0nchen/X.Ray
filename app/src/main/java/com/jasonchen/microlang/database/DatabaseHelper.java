@@ -10,6 +10,7 @@ import com.jasonchen.microlang.database.table.CommentsTable;
 import com.jasonchen.microlang.database.table.DownloadPicturesTable;
 import com.jasonchen.microlang.database.table.FavouriteTable;
 import com.jasonchen.microlang.database.table.GroupTable;
+import com.jasonchen.microlang.database.table.HomeOtherGroupTable;
 import com.jasonchen.microlang.database.table.HomeTable;
 import com.jasonchen.microlang.database.table.MentionCommentsTable;
 import com.jasonchen.microlang.database.table.RepostsTable;
@@ -25,7 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "weibo.db";
 
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     //账户表
     static final String CREATE_ACCOUNT_TABLE_SQL = "create table " + AccountTable.TABLE_NAME
@@ -64,16 +65,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + HomeTable.HomeDataTable.JSONDATA + " text"
             + ");";
     
-   /* static final String CREATE_HOME_OTHER_GROUP_TABLE_SQL = "create table "
+   static final String CREATE_HOME_OTHER_GROUP_TABLE_SQL = "create table "
             + HomeOtherGroupTable.TABLE_NAME
             + "("
             + HomeOtherGroupTable.ID + " integer primary key autoincrement,"
             + HomeOtherGroupTable.ACCOUNTID + " text,"
             + HomeOtherGroupTable.GROUPID + " text,"
             + HomeOtherGroupTable.TIMELINEDATA + " text"
-            + ");";*/
+            + ");";
     //分组微博数据
-    /*static final String CREATE_HOME_OTHER_GROUP_DATA_TABLE_SQL = "create table "
+    static final String CREATE_HOME_OTHER_GROUP_DATA_TABLE_SQL = "create table "
             + HomeOtherGroupTable.HomeOtherGroupDataTable.TABLE_NAME
             + "("
             + HomeOtherGroupTable.HomeOtherGroupDataTable.ID + " integer primary key autoincrement,"
@@ -81,7 +82,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + HomeOtherGroupTable.HomeOtherGroupDataTable.MBLOGID + " text,"
             + HomeOtherGroupTable.HomeOtherGroupDataTable.GROUPID + " text,"
             + HomeOtherGroupTable.HomeOtherGroupDataTable.JSONDATA + " text"
-            + ");";*/
+            + ");";
     //评论表
     static final String CREATE_COMMENTS_TABLE_SQL = "create table " + CommentsTable.TABLE_NAME
             + "("
@@ -349,6 +350,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_ATUSERS_TABLE_SQL);
 
+        db.execSQL(CREATE_HOME_OTHER_GROUP_TABLE_SQL);
+        db.execSQL(CREATE_HOME_OTHER_GROUP_DATA_TABLE_SQL);
+
         //createOtherTable(db);
     }
 
@@ -361,6 +365,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(oldVersion <= 3){
             deleteAllTable(db);
             db.execSQL(CREATE_ACCOUNT_TABLE_SQL);
+        }
+
+        if(oldVersion <=4){
+            db.execSQL(CREATE_HOME_OTHER_GROUP_TABLE_SQL);
+            db.execSQL(CREATE_HOME_OTHER_GROUP_DATA_TABLE_SQL);
         }
     }
 

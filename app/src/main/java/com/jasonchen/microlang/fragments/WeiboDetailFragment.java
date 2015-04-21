@@ -372,6 +372,10 @@ public class WeiboDetailFragment extends AbstractAppFragment implements LoadList
         adapter.setIsCommentList(true);
     }
 
+    public MessageBean getMessageBean(){
+        return messageBean;
+    }
+
     private void asyncDownloadRepost() {
         new Thread() {
             public void run() {

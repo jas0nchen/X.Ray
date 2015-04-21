@@ -25,14 +25,6 @@ import java.util.List;
  */
 public class FriendsTimeLineDBTask {
 
-	/**
-	 * the number of messages to read is calculated by listview position, for
-	 * example, if you have 1000 messages, but the first position of listview is
-	 * 60, weiciyuan will save 1000 messages to database, but at the next time
-	 * when app need to read database, app will read only 60+
-	 * DB_CACHE_COUNT_OFFSET =70 messages.
-	 */
-
 	private FriendsTimeLineDBTask() {
 
 	}
@@ -152,49 +144,6 @@ public class FriendsTimeLineDBTask {
 		}).start();
 	}
 
-	/*
-	 * public static void asyncUpdatePosition(final TimeLinePosition position,
-	 * final String accountId, final String groupId) { Runnable runnable = new
-	 * Runnable() {
-	 * 
-	 * @Override public void run() {
-	 * FriendsTimeLineDBTask.updatePosition(position, accountId, groupId); } };
-	 * 
-	 * new Thread(runnable).start(); }
-	 */
-
-	/*
-	 * private static void updatePosition(TimeLinePosition position, String
-	 * accountId, String groupId) { if (groupId.equals("0")) {
-	 * updatePosition(position, accountId); } else {
-	 * HomeOtherGroupTimeLineDBTask .updatePosition(position,
-	 * GlobalContext.getInstance().getCurrentAccountId(), groupId); } }
-	 */
-
-	/*
-	 * private static void updatePosition(TimeLinePosition position, String
-	 * accountId) { String sql = "select * from " + HomeTable.TABLE_NAME +
-	 * " where " + HomeTable.ACCOUNTID + "  = " + accountId; Cursor c =
-	 * getRsd().rawQuery(sql, null); Gson gson = new Gson(); if (c.getCount() >
-	 * 0) { try { String[] args = {accountId}; ContentValues cv = new
-	 * ContentValues(); cv.put(HomeTable.TIMELINEDATA, gson.toJson(position));
-	 * getWsd().update(HomeTable.TABLE_NAME, cv, HomeTable.ACCOUNTID + "=?",
-	 * args); } catch (JsonSyntaxException e) { e.printStackTrace(); } } else {
-	 * ContentValues cv = new ContentValues(); cv.put(HomeTable.ACCOUNTID,
-	 * accountId); cv.put(HomeTable.TIMELINEDATA, gson.toJson(position));
-	 * getWsd().insert(HomeTable.TABLE_NAME, HomeTable.ID, cv); } }
-	 * 
-	 * private static TimeLinePosition getPosition(String accountId) { String
-	 * sql = "select * from " + HomeTable.TABLE_NAME + " where " +
-	 * HomeTable.ACCOUNTID + "  = " + accountId; Cursor c =
-	 * getRsd().rawQuery(sql, null); Gson gson = new Gson(); while
-	 * (c.moveToNext()) { String json =
-	 * c.getString(c.getColumnIndex(HomeTable.TIMELINEDATA)); if
-	 * (!TextUtils.isEmpty(json)) { try { TimeLinePosition value =
-	 * gson.fromJson(json, TimeLinePosition.class); c.close(); return value; }
-	 * catch (JsonSyntaxException e) { e.printStackTrace(); } } } c.close();
-	 * return TimeLinePosition.empty(); }
-	 */
 	public static String getRecentGroupId(String accountId) {
 		String sql = "select * from " + HomeTable.TABLE_NAME + " where "
 				+ HomeTable.ACCOUNTID + "  = " + accountId;
