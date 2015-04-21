@@ -7,7 +7,14 @@ Feature
   
 Snapshots
 -----
-  ![](https://github.com/jas0nchen/X.Ray/blob/master/snapshot/device-2015-04-21-200832.png)  
-  ![](https://github.com/jas0nchen/X.Ray/blob/master/snapshot/device-2015-04-21-200939.png)
-  ![](https://github.com/jas0nchen/X.Ray/blob/master/snapshot/device-2015-04-21-201018.png)
-  ![](https://github.com/jas0nchen/X.Ray/blob/master/snapshot/device-2015-04-21-201106.png)
+  ![](https://github.com/jas0nchen/X.Ray/blob/master/snapshot/snapshot_1.png)  
+  ![](https://github.com/jas0nchen/X.Ray/blob/master/snapshot/snapshot_2.png)
+  ![](https://github.com/jas0nchen/X.Ray/blob/master/snapshot/snapshot_3.png)
+  ![](https://github.com/jas0nchen/X.Ray/blob/master/snapshot/snapshot_4.png)
+
+Thanks
+-----
+   @qii 四次元
+
+Lisence
+  
