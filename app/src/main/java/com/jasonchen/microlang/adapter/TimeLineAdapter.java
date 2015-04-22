@@ -825,7 +825,7 @@ public class TimeLineAdapter extends BaseAdapter {
         TextView repost_count;
         TextView comment_count;
         ImageView more;
-        TimeLineAvatarImageView avatar;
+        TimeLineRoundAvatarImageView avatar;
         TimeLineImageView content_pic;
         GridLayout content_pic_multi;
         LinearLayout repost_layout;

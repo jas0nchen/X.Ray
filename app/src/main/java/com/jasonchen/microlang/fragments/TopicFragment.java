@@ -8,6 +8,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -97,6 +98,46 @@ public class TopicFragment extends AbstractAppFragment implements SwipeRefreshLa
         listView.setXListViewListener(this);
         listView.setPullLoadEnable(true);
         listView.setDivider(null);
+
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                switch (scrollState) {
+                    case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:
+                        TimeLineBitmapDownloader.getInstance()
+                                .setPauseDownloadWork(false);
+                        TimeLineBitmapDownloader.getInstance().setPauseReadWork(
+                                false);
+
+                        break;
+                    case AbsListView.OnScrollListener.SCROLL_STATE_FLING:
+                        if (adapter != null) {
+                            adapter.setIsFling(true);
+                        }
+                        TimeLineBitmapDownloader.getInstance()
+                                .setPauseDownloadWork(true);
+                        TimeLineBitmapDownloader.getInstance().setPauseReadWork(
+                                true);
+                        break;
+                    case AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
+                        if (adapter != null) {
+                            adapter.setIsFling(true);
+                        }
+                        TimeLineBitmapDownloader.getInstance()
+                                .setPauseDownloadWork(true);
+                        TimeLineBitmapDownloader.getInstance().setPauseReadWork(
+                                true);
+                        break;
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem,
+                                 int visibleItemCount, int totalItemCount) {
+
+            }
+        });
 
         handler = new MyHandler();
         list = new ArrayList<MessageBean>();

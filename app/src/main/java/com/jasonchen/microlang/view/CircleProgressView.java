@@ -12,6 +12,9 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.jasonchen.microlang.R;
+import com.jasonchen.microlang.utils.Utility;
+
 /**
  * jasonchen
  * 2015/04/10
@@ -38,8 +41,8 @@ public class CircleProgressView extends View {
 
     public CircleProgressView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        mPaint.setStrokeWidth(10);
-        mPaint.setColor(Color.parseColor("#009688"));
+        mPaint.setStrokeWidth(Utility.dip2px(4));
+        mPaint.setColor(getResources().getColor(R.color.colorPrimary));
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.STROKE);
 
@@ -56,7 +59,7 @@ public class CircleProgressView extends View {
         mPaintOuter.setColor(Color.LTGRAY);
         mPaintOuter.setAntiAlias(true);
         mPaintOuter.setStyle(Paint.Style.STROKE);
-        mPaintOuter.setStrokeWidth(10);
+        mPaintOuter.setStrokeWidth(Utility.dip2px(4));
         int h = Math.min(width, height);
         canvas.drawCircle(width/2, height/2, (h - 20)/2, mPaintOuter);
 
@@ -64,12 +67,13 @@ public class CircleProgressView extends View {
                 h + (height - h) / 2 - 10);
 
         if (getProgress() < 360) {
-            mPaint.setColor(Color.parseColor("#009688"));
-            mPaint.setStrokeWidth(10);
+            mPaint.setColor(getResources().getColor(R.color.colorPrimary));
+            mPaint.setStrokeWidth(Utility.dip2px(4));
             canvas.drawArc(oval2, 270, getProgress(), false, mPaint);
-            mPaint.setStrokeWidth(1);
-            mPaint.setTextSize(25);
-            canvas.drawText((getProgress()*100/360) + "%", width/2 - 20, height/2 + 10, mPaint);
+            mPaint.setStrokeWidth(0);
+            mPaint.setTextSize((float) Utility.sp2px(15));
+            float textWidth = mPaint.measureText((getProgress()*100/360) + "%");   //测量字体宽度，我们需要根据字体的宽度设置在圆环中间
+            canvas.drawText((getProgress()*100/360) + "%", width/2 - textWidth/2, height/2 + Utility.sp2px(15)/2, mPaint);
         } else {
             mPaint.setColor(Color.LTGRAY);
             canvas.drawArc(oval2, 270, 360, false, mPaint);

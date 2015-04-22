@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
 import android.util.AttributeSet;
@@ -74,7 +77,13 @@ public class RoundImageView extends ImageView {
 		this.measure(0, 0);
 		if (drawable.getClass() == NinePatchDrawable.class)
 			return;
-		Bitmap b = ((BitmapDrawable) drawable).getBitmap();
+		Bitmap b = null;
+		if(drawable instanceof PictureBitmapDrawable){
+			b = BitmapFactory.decodeResource(getResources(), R.drawable.avatar_default);
+		}else{
+			b = ((BitmapDrawable) drawable).getBitmap();
+		}
+		//Bitmap b = ((BitmapDrawable) drawable).getBitmap();
 		Bitmap bitmap = b.copy(Config.ARGB_8888, true);
 
 		if (defaultWidth == 0) {

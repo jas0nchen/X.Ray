@@ -156,6 +156,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
             loadAccountTask = new LoadAccountTask();
             loadAccountTask.executeOnExecutor(MyAsyncTask.THREAD_POOL_EXECUTOR);
         }
+        me.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = UserActivity.newIntent(MainActivity.this, userBean);
+                startActivity(intent);
+                overridePendingTransition(R.anim.push_left_in, R.anim.stay);
+            }
+        });
 
         mAvatar.setOnClickListener(new View.OnClickListener() {
             @Override

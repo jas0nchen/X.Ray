@@ -328,7 +328,7 @@ public class WeiboDetailAdapter extends BaseAdapter {
 				return view;
 			} else {
 				ViewHolder holder = null;
-				if (convertView == null || convertView.getTag() == null) {
+				if (convertView == null || convertView.getTag(R.drawable.ic_launcher + getItemViewType(position)) == null) {
 					convertView = mInflater.inflate(R.layout.weibodetail_normal_item, null);
 					holder = new ViewHolder();
 					holder.layout = ViewUtility.findViewById(convertView, R.id.listview_root);
@@ -387,12 +387,8 @@ public class WeiboDetailAdapter extends BaseAdapter {
 						}
 					});
 					holder.avatar.checkVerified(msg.getUser());
-					TimeLineBitmapDownloader.getInstance().displayRoundAvatar(
-							holder.avatar.getImageView(),
-							holder.avatar.getImageView().getWidth(),
-							holder.avatar.getImageView().getHeight(),
-							msg.getUser().getProfile_image_url(),
-							FileLocationMethod.avatar_small, isFling);
+					TimeLineBitmapDownloader.getInstance().downloadAvatar(
+							holder.avatar.getImageView(),msg.getUser(), false);
 					holder.username.setText(msg.getUser().getName());
 					holder.time.setTime(msg.getMills());
 					holder.source.setText(msg.getSourceString());
@@ -448,12 +444,8 @@ public class WeiboDetailAdapter extends BaseAdapter {
 					final MessageBean repmsg = repostList.getItemList().get(position - 1);
 					holder.more.setVisibility(View.GONE);
 					holder.avatar.checkVerified(repmsg.getUser());
-					TimeLineBitmapDownloader.getInstance().displayRoundAvatar(
-							holder.avatar.getImageView(),
-							holder.avatar.getImageView().getWidth(),
-							holder.avatar.getImageView().getHeight(),
-							repmsg.getUser().getProfile_image_url(),
-							FileLocationMethod.avatar_small, isFling);
+					TimeLineBitmapDownloader.getInstance().downloadAvatar(
+							holder.avatar.getImageView(), repmsg.getUser(), false);
 					holder.username.setText(repmsg.getUser().getName());
                     convertView.setOnClickListener(new OnClickListener() {
 						@Override

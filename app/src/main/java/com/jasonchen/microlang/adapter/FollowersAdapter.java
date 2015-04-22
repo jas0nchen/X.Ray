@@ -142,7 +142,7 @@ public class FollowersAdapter extends BaseAdapter {
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder holder = null;
-		if (convertView == null || convertView.getTag() == null) {
+		if (convertView == null || convertView.getTag(R.drawable.ic_launcher + getItemViewType(position)) == null) {
 			convertView = mInflater.inflate(R.layout.follow_fan_normal_item, null);
 			holder = new ViewHolder();
 			holder.avatar = ViewUtility.findViewById(convertView, R.id.avatar);
@@ -156,9 +156,7 @@ public class FollowersAdapter extends BaseAdapter {
 		}
 
 		ViewGroup.LayoutParams params = holder.avatar.getLayoutParams();
-		TimeLineBitmapDownloader.getInstance().displayRoundAvatar(holder.avatar,
-				params.width, params.height, list.get(position).getProfile_image_url(),
-				FileLocationMethod.avatar_small, false);
+		TimeLineBitmapDownloader.getInstance().downloadAvatar(holder.avatar, list.get(position), false);
 		holder.avatar.checkVerified(list.get(position));
 		holder.username.setText(list.get(position).getScreen_name());
 		if(!TextUtils.isEmpty(list.get(position).getDescription())){
