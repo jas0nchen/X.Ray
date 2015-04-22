@@ -16,6 +16,7 @@ Snapshots
 Thanks
 -----
   [@qii weiciyuan](https://github.com/qii/weiciyuan)
+  [@PaperAirplane-Dev-Team BlackLight](https://github.com/PaperAirplane-Dev-Team/BlackLight)
   [@andforce ibeebo](https://github.com/andforce/Beebo/)
 
 Lisence
