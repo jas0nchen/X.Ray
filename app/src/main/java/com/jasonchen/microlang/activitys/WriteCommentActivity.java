@@ -26,9 +26,6 @@ public class WriteCommentActivity extends AbstractWriteActivity {
     private AccountBean accountBean;
     private MessageBean messageBean;
 
-    private CommentDraftBean commentDraftBean;
-    private String failedReason;
-
     public static Intent startBecauseSendFailed(Context context,
                                                 AccountBean account, String content, MessageBean oriMsg,
                                                 CommentDraftBean draft, boolean repost_too, String failedReason) {

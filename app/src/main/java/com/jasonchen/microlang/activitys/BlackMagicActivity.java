@@ -157,7 +157,7 @@ public class BlackMagicActivity extends SwipeBackActivity implements SwipeRefres
         parameters.put("display", "mobile");
         return URLHelper.URL_OAUTH2_ACCESS_AUTHORIZE + "?"
                 + Utility.encodeUrl(parameters)
-                + "&scope=all";
+                + "&scope=email,direct_messages_read,direct_messages_write,friendships_groups_read,friendships_groups_write,statuses_to_me_read,invitation_write";
     }
 
     private String getWeiboTokenUrl() {

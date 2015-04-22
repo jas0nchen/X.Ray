@@ -358,11 +358,8 @@ public class UserFragment extends AbstractAppFragment implements SwipeRefreshLay
                     } else {
                         listView.stopLoadMore();
                         listView.getFooterView().hide();
-                        Toast.makeText(GlobalContext.getInstance(), getString(R.string.older_message_empty), Toast.LENGTH_SHORT).show();
-                    }
-                    if(number < 20){
-                        listView.getFooterView().hide();
                         listView.setPullLoadEnable(false);
+                        Toast.makeText(GlobalContext.getInstance(), getString(R.string.older_message_empty), Toast.LENGTH_SHORT).show();
                     }
                     break;
                 case NETWORK_ERROR:
