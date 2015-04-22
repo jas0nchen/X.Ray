@@ -41,6 +41,13 @@ public class WriteWeiboActivity extends AbstractWriteActivity {
         return intent;
     }
 
+    public static Intent newIntent(Context context, String content){
+        Intent intent = new Intent(context, WriteWeiboActivity.class);
+        intent.setAction(ACTION_FEED_BACK);
+        intent.putExtra("content", content);
+        return intent;
+    }
+
     public static Intent newIntent(Context context, AccountBean accountBean, String name){
         Intent intent = new Intent(context, WriteWeiboActivity.class);
         intent.setAction(ACTION_AT);
@@ -99,6 +106,11 @@ public class WriteWeiboActivity extends AbstractWriteActivity {
             content.setSelection(content.getText().toString().length());
         }else if(ACTION_NEW.equals(action)){
             accountBean = getIntent().getParcelableExtra("account");
+        }else if(ACTION_FEED_BACK.equals(getIntent().getAction())){
+            String contentStr = getIntent().getStringExtra("content");
+            accountBean = GlobalContext.getInstance().getAccountBean();
+            content.setText(contentStr +" ");
+            content.setSelection(content.getText().toString().length());
         }
 
     }

@@ -32,7 +32,7 @@ public class FileManager {
     private static final String TXT2PIC = "txt2pic";
     private static final String WEBVIEW_FAVICON = "favicon";
     private static final String LOG = "log";
-    private static final String WEICIYUAN = "sim_ray";
+    private static final String WEICIYUAN = "x_ray";
 
     private static volatile boolean cantReadBecauseOfAndroidBugPermissionProblem = false;
 

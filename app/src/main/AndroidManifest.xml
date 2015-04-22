@@ -11,7 +11,7 @@
     <application
         android:name=".utils.GlobalContext"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
@@ -105,6 +105,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activitys.SearchActivity" />
+        <activity android:name=".activitys.SettingActivity" />
+        <activity android:name=".preference.AboutActivity" />
+        <activity android:name=".preference.LicenseActivity" />
 
         <!-- services -->
         <service android:name=".services.SendWeiboService" />

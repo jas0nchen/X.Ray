@@ -100,6 +100,8 @@ public class TimeLineFragment extends TimeLineBaseFragment {
         handler = new MyHandler();
         soundPool = new SoundPool(10, AudioManager.STREAM_SYSTEM, 10);
         soundPool.load(getActivity(), R.raw.pop, 1);
+        adapter = new TimeLineAdapter(TimeLineFragment.this, getListView(),
+                msgBean);
         getListView().setOnScrollListener(new AbsListView.OnScrollListener() {
 
             @Override
@@ -139,13 +141,7 @@ public class TimeLineFragment extends TimeLineBaseFragment {
 
             }
         });
-        if(!SettingUtility.firstStart() && SettingUtility.getEnableAutoRefresh()){
-            getRefreshLayout().setProgressViewOffset(false, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, getResources().getDisplayMetrics()));
-            getRefreshLayout().setRefreshing(true);
-            onRefresh();
-        }else {
-            getStatusFromNetWorkOrDB();
-        }
+        getStatusFromNetWorkOrDB();
     }
 
     private void getStatusFromNetWorkOrDB() {
@@ -212,15 +208,15 @@ public class TimeLineFragment extends TimeLineBaseFragment {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case FIRST_LOAD_TIMELINE_FROM_INTERNET:
                     list = (MessageListBean) msg.obj;
                     msgBean.addAll(list.getItemList());
                     int firstLoadNumberFromInternet = list.getSize();
-                    if(SettingUtility.isInvertRead()) {
+                    if (SettingUtility.isInvertRead()) {
                         getListView().setSelection(firstLoadNumberFromInternet);
                     }
-                    if(list.getSize() > 0 && SettingUtility.getEnableSound()) {
+                    if (list.getSize() > 0 && SettingUtility.getEnableSound()) {
                         soundPool.play(1, 1, 1, 0, 0, 1);
                     }
                     adapter = new TimeLineAdapter(TimeLineFragment.this, getListView(),
@@ -236,20 +232,21 @@ public class TimeLineFragment extends TimeLineBaseFragment {
                             msgBean);
                     getListView().setVisibility(View.VISIBLE);
                     getListView().setAdapter(adapter);
-                    if(SettingUtility.getEnableAutoRefresh()){
+                    if (SettingUtility.getEnableAutoRefresh()) {
                         onRefresh();
-                    }else{
-                        getRefreshLayout().setRefreshing(false);
+                    } else {
+                        refreshLayout.setRefreshing(false);
                     }
                     break;
                 case REFRESH_LISTVIEW:
                     MessageListBean newList = (MessageListBean) msg.obj;
                     list.addNewData(newList);
+                    listView.setVisibility(View.VISIBLE);
                     int number = newList.getItemList().size();
                     msgBean.addAll(0, newList.getItemList());
                     newList = null;
                     adapter.notifyDataSetChanged();
-                    if(SettingUtility.isInvertRead()) {
+                    if (SettingUtility.isInvertRead()) {
                         getListView().setSelection(number);
                     }
                     if (number == 0) {
@@ -257,7 +254,7 @@ public class TimeLineFragment extends TimeLineBaseFragment {
                                 getString(R.string.no_new_message),
                                 Toast.LENGTH_SHORT).show();
                     } else {
-                        if(SettingUtility.getEnableSound()) {
+                        if (SettingUtility.getEnableSound()) {
                             soundPool.play(1, 1, 1, 0, 0, 1);
                         }
                         Toast.makeText(
@@ -287,7 +284,7 @@ public class TimeLineFragment extends TimeLineBaseFragment {
                                 getString(R.string.older_message_empty),
                                 Toast.LENGTH_SHORT).show();
                     }
-                    if(oldnumber < 20){
+                    if (oldnumber < 20) {
                         getListView().setPullLoadEnable(false);
                         getListView().getFooterView().hide();
                     }
@@ -369,7 +366,7 @@ public class TimeLineFragment extends TimeLineBaseFragment {
                 MainFriendsTimeLineDao dao = new MainFriendsTimeLineDao(
                         accountBean.getAccess_token(), "20");
                 long maxId = 0;
-                if(getList() != null) {
+                if (getList() != null) {
                     maxId = getList().get(getList().size() - 1).getIdLong() - 1;
                     dao.setMax_id(String.valueOf(maxId));
                 }
@@ -394,9 +391,9 @@ public class TimeLineFragment extends TimeLineBaseFragment {
     }
 
     private List<MessageBean> getList() {
-        if(adapter != null && adapter.getList().size() > 0) {
+        if (adapter != null && adapter.getList().size() > 0) {
             return adapter.getList();
-        }else{
+        } else {
             return null;
         }
     }

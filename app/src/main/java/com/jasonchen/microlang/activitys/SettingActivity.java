@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.jasonchen.microlang.R;
+import com.jasonchen.microlang.preference.SettingFragment;
 import com.jasonchen.microlang.swipeback.app.SwipeBackActivity;
 import com.jasonchen.microlang.utils.GlobalContext;
 
@@ -77,6 +78,7 @@ public class SettingActivity extends SwipeBackActivity {
 
     //about
     public static final String OFFICIAL_WEIBO = "pref_official_weibo_key";
+    public static final String THANKS = "pref_thanks";
     public static final String SUGGEST = "pref_suggest_key";
     public static final String VERSION = "pref_version_key";
     public static final String RECOMMEND = "pref_recommend_key";
@@ -94,12 +96,12 @@ public class SettingActivity extends SwipeBackActivity {
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            finish();
-            overridePendingTransition(R.anim.stay, R.anim.push_right_out);
+    protected void onCreate(Bundle savedInstanceState) {
+        mLayout = R.layout.activity_setting;
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState == null) {
+            getFragmentManager().beginTransaction().replace(R.id.container, new SettingFragment()).commit();
         }
-
-        return false;
+        getSupportActionBar().setTitle(getString(R.string.setting));
     }
 }

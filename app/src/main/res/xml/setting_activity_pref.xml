@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fitsSystemWindows="true"
+    android:key="root_screen">
+    <PreferenceCategory android:title="@string/pref_normal_title">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="sound"
+            android:summary="刷新微博成功音效提醒"
+            android:title="@string/pref_sound_title" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="vibrate"
+            android:summary="微博发送成功后震动提醒"
+            android:title="@string/pref_vibrate_title" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="enable_internal_web_browser"
+            android:summary="使用内置浏览器浏览微博链接"
+            android:title="@string/pref_internal_web_browser" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="invert_read"
+            android:summary="@string/pref_invert_read_summary"
+            android:title="@string/pref_invert_read" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="right_hand"
+            android:summary="@string/pref_right_hand_summary"
+            android:title="@string/pref_right_hand" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_advanced_title">
+        <ListPreference
+            android:key="upload_pic_quality"
+            android:title="@string/pref_upload_pic_quality_title"
+            android:dialogTitle="@string/pref_upload_pic_quality_title"
+            android:entries="@array/upload_pic_quality"
+            android:entryValues="@array/upload_pic_quality_value"
+            android:defaultValue="4"
+            android:summary="%s" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="auto_refresh"
+            android:summary="@string/pref_auto_refresh_summary"
+            android:title="@string/pref_auto_refresh_title" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="show_big_pic"
+            android:summary="@string/pref_msg_detail_show_big_pic_summary"
+            android:title="@string/pref_msg_detail_show_big_pic" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="intelligence_pic"
+            android:summary="@string/pref_intelligence_pic_summary"
+            android:title="@string/pref_intelligence_pic" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_storage_title">
+
+        <Preference
+            android:key="pref_cache_path_key"
+            android:title="@string/pref_cache_path_title">
+        </Preference>
+
+        <Preference
+            android:key="pref_saved_pic_path_key"
+            android:title="@string/pref_saved_pic_path_title">
+        </Preference>
+
+        <Preference
+            android:key="pref_saved_log_path_key"
+            android:title="@string/pref_saved_log_path_title">
+        </Preference>
+
+        <Preference
+            android:key="click_to_clean_cache"
+            android:summary="@string/getting_cache_size"
+            android:title="@string/pref_click_to_clean_cache" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_other_title" >
+        <Preference
+            android:title="@string/pref_about_title" >
+            <intent
+                android:targetPackage="@string/applicationId"
+                android:targetClass="com.jasonchen.microlang.preference.AboutActivity"
+                />
+        </Preference>
+    </PreferenceCategory>
+
+</PreferenceScreen>

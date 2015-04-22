@@ -49,6 +49,7 @@ public abstract class AbstractWriteActivity extends SwipeBackActivity implements
     public static final String ACTION_DRAFT = "com.jasonchen.DRAFT";
     public static final String ACTION_SEND_FAILED = "com.jasonchen.SEND_FAILED";
     public static final String ACTION_AT = "com.jasonchen.AT";
+    public static final String ACTION_FEED_BACK = "com.jasonchen.FEED_BACK";
     private static final String[] visiArr = {"所有人", "密友圈"};
 
     protected static final int COMMENT = 0;
