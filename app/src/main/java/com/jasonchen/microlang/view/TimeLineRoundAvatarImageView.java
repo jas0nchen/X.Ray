@@ -52,7 +52,6 @@ public class TimeLineRoundAvatarImageView extends AvaterBaseImageView implements
     	opts.inSampleSize = 2;
         switch (vType) {
             case UserBean.V_TYPE_PERSONAL:
-            	
                // bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.avatar_vip);
             	bitmap =  BitmapFactory.decodeResource(getResources(), R.drawable.avatar_vip, opts);
                 canvas.drawBitmap(bitmap, getWidth() - bitmap.getWidth(),

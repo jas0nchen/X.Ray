@@ -52,6 +52,7 @@ import com.jasonchen.microlang.utils.Utility;
 import com.jasonchen.microlang.utils.ViewUtility;
 import com.jasonchen.microlang.utils.file.FileLocationMethod;
 import com.jasonchen.microlang.view.HackyTextView;
+import com.jasonchen.microlang.view.TimeLineAvatarImageView;
 import com.jasonchen.microlang.view.TimeLineImageView;
 import com.jasonchen.microlang.view.TimeLineRoundAvatarImageView;
 import com.jasonchen.microlang.view.TimeTextView;
@@ -680,9 +681,7 @@ public class TimeLineAdapter extends BaseAdapter {
             view.setVisibility(View.VISIBLE);
             LayoutParams params = view.getLayoutParams();
 
-            TimeLineBitmapDownloader.getInstance().displayRoundAvatar(view,
-                    params.width, params.height, user.getProfile_image_url(),
-                    FileLocationMethod.avatar_small, isFling);
+            TimeLineBitmapDownloader.getInstance().downloadAvatar(view, user, false);
 
         } else {
             view.setVisibility(View.GONE);
@@ -826,7 +825,7 @@ public class TimeLineAdapter extends BaseAdapter {
         TextView repost_count;
         TextView comment_count;
         ImageView more;
-        TimeLineRoundAvatarImageView avatar;
+        TimeLineAvatarImageView avatar;
         TimeLineImageView content_pic;
         GridLayout content_pic_multi;
         LinearLayout repost_layout;

@@ -19,7 +19,7 @@
             android:background="?android:attr/selectableItemBackground"
             android:orientation="horizontal">
 
-            <com.jasonchen.microlang.view.TimeLineRoundAvatarImageView
+            <com.jasonchen.microlang.view.TimeLineAvatarImageView
                 android:id="@+id/avatar"
                 android:layout_width="@dimen/timeline_avatar_width"
                 android:layout_height="@dimen/timeline_avatar_height"

@@ -47,15 +47,17 @@ public class TimeLineAvatarImageView extends PerformanceImageView implements ISi
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         Bitmap bitmap;
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inSampleSize = 2;
         switch (vType) {
             case UserBean.V_TYPE_PERSONAL:
-                bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.avatar_vip);
+                bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.avatar_vip, opts);
                 canvas.drawBitmap(bitmap, getWidth() - bitmap.getWidth(),
                         getHeight() - bitmap.getHeight(), paint);
                 break;
             case UserBean.V_TYPE_ENTERPRISE:
                 bitmap = BitmapFactory
-                        .decodeResource(getResources(), R.drawable.avatar_enterprise_vip);
+                        .decodeResource(getResources(), R.drawable.avatar_enterprise_vip, opts);
                 canvas.drawBitmap(bitmap, getWidth() - bitmap.getWidth(),
                         getHeight() - bitmap.getHeight(), paint);
                 break;

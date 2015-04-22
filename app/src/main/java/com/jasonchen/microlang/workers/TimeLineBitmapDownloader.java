@@ -239,7 +239,7 @@ public class TimeLineBitmapDownloader {
 
 			if (isFling) {
 				view.setImageResource(defaultPictureResId);
-				// return;
+				return;
 			}
 
 			if (!cancelPotentialDownload(urlKey, view)) {
@@ -435,6 +435,7 @@ public class TimeLineBitmapDownloader {
 			final int height, final String url,
 			final FileLocationMethod method, boolean isFling) {
 
+		//displayImageView(imageView, url, method, isFling, false);
 		displayReoundAvatar(imageView, width, height, url, method, null,
 				isFling);
 	}
@@ -444,6 +445,9 @@ public class TimeLineBitmapDownloader {
 			final FileLocationMethod method,
 			final ArrayList<Animation> animations, boolean isFling) {
 		if (TextUtils.isEmpty(url)) {
+			return;
+		}
+		if (!shouldReloadPicture(view, url)) {
 			return;
 		}
 
@@ -496,6 +500,7 @@ public class TimeLineBitmapDownloader {
 							.put(url, bitmap);
 					view.setImageDrawable(new BitmapDrawable(GlobalContext
 							.getInstance().getResources(), bitmap));
+					view.setTag(url);
 					// Animation animation = animations.get(0);
 					// view.startAnimation(animation);
 				}

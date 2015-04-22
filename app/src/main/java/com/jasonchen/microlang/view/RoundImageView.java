@@ -16,6 +16,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.jasonchen.microlang.R;
+import com.jasonchen.microlang.workers.PictureBitmapDrawable;
 
 /**
  *
@@ -75,6 +76,7 @@ public class RoundImageView extends ImageView {
 			return;
 		Bitmap b = ((BitmapDrawable) drawable).getBitmap();
 		Bitmap bitmap = b.copy(Config.ARGB_8888, true);
+
 		if (defaultWidth == 0) {
 			defaultWidth = getWidth();
 
@@ -89,7 +91,7 @@ public class RoundImageView extends ImageView {
 		// }
 		int radius = 0;
 		if (mBorderInsideColor != defaultColor
-				&& mBorderOutsideColor != defaultColor) {// ���廭�����߿򣬷ֱ�Ϊ��Բ�߿����Բ�߿�
+				&& mBorderOutsideColor != defaultColor) {
 			radius = (defaultWidth < defaultHeight ? defaultWidth
 					: defaultHeight) / 2 - 2 * mBorderThickness;
 			drawCircleBorder(canvas, radius + mBorderThickness / 2,
@@ -97,18 +99,18 @@ public class RoundImageView extends ImageView {
 			drawCircleBorder(canvas, radius + mBorderThickness
 					+ mBorderThickness / 2, mBorderOutsideColor);
 		} else if (mBorderInsideColor != defaultColor
-				&& mBorderOutsideColor == defaultColor) {// ���廭һ���߿�
+				&& mBorderOutsideColor == defaultColor) {
 			radius = (defaultWidth < defaultHeight ? defaultWidth
 					: defaultHeight) / 2 - mBorderThickness;
 			drawCircleBorder(canvas, radius + mBorderThickness / 2,
 					mBorderInsideColor);
 		} else if (mBorderInsideColor == defaultColor
-				&& mBorderOutsideColor != defaultColor) {// ���廭һ���߿�
+				&& mBorderOutsideColor != defaultColor) {
 			radius = (defaultWidth < defaultHeight ? defaultWidth
 					: defaultHeight) / 2 - mBorderThickness;
 			drawCircleBorder(canvas, radius + mBorderThickness / 2,
 					mBorderOutsideColor);
-		} else {// û�б߿�
+		} else {
 			radius = (defaultWidth < defaultHeight ? defaultWidth
 					: defaultHeight) / 2;
 		}
@@ -177,9 +179,6 @@ public class RoundImageView extends ImageView {
 		return output;
 	}
 
-	/**
-	 * ��Ե��Բ
-	 */
 	private void drawCircleBorder(Canvas canvas, int radius, int color) {
 		Paint paint = new Paint();
 		paint.setAntiAlias(true);

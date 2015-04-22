@@ -8,6 +8,7 @@ import android.text.TextUtils;
 
 import com.jasonchen.microlang.R;
 import com.jasonchen.microlang.settings.SettingUtility;
+import com.jasonchen.microlang.utils.GlobalContext;
 
 
 public class SplashActivity extends ActionBarActivity {
@@ -27,8 +28,8 @@ public class SplashActivity extends ActionBarActivity {
 
                 @Override
                 public void run() {
-                    //jumpToMainActivity();
-                    jumpToAccountActivity();
+                    jumpToMainActivity();
+                    //jumpToAccountActivity();
                 }
             }, 1000);
         } else {
@@ -46,10 +47,10 @@ public class SplashActivity extends ActionBarActivity {
     }
 
     protected void jumpToMainActivity() {
-        /*Intent intent = NewMainActivity.newIntent(GlobalContext.getInstance().getAccountBean());
+        Intent intent = MainActivity.newIntent(GlobalContext.getInstance().getAccountBean());
         startActivity(intent);
         finish();
-        overridePendingTransition(R.anim.push_left_in, R.anim.stay);*/
+        overridePendingTransition(R.anim.push_left_in, R.anim.stay);
     }
 
     private void jumpToAccountActivity() {
