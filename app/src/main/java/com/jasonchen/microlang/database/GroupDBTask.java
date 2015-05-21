@@ -1,5 +1,6 @@
 package com.jasonchen.microlang.database;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
@@ -7,6 +8,7 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.jasonchen.microlang.beans.GroupListBean;
 import com.jasonchen.microlang.database.table.GroupTable;
+import com.jasonchen.microlang.database.table.HomeTable;
 
 /**
  * jasonchen
@@ -54,16 +56,16 @@ public class GroupDBTask {
 
         clearGroup(accountId);
 
-        /*ContentValues cv = new ContentValues();
+        ContentValues cv = new ContentValues();
         cv.put(GroupTable.ACCOUNTID, accountId);
         cv.put(GroupTable.JSONDATA, new Gson().toJson(bean));
         getWsd().insert(GroupTable.TABLE_NAME,
-                HomeTable.ID, cv);*/
+                HomeTable.ID, cv);
     }
 
     private static void clearGroup(String accountId) {
-        /*String sql = "delete from " + GroupTable.TABLE_NAME + " where "
+        String sql = "delete from " + GroupTable.TABLE_NAME + " where "
                 + GroupTable.ACCOUNTID + " = " + "\"" + accountId + "\"";
-        getWsd().execSQL(sql);*/
+        getWsd().execSQL(sql);
     }
 }

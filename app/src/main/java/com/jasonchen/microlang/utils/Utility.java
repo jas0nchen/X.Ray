@@ -250,13 +250,15 @@ public class Utility {
         return task == null || task.getStatus() == MyAsyncTask.Status.FINISHED;
     }
 
-	/*
-     * public static void stopListViewScrollingAndScrollToTop(ListView listView)
-	 * { Runnable runnable = JavaReflectionUtility.getValue(listView,
-	 * "mFlingRunnable"); listView.removeCallbacks(runnable);
-	 * listView.setSelection(Math.min(listView.getFirstVisiblePosition(), 5));
-	 * listView.smoothScrollToPosition(0); }
-	 */
+
+    public static void stopListViewScrollingAndScrollToTop(ListView listView) {
+        /*Runnable runnable = JavaReflectionUtility.getValue(listView,
+                "mFlingRunnable");
+        listView.removeCallbacks(runnable);*/
+        listView.setSelection(Math.min(listView.getFirstVisiblePosition(), 5));
+        listView.smoothScrollToPosition(0);
+    }
+
 
     public static int dip2px(int dipValue) {
         float reSize = GlobalContext.getInstance().getResources()
@@ -669,7 +671,7 @@ public class Utility {
      *
      */
     /*
-	 * int firstVisiblePosition = listView.getFirstVisiblePosition(); if
+     * int firstVisiblePosition = listView.getFirstVisiblePosition(); if
 	 * (firstVisiblePosition < listView.getHeaderViewsCount()) {
 	 */
 
@@ -965,6 +967,7 @@ public class Utility {
         return String.valueOf(number);
     }
 
+    @SuppressLint("NewApi")
     public static void showExpiredTokenDialogOrNotification() {
         final Activity activity = GlobalContext.getInstance()
                 .getCurrentRunningActivity();

@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -61,7 +62,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     private DrawerLayout mDrawer;
     private int mDrawerGravity;
     private ActionBarDrawerToggle mToggle;
-    private ContextThemeWrapper mToolbarContext;
 
     private AccountBean accountBean;
     private UserBean userBean;
@@ -72,7 +72,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     private ScrollView mDrawerScroll;
     private TextView mName;
     private AvatarBigImageView mAvatar;
-    private ImageView mCover;
     private TextView mExchange;
     private Toolbar mToolbar;
     private List<AccountBean> accountBeanList;
@@ -142,7 +141,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         mDrawerScroll = ViewUtility.findViewById(this, R.id.drawer_scroll);
         mName = ViewUtility.findViewById(this, R.id.my_name);
         mAvatar = ViewUtility.findViewById(this, R.id.my_avatar);
-        mCover = ViewUtility.findViewById(this, R.id.my_cover);
         mExchange = ViewUtility.findViewById(this, R.id.exchange);
 
         View me = ViewUtility.findViewById(this, R.id.my_account);
@@ -177,7 +175,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
             @Override
             public void onClick(View v) {
                 if (currentFragemnt instanceof TimeLineBaseFragment) {
-                    ((TimeLineBaseFragment) currentFragemnt).getListView().setSelection(0);
+                    Utility.stopListViewScrollingAndScrollToTop(((TimeLineBaseFragment) currentFragemnt).getListView());
                 }
             }
         });
@@ -305,6 +303,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
 
+        initGroupList();
+
         // Fragments
         TimeLineFragment homeFragment = (TimeLineFragment) getTimeLineFragment();
         if (homeFragment.isAdded()) {
@@ -328,6 +328,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                 }
             }
         });
+    }
+
+    private void initGroupList() {
+
     }
 
     @Override
