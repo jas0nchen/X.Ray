@@ -256,8 +256,13 @@ public class WeiboDetailFragment extends AbstractAppFragment implements LoadList
                 avatar.getImageView().getHeight(),
                 userBean.getProfile_image_url(),
                 FileLocationMethod.avatar_small, false);
+        int prefFontSizeSp = SettingUtility.getFontSize();
+        float currentWidgetTextSizePx;
+        currentWidgetTextSizePx = content.getTextSize();
+        if (Utility.sp2px(prefFontSizeSp) != currentWidgetTextSizePx) {
+            content.setTextSize(prefFontSizeSp);
+        }
         content.setText(messageBean.getWeiboDetailSpannableString());
-
         content.setMovementMethod(HackyMovementMethod.getInstance());
         time.setTime(messageBean.getMills());
         if (source != null) {
@@ -298,6 +303,11 @@ public class WeiboDetailFragment extends AbstractAppFragment implements LoadList
                     }
                 }
             });
+            currentWidgetTextSizePx = repost_content.getTextSize();
+
+            if (Utility.sp2px(prefFontSizeSp - 2) != currentWidgetTextSizePx) {
+                repost_content.setTextSize(prefFontSizeSp - 2);
+            }
             repost_content.setText(repostMsg.getWeiboDetailSpannableString());
             repost_content.setMovementMethod(HackyMovementMethod.getInstance());
             repost_comment_count.setText(String.valueOf(repostMsg.getCommentscountString()));
@@ -702,6 +712,7 @@ public class WeiboDetailFragment extends AbstractAppFragment implements LoadList
     @Override
     public void onResume() {
         super.onResume();
+        adapter.notifyDataSetChanged();
         sendCommentCompletedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {

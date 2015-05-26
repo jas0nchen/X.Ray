@@ -373,6 +373,12 @@ public class UserFragment extends AbstractAppFragment implements SwipeRefreshLay
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
     }

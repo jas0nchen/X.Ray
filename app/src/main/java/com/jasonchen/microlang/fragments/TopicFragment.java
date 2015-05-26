@@ -252,6 +252,12 @@ public class TopicFragment extends AbstractAppFragment implements SwipeRefreshLa
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
     }

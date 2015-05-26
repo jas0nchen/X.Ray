@@ -38,6 +38,7 @@ import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.HackyMovementMethod;
 import com.jasonchen.microlang.utils.SettingUtility;
 import com.jasonchen.microlang.utils.TimeLineUtility;
+import com.jasonchen.microlang.utils.Utility;
 import com.jasonchen.microlang.utils.ViewUtility;
 import com.jasonchen.microlang.utils.file.FileLocationMethod;
 import com.jasonchen.microlang.view.HackyTextView;
@@ -207,6 +208,7 @@ public class MentionCommentAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView
                     .getTag(R.drawable.ic_launcher + getItemViewType(position));
         }
+        configViewFont(holder);
         bindViewData(holder, position);
         return convertView;
     }
@@ -430,6 +432,17 @@ public class MentionCommentAdapter extends BaseAdapter {
         HackyTextView ori_comment;
         LinearLayout ori_comment_flag;
         HackyTextView ori_content;
+    }
+
+    private void configViewFont(ViewHolder holder) {
+        int prefFontSizeSp = SettingUtility.getFontSize();
+        float currentWidgetTextSizePx;
+
+        currentWidgetTextSizePx = holder.content.getTextSize();
+
+        if (Utility.sp2px(prefFontSizeSp - 2) != currentWidgetTextSizePx) {
+            holder.content.setTextSize(prefFontSizeSp - 2);
+        }
     }
 
 }

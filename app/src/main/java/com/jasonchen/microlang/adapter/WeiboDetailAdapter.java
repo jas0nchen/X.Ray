@@ -43,6 +43,7 @@ import com.jasonchen.microlang.swiperefresh.LoadListView;
 import com.jasonchen.microlang.tasks.MyAsyncTask;
 import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.HackyMovementMethod;
+import com.jasonchen.microlang.utils.SettingUtility;
 import com.jasonchen.microlang.utils.Utility;
 import com.jasonchen.microlang.utils.ViewUtility;
 import com.jasonchen.microlang.utils.file.FileLocationMethod;
@@ -345,6 +346,7 @@ public class WeiboDetailAdapter extends BaseAdapter {
 				} else {
 					holder = (ViewHolder) convertView.getTag(R.drawable.ic_launcher + getItemViewType(position));
 				}
+				configViewFont(holder);
 				if (isCommentList && commentList != null && commentList.getItemList().size() > 0) {
 					final CommentBean msg = commentList.getItemList().get(position - 1);
 					final ViewHolder finalHolder = holder;
@@ -613,6 +615,18 @@ public class WeiboDetailAdapter extends BaseAdapter {
 				WeiboDetailAdapter.this.removeCommentItem(positon);
 			}
 		}
+	}
+
+	private void configViewFont(ViewHolder holder) {
+		int prefFontSizeSp = SettingUtility.getFontSize();
+		float currentWidgetTextSizePx;
+
+		currentWidgetTextSizePx = holder.content.getTextSize();
+
+		if (Utility.sp2px(prefFontSizeSp) != currentWidgetTextSizePx) {
+			holder.content.setTextSize(prefFontSizeSp);
+		}
+
 	}
 
 }

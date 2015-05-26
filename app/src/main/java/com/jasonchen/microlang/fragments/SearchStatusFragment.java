@@ -250,4 +250,10 @@ public class SearchStatusFragment extends TimeLineBaseFragment implements Search
             ;
         }.start();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
 }
