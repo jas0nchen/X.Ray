@@ -28,6 +28,14 @@
             android:key="right_hand"
             android:summary="@string/pref_right_hand_summary"
             android:title="@string/pref_right_hand" />
+        <ListPreference
+            android:key="font_size"
+            android:title="@string/pref_font_size_title"
+            android:dialogTitle="@string/pref_font_size_title"
+            android:entries="@array/font"
+            android:entryValues="@array/font_value"
+            android:defaultValue="13"
+            android:summary="%s" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_advanced_title">
         <ListPreference

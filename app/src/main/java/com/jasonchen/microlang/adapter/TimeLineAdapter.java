@@ -286,6 +286,7 @@ public class TimeLineAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView
                     .getTag(R.drawable.ic_launcher + getItemViewType(position));
         }
+        configViewFont(holder);
         bindViewData(holder, position);
         return convertView;
     }
@@ -407,6 +408,9 @@ public class TimeLineAdapter extends BaseAdapter {
 
             holder.content.requestLayout();
             holder.content.setText(msg.getListViewSpannableString());
+
+
+
             if (!haveCachedHeight) {
                 msgHeights.append(msg.getIdLong(), layoutParams.height);
             }
@@ -973,6 +977,25 @@ public class TimeLineAdapter extends BaseAdapter {
 
     public enum DestroyResult {
         success, failed
+    }
+
+    private void configViewFont(ViewHolder holder) {
+        int prefFontSizeSp = SettingUtility.getFontSize();
+        float currentWidgetTextSizePx;
+
+        currentWidgetTextSizePx = holder.content.getTextSize();
+
+        if (Utility.sp2px(prefFontSizeSp) != currentWidgetTextSizePx) {
+            holder.content.setTextSize(prefFontSizeSp);
+        }
+
+        if (holder.repost_content != null) {
+            currentWidgetTextSizePx = holder.repost_content.getTextSize();
+            if (Utility.sp2px(prefFontSizeSp - 2) != currentWidgetTextSizePx) {
+                holder.repost_content.setTextSize(prefFontSizeSp - 2);
+            }
+        }
+
     }
 
 }

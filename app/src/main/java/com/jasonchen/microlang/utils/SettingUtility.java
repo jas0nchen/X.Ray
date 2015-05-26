@@ -114,50 +114,52 @@ public class SettingUtility {
      * public static boolean isEnableFilter() { return
      * SettingHelper.getSharedPreferences(getContext(), SettingActivity.FILTER,
      * false); }
-     *
-     * public static int getFontSize() { String value = SettingHelper
-     * .getSharedPreferences(getContext(), SettingActivity.FONT_SIZE, "15");
-     * return Integer.valueOf(value); }
-     *
-     * public static int getAppTheme() { String value =
-     * SettingHelper.getSharedPreferences(getContext(), SettingActivity.THEME,
-     * "1");
-     *
-     * switch (Integer.valueOf(value)) { case 1: return R.style.AppTheme_Light;
-     *
-     * case 2: return R.style.AppTheme_Dark;
-     *
-     * default: return R.style.AppTheme_Light; } }
-     *
-     * public static void switchToAnotherTheme() { String value =
-     * SettingHelper.getSharedPreferences(getContext(), SettingActivity.THEME,
-     * "1"); switch (Integer.valueOf(value)) { case 1:
-     * SettingHelper.setEditor(getContext(), SettingActivity.THEME, "2"); break;
-     * case 2: SettingHelper.setEditor(getContext(), SettingActivity.THEME,
-     * "1"); break; default: SettingHelper.setEditor(getContext(),
-     * SettingActivity.THEME, "1"); break; } }
-     *
-     * public static int getHighPicMode() { String value = SettingHelper
-     * .getSharedPreferences(getContext(), SettingActivity.LIST_HIGH_PIC_MODE,
-     * "2"); return Integer.valueOf(value); }
-     *
-     * public static int getCommentRepostAvatar() { String value = SettingHelper
-     * .getSharedPreferences(getContext(),
-     * SettingActivity.COMMENT_REPOST_AVATAR, "1"); return
-     * Integer.valueOf(value); }
-     *
-     * public static int getListAvatarMode() { String value = SettingHelper
-     * .getSharedPreferences(getContext(), SettingActivity.LIST_AVATAR_MODE,
-     * "1"); return Integer.valueOf(value); }
-     *
-     * public static int getListPicMode() { String value = SettingHelper
-     * .getSharedPreferences(getContext(), SettingActivity.LIST_PIC_MODE, "1");
-     * return Integer.valueOf(value); }
-     *
-     * public static void setEnableCommentRepostAvatar(boolean value) {
-     * SettingHelper.setEditor(getContext(),
-     * SettingActivity.SHOW_COMMENT_REPOST_AVATAR, value); }
      */
+    public static int getFontSize() {
+        String value = SettingHelper
+                .getSharedPreferences(getContext(), SettingActivity.FONT_SIZE, "15");
+        return Integer.valueOf(value);
+    }
+
+    /* public static int getAppTheme() { String value =
+    * SettingHelper.getSharedPreferences(getContext(), SettingActivity.THEME,
+    * "1");
+    *
+    * switch (Integer.valueOf(value)) { case 1: return R.style.AppTheme_Light;
+    *
+    * case 2: return R.style.AppTheme_Dark;
+    *
+    * default: return R.style.AppTheme_Light; } }
+    *
+    * public static void switchToAnotherTheme() { String value =
+    * SettingHelper.getSharedPreferences(getContext(), SettingActivity.THEME,
+    * "1"); switch (Integer.valueOf(value)) { case 1:
+    * SettingHelper.setEditor(getContext(), SettingActivity.THEME, "2"); break;
+    * case 2: SettingHelper.setEditor(getContext(), SettingActivity.THEME,
+    * "1"); break; default: SettingHelper.setEditor(getContext(),
+    * SettingActivity.THEME, "1"); break; } }
+    *
+    * public static int getHighPicMode() { String value = SettingHelper
+    * .getSharedPreferences(getContext(), SettingActivity.LIST_HIGH_PIC_MODE,
+    * "2"); return Integer.valueOf(value); }
+    *
+    * public static int getCommentRepostAvatar() { String value = SettingHelper
+    * .getSharedPreferences(getContext(),
+    * SettingActivity.COMMENT_REPOST_AVATAR, "1"); return
+    * Integer.valueOf(value); }
+    *
+    * public static int getListAvatarMode() { String value = SettingHelper
+    * .getSharedPreferences(getContext(), SettingActivity.LIST_AVATAR_MODE,
+    * "1"); return Integer.valueOf(value); }
+    *
+    * public static int getListPicMode() { String value = SettingHelper
+    * .getSharedPreferences(getContext(), SettingActivity.LIST_PIC_MODE, "1");
+    * return Integer.valueOf(value); }
+    *
+    * public static void setEnableCommentRepostAvatar(boolean value) {
+    * SettingHelper.setEditor(getContext(),
+    * SettingActivity.SHOW_COMMENT_REPOST_AVATAR, value); }
+    */
     public static boolean getEnableCommentRepostListAvatar() {
         return SettingHelper.getSharedPreferences(getContext(),
                 SettingActivity.SHOW_COMMENT_REPOST_AVATAR, true);

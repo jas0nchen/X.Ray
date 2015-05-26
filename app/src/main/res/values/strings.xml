@@ -398,6 +398,7 @@
     <string name="pref_about_title">关于</string>
     <string name="pref_right_hand">大屏模式</string>
     <string name="pref_right_hand_summary">开启大屏模式，抽屉菜单将在右侧显示，方便大屏手机操作,需重启应用生效</string>
+    <string name="pref_font_size_title">字体大小</string>
 
     <string name="pref_normal_about">常规</string>
 
