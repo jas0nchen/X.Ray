@@ -19,6 +19,7 @@ public class SplashActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        findViewById(R.id.root).setBackgroundColor(getResources().getColor(SettingUtility.getThemeColor()));
         defaultAccountId = SettingUtility.getDefaultAccountId();
         handler = new Handler();
 

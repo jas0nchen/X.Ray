@@ -29,10 +29,17 @@ import android.widget.Toast;
 import com.jasonchen.microlang.R;
 import com.jasonchen.microlang.beans.AccountBean;
 import com.jasonchen.microlang.beans.CommentListBean;
+import com.jasonchen.microlang.beans.GroupBean;
+import com.jasonchen.microlang.beans.GroupListBean;
 import com.jasonchen.microlang.beans.MessageListBean;
 import com.jasonchen.microlang.beans.UnreadBean;
 import com.jasonchen.microlang.beans.UserBean;
+import com.jasonchen.microlang.dao.FriendGroupDao;
+import com.jasonchen.microlang.dao.GroupListDao;
 import com.jasonchen.microlang.database.AccountDBTask;
+import com.jasonchen.microlang.database.FriendsTimeLineDBTask;
+import com.jasonchen.microlang.database.GroupDBTask;
+import com.jasonchen.microlang.exception.WeiboException;
 import com.jasonchen.microlang.fragments.CommentFragment;
 import com.jasonchen.microlang.fragments.FavFragment;
 import com.jasonchen.microlang.fragments.MentionFragment;
@@ -66,6 +73,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     private AccountBean accountBean;
     private UserBean userBean;
     private String token;
+    private GroupListBean groupListBean;
 
     // Drawer content
     private View mDrawerWrapper;
@@ -372,7 +380,23 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     }
 
     private void initGroupList() {
+        groupListBean = GroupDBTask.get(GlobalContext.getInstance().getCurrentAccountId());
+    }
 
+    private void asyncGetGroupInfo() {
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                FriendGroupDao dao = new FriendGroupDao(GlobalContext.getInstance().getSpecialToken());
+                try {
+                    GroupListBean list = dao.getGroup();
+                    GroupDBTask.update(list, GlobalContext.getInstance().getCurrentAccountId());
+                } catch (WeiboException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     @Override
@@ -399,7 +423,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         super.onResume();
         // Dirty fix strange focus
         findViewById(R.id.container).requestFocus();
-        if (!Utility.isTokenValid(GlobalContext.getInstance().getAccountBean())) {
+        if (!Utility.isTokenValid(GlobalContext.getInstance().getAccountBean()) || !Utility.isHacyTokenValid(GlobalContext.getInstance().getAccountBean())) {
             Utility.showExpiredTokenDialogOrNotification();
         }
         configTheme();
@@ -475,7 +499,19 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         switch (v.getId()) {
             case R.id.drawer_home:
                 newFragment = getTimeLineFragment();
-                mToolbar.setTitle(accountBean.getUsernick());
+                String currentGroupId = FriendsTimeLineDBTask.getRecentGroupId(GlobalContext.getInstance().getCurrentAccountId());
+                if("0".equals(currentGroupId)) {
+                    mToolbar.setTitle(accountBean.getUsernick());
+                }else if("1".equals(currentGroupId)){
+                    mToolbar.setTitle("好友圈");
+                }else{
+                    GroupListBean groupListBean = GroupDBTask.get(GlobalContext.getInstance().getCurrentAccountId());
+                    for(GroupBean bean : groupListBean.getLists()){
+                        if(currentGroupId.equals(bean.getIdstr())){
+                            mToolbar.setTitle(bean.getName());
+                        }
+                    }
+                }
                 if (Build.VERSION.SDK_INT >= 21) {
                     mToolbar.setElevation(getToolbarElevation());
                 }

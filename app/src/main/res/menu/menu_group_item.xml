@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- This group uses the default category. -->
+    <item
+        android:id="@+id/all"
+        android:title="@string/all" />
+
+    <item
+        android:id="@+id/friend"
+        android:title="@string/friend"/>
+
+</menu>

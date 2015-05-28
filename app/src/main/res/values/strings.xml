@@ -22,7 +22,8 @@
     <string name="please_deleted_cache_dir">出问题啦！请手动删除SD卡下的/Android/data/com.jasonchen.microlang目录～</string>
 
     <!-- Main Tab bar -->
-    <string name="all">全 部</string>
+    <string name="all">全部</string>
+    <string name="friend">好友圈</string>
     <string name="bilterial">相互关注</string>
     <string name="home">首 页</string>
     <string name="mention">提 及</string>
@@ -250,6 +251,7 @@
     <string name="take_camera">拍照</string>
     <string name="select_pic">图库</string>
     <string name="send">发送</string>
+    <string name="group">分组</string>
     <string name="sending">发送中</string>
     <string name="photo">照片</string>
     <string name="left">剩余</string>

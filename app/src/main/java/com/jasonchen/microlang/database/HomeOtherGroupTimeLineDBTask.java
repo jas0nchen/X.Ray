@@ -119,7 +119,7 @@ public class HomeOtherGroupTimeLineDBTask {
         }
     }
 
-    static void replace(MessageListBean list, String accountId, String groupId) {
+    public static void replace(MessageListBean list, String accountId, String groupId) {
 
         deleteGroupTimeLine(accountId, groupId);
         addHomeLineMsg(list, accountId, groupId);
@@ -133,7 +133,7 @@ public class HomeOtherGroupTimeLineDBTask {
         getWsd().execSQL(sql);
     }
 
-    static MessageListBean get(String accountId, String groupId, int limitCount) {
+    public static MessageListBean get(String accountId, String groupId, int limitCount) {
         Gson gson = new Gson();
         MessageListBean result = new MessageListBean();
         int limit = limitCount > AppConfig.DEFAULT_MSG_COUNT_50 ? limitCount : AppConfig.DEFAULT_MSG_COUNT_50;
