@@ -25,8 +25,8 @@ import com.jasonchen.microlang.dao.SearchStatusDao;
 import com.jasonchen.microlang.database.FriendsTimeLineDBTask;
 import com.jasonchen.microlang.debug.AppLogger;
 import com.jasonchen.microlang.exception.WeiboException;
+import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.utils.GlobalContext;
-import com.jasonchen.microlang.utils.SettingUtility;
 import com.jasonchen.microlang.workers.TimeLineBitmapDownloader;
 
 import java.util.ArrayList;
@@ -127,7 +127,7 @@ public class SearchStatusFragment extends TimeLineBaseFragment implements Search
             }
         });
 
-        refreshLayout.setOnRefreshListener(null);
+        refreshLayout.setOnRefreshListener(this);
         adapter = new TimeLineAdapter(this, listView, msgBean);
         listView.setAdapter(adapter);
         listView.setVisibility(View.GONE);
@@ -157,12 +157,14 @@ public class SearchStatusFragment extends TimeLineBaseFragment implements Search
             switch (msg.what) {
                 case REFRESH_LISTVIEW:
                     MessageListBean newList = (MessageListBean) msg.obj;
-                    int number = newList.getItemList().size();
-                    msgBean.addAll(0, newList.getItemList());
-                    adapter.setList(msgBean);
-                    adapter.notifyDataSetChanged();
-                    if (SettingUtility.isInvertRead()) {
-                        getListView().setSelection(number);
+                    if(newList != null && newList.getItemList().size() > 0) {
+                        int number = newList.getItemList().size();
+                        msgBean.addAll(0, newList.getItemList());
+                        adapter.setList(msgBean);
+                        adapter.notifyDataSetChanged();
+                        if (SettingUtility.isInvertRead()) {
+                            getListView().setSelection(number);
+                        }
                     }
                     listView.setVisibility(View.VISIBLE);
                     getRefreshLayout().setRefreshing(false);
@@ -230,7 +232,7 @@ public class SearchStatusFragment extends TimeLineBaseFragment implements Search
         new Thread() {
             public void run() {
                 SearchStatusDao dao = new SearchStatusDao(token, q);
-                pager ++;
+                pager = pager + 1;
                 dao.setPage(String.valueOf(pager));
                 try {
                     MessageListBean oldList = dao.getGSONMsgList();

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.jasonchen.microlang.R;
 import com.jasonchen.microlang.activitys.WriteWeiboActivity;
+import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.swiperefresh.LoadListView;
 import com.jasonchen.microlang.swiperefresh.SwipeRefreshLayout;
 import com.jasonchen.microlang.utils.GlobalContext;
@@ -51,7 +52,7 @@ public class TimeLineBaseFragment extends AbstractAppFragment implements SwipeRe
         refreshLayout = ViewUtility.findViewById(view, R.id.refreshLayout);
         listView = ViewUtility.findViewById(view, R.id.listView);
 
-        refreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
+        refreshLayout.setColorSchemeColors(getResources().getColor(SettingUtility.getThemeColor()));
         refreshLayout.setOnRefreshListener(this);
         listView.setXListViewListener(this);
         listView.setPullLoadEnable(true);
@@ -60,7 +61,7 @@ public class TimeLineBaseFragment extends AbstractAppFragment implements SwipeRe
                 .withGravity(Gravity.BOTTOM | Gravity.RIGHT)
                 .withPaddings(16, 16, 16, 16)
                 .withDrawable(getResources().getDrawable(R.drawable.ic_edit_white))
-                .withButtonColor(getResources().getColor(R.color.colorPrimary))
+                .withButtonColor(getResources().getColor(SettingUtility.getThemeColor()))
                 .withButtonSize(100)
                 .create();
         fab.setOnClickListener(this);

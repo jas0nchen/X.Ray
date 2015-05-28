@@ -13,8 +13,11 @@ import android.widget.Toast;
 
 import com.jasonchen.microlang.R;
 import com.jasonchen.microlang.activitys.SettingActivity;
+import com.jasonchen.microlang.fragments.MDColorsDialogFragment;
+import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.tasks.MyAsyncTask;
 import com.jasonchen.microlang.utils.GlobalContext;
+import com.jasonchen.microlang.utils.ThemeUtility;
 import com.jasonchen.microlang.utils.file.FileManager;
 
 import java.io.File;
@@ -30,6 +33,7 @@ public class SettingFragment extends PreferenceFragment {
 
     private BroadcastReceiver sdCardReceiver;
     private Preference cleanCachePre;
+    private Preference theme;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,8 @@ public class SettingFragment extends PreferenceFragment {
                         Environment.DIRECTORY_PICTURES).getAbsolutePath() + "/x_ray");
 
         cleanCachePre = findPreference(SettingActivity.CLICK_TO_CLEAN_CACHE);
+        theme = (Preference) findPreference(SettingActivity.THEME);
+        theme.setSummary(getResources().getStringArray(R.array.mdColorNames)[SettingUtility.getThemeIndex()]);
 
         if (FileManager.isExternalStorageMounted()) {
             new CalcCacheSize(cleanCachePre)
@@ -75,6 +81,13 @@ public class SettingFragment extends PreferenceFragment {
                         return true;
                     }
                 });
+        theme.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                MDColorsDialogFragment.launch(getActivity());
+                return false;
+            }
+        });
 
 
     }

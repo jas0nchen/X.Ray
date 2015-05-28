@@ -399,6 +399,7 @@
     <string name="pref_right_hand">大屏模式</string>
     <string name="pref_right_hand_summary">开启大屏模式，抽屉菜单将在右侧显示，方便大屏手机操作,需重启应用生效</string>
     <string name="pref_font_size_title">字体大小</string>
+    <string name="pref_theme_title">主题配色</string>
 
     <string name="pref_normal_about">常规</string>
 
@@ -455,7 +456,28 @@
     <string name="please_insert_sd_card">请插入SD卡</string>
     <string name="pref_click_to_clean_cache">点击清理缓存图片</string>
 
-<!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="mdColorNames">
+        <item>红色</item>
+        <item>粉红色</item>
+        <item>紫色</item>
+        <item>深紫色</item>
+        <item>靛蓝色</item>
+        <item>蓝色</item>
+        <item>浅蓝色</item>
+        <item>蓝绿色</item>
+        <item>青绿色</item>
+        <item>绿色</item>
+        <item>浅绿色</item>
+        <item>绿黄色</item>
+        <item>黄色</item>
+        <item>琥珀色</item>
+        <item>橙色</item>
+        <item>深橙色</item>
+        <item>棕色</item>
+        <item>灰色</item>
+        <item>蓝灰色</item>
+    </string-array>
 
 </resources>

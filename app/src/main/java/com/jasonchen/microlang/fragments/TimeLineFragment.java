@@ -430,4 +430,13 @@ public class TimeLineFragment extends TimeLineBaseFragment {
             }
         }
     }
+
+    public void showFab(){
+        fab.showFloatingActionButton();
+    }
+
+    public void hideFab(){
+        fab.hideFloatingActionButton();
+    }
 }
+

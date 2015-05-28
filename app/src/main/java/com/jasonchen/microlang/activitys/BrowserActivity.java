@@ -22,6 +22,7 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.jasonchen.microlang.R;
+import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.swipeback.app.SwipeBackActivity;
 import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.Utility;
@@ -72,7 +73,7 @@ public class BrowserActivity extends SwipeBackActivity implements SwipeRefreshLa
         webView.setWebViewClient(new WeiboWebViewClient());
         getSupportActionBar().setTitle(getString(R.string.app_name));
 
-        container.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
+        container.setColorSchemeColors(getResources().getColor(SettingUtility.getThemeColor()));
         container.setOnRefreshListener(this);
 
         WebSettings settings = webView.getSettings();

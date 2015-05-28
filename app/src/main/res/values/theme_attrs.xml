@@ -4,6 +4,8 @@
     <attr name="account" format="reference"/>
     <attr name="account_management" format="reference"/>
 
+    <attr name="theme_color" format="reference|color"/>
+
     <!--actionbar action mode menu -->
     <attr name="add" format="reference"/>
     <attr name="remove" format="reference"/>

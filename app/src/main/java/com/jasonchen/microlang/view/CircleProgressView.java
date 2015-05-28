@@ -13,6 +13,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.jasonchen.microlang.R;
+import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.utils.Utility;
 
 /**
@@ -42,7 +43,7 @@ public class CircleProgressView extends View {
     public CircleProgressView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mPaint.setStrokeWidth(Utility.dip2px(4));
-        mPaint.setColor(getResources().getColor(R.color.colorPrimary));
+        mPaint.setColor(getResources().getColor(SettingUtility.getThemeColor()));
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.STROKE);
 
@@ -67,7 +68,7 @@ public class CircleProgressView extends View {
                 h + (height - h) / 2 - 10);
 
         if (getProgress() < 360) {
-            mPaint.setColor(getResources().getColor(R.color.colorPrimary));
+            mPaint.setColor(getResources().getColor(SettingUtility.getThemeColor()));
             mPaint.setStrokeWidth(Utility.dip2px(4));
             canvas.drawArc(oval2, 270, getProgress(), false, mPaint);
             mPaint.setStrokeWidth(0);

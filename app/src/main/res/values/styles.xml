@@ -8,6 +8,7 @@
         <item name="colorPrimaryDark">@color/darkColorPrimary</item>
         <!-- 窗口的背景颜色 -->
         <item name="android:windowBackground">@color/light_gray</item>
+        <item name="theme_color">@color/md_light_blue_500</item>
         <item name="android:windowAnimationStyle">@style/FeelyouWindowAnimTheme</item>
         <item name="android:windowActionBarOverlay">false</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -20,12 +21,16 @@
         <item name="listview_pic_bg">@color/gainsboro</item>
     </style>
 
-    <style name="SplashActivityTheme" parent="AppTheme">
+    <style name="SplashActivityTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="MainActivityTheme" parent="AppTheme">
+    <style name="AppTheme.Main">
+        <item name="android:windowIsTranslucent">false</item>
+    </style>
+
+    <style name="MainActivityTheme" parent="AppTheme.LightBlue">
         <item name="colorAccent">#FFFFFF</item>
         <item name="android:windowIsTranslucent">false</item>
     </style>

@@ -11,8 +11,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.ContextThemeWrapper;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,12 +20,11 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jasonchen.microlang.R;
 import com.jasonchen.microlang.beans.AccountBean;
@@ -39,11 +38,10 @@ import com.jasonchen.microlang.fragments.FavFragment;
 import com.jasonchen.microlang.fragments.MentionFragment;
 import com.jasonchen.microlang.fragments.TimeLineBaseFragment;
 import com.jasonchen.microlang.fragments.TimeLineFragment;
-import com.jasonchen.microlang.fragments.UserFragment;
+import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.tasks.MyAsyncTask;
 import com.jasonchen.microlang.utils.BundleArgsConstants;
 import com.jasonchen.microlang.utils.GlobalContext;
-import com.jasonchen.microlang.utils.SettingUtility;
 import com.jasonchen.microlang.utils.Utility;
 import com.jasonchen.microlang.utils.ViewUtility;
 import com.jasonchen.microlang.utils.file.FileLocationMethod;
@@ -52,6 +50,8 @@ import com.jasonchen.microlang.workers.TimeLineBitmapDownloader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * jasonchen
@@ -77,6 +77,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     private List<AccountBean> accountBeanList;
     private LoadAccountTask loadAccountTask;
     private PopupMenu popupMenu;
+
+    private int theme = 0;
+    private boolean canExit = false;
 
     // Fragments
     private android.support.v4.app.Fragment currentFragemnt = null;
@@ -108,6 +111,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            theme = SettingUtility.getTheme();
+        } else {
+            theme = savedInstanceState.getInt("theme");
+        }
+        configTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         GlobalContext.getInstance().setActivity(this);
@@ -121,7 +130,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
             View view = new View(this);
             LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, Utility.getStatusBarHeight());
-            view.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            int color = SettingUtility.getThemeColor();
+            view.setBackgroundColor(getResources().getColor(color));
             view.setLayoutParams(lParams);
             contentLayout.addView(view, 0);
         }
@@ -279,12 +289,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 invalidateOptionsMenu();
+                hideFab();
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 invalidateOptionsMenu();
+                showFab();
             }
         };
 
@@ -330,6 +342,35 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         });
     }
 
+    private void showFab(){
+        TimeLineFragment homeFragment = (TimeLineFragment) getTimeLineFragment();
+        homeFragment.showFab();
+    }
+
+    private void hideFab(){
+        TimeLineFragment homeFragment = (TimeLineFragment) getTimeLineFragment();
+        homeFragment.hideFab();
+    }
+
+    private void configTheme() {
+        if (theme == SettingUtility.getTheme()) {
+            setTheme(theme);
+        } else {
+            reload();
+            return;
+        }
+    }
+
+    private void reload() {
+        Intent intent = getIntent();
+        overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+    }
+
     private void initGroupList() {
 
     }
@@ -361,6 +402,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         if (!Utility.isTokenValid(GlobalContext.getInstance().getAccountBean())) {
             Utility.showExpiredTokenDialogOrNotification();
         }
+        configTheme();
     }
 
     private class LoadAccountTask extends MyAsyncTask<Void, Void, List<AccountBean>> {
@@ -396,9 +438,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 
     @Override
     protected void onSaveInstanceState(Bundle bundle) {
-        // This is a dummy method
-        // To fix duplicate menu and fragments
-        // After a restart
+        super.onSaveInstanceState(bundle);
+        bundle.putInt("theme", theme);
     }
 
     public void openOrCloseDrawer() {
@@ -530,5 +571,26 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         } else {
             return -1;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if(!canExit) {
+                Toast.makeText(GlobalContext.getInstance(), "再按返回键退出", Toast.LENGTH_SHORT).show();
+                canExit = true;
+                Timer timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        canExit = false;
+                    }
+                }, 3000);
+                return false;
+            }else{
+                finish();
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

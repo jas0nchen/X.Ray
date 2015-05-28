@@ -23,6 +23,7 @@ import com.jasonchen.microlang.beans.UserBean;
 import com.jasonchen.microlang.dao.SearchTopicDao;
 import com.jasonchen.microlang.dao.StatusesTimeLineDao;
 import com.jasonchen.microlang.exception.WeiboException;
+import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.swiperefresh.LoadListView;
 import com.jasonchen.microlang.swiperefresh.SwipeRefreshLayout;
 import com.jasonchen.microlang.utils.GlobalContext;
@@ -93,7 +94,7 @@ public class TopicFragment extends AbstractAppFragment implements SwipeRefreshLa
         refreshLayout = ViewUtility.findViewById(view, R.id.refreshLayout);
         listView = ViewUtility.findViewById(view, R.id.listView);
 
-        refreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
+        refreshLayout.setColorSchemeColors(getResources().getColor(SettingUtility.getThemeColor()));
         refreshLayout.setOnRefreshListener(this);
         listView.setXListViewListener(this);
         listView.setPullLoadEnable(true);

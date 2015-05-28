@@ -54,7 +54,7 @@ public class HackyMovementMethod extends LinkMovementMethod
 	@Override
 	public boolean onTouchEvent(TextView widget, Spannable buffer, MotionEvent event) {
 		if (mGray == null) {
-			mGray = new BackgroundColorSpan(widget.getContext().getResources().getColor(R.color.lightColorPrimary));
+			mGray = new BackgroundColorSpan(widget.getContext().getResources().getColor(R.color.light_gray));
 		}
 		
 		mIsLinkHit = false;

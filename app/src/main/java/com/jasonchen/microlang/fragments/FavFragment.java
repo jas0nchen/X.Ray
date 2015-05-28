@@ -25,9 +25,9 @@ import com.jasonchen.microlang.beans.UserBean;
 import com.jasonchen.microlang.dao.FavListDao;
 import com.jasonchen.microlang.database.FavouriteDBTask;
 import com.jasonchen.microlang.exception.WeiboException;
+import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.swiperefresh.LoadListView;
 import com.jasonchen.microlang.utils.GlobalContext;
-import com.jasonchen.microlang.utils.SettingUtility;
 import com.jasonchen.microlang.utils.ViewUtility;
 import com.jasonchen.microlang.workers.TimeLineBitmapDownloader;
 
@@ -90,7 +90,7 @@ public class FavFragment extends FixedOnActivityResultBugFragment implements
         mListView = ViewUtility.findViewById(view, R.id.list);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(SettingUtility.getThemeColor()));
         swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, getResources().getDisplayMetrics()));
         swipeRefreshLayout.setRefreshing(true);
         mListView.setPullLoadEnable(true);

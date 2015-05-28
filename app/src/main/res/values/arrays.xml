@@ -66,19 +66,22 @@
         <!--<item>4</item>-->
     </string-array>
     <string-array name="font">
-        <item>小</item>
-        <!--<item>较小</item>-->
-        <item>中等</item>
-        <item>大</item>
-        <!--<item>很大</item>-->
-    </string-array>
-    <string-array name="font_value">
-        <!--<item>12</item>-->
+        <item>11</item>
         <item>13</item>
         <item>15</item>
         <item>17</item>
-        <!--<item>18</item>-->
-        <!--<item>20</item>-->
+        <item>19</item>
+        <item>21</item>
+        <item>23</item>
+    </string-array>
+    <string-array name="font_value">
+        <item>11</item>
+        <item>13</item>
+        <item>15</item>
+        <item>17</item>
+        <item>19</item>
+        <item>21</item>
+        <item>23</item>
     </string-array>
     <string-array name="notification_style">
         <item>一行一条</item>

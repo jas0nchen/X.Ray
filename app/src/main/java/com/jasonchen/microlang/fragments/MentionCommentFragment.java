@@ -24,9 +24,9 @@ import com.jasonchen.microlang.beans.UserBean;
 import com.jasonchen.microlang.dao.MentionsCommentTimeLineDao;
 import com.jasonchen.microlang.database.MentionCommentsTimeLineDBTask;
 import com.jasonchen.microlang.exception.WeiboException;
+import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.swiperefresh.LoadListView;
 import com.jasonchen.microlang.utils.GlobalContext;
-import com.jasonchen.microlang.utils.SettingUtility;
 import com.jasonchen.microlang.workers.TimeLineBitmapDownloader;
 
 import java.util.List;
@@ -87,7 +87,7 @@ public class MentionCommentFragment extends AbstractAppFragment implements
         mListView = (LoadListView) view.findViewById(R.id.list);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(SettingUtility.getThemeColor()));
         swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
         swipeRefreshLayout.setRefreshing(true);
         mListView.setPullLoadEnable(true);

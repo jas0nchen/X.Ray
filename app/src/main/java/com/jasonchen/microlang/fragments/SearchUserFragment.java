@@ -23,7 +23,6 @@ import com.jasonchen.microlang.dao.SearchUserDao;
 import com.jasonchen.microlang.debug.AppLogger;
 import com.jasonchen.microlang.exception.WeiboException;
 import com.jasonchen.microlang.utils.GlobalContext;
-import com.jasonchen.microlang.utils.SettingUtility;
 import com.jasonchen.microlang.workers.TimeLineBitmapDownloader;
 
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ import java.util.List;
  * jasonchen
  * 2015/04/16
  */
-public class SearchUserFragment extends TimeLineBaseFragment implements SearchActivity.Searcher{
+public class SearchUserFragment extends TimeLineBaseFragment implements SearchActivity.Searcher {
 
     private static final String ARGUMENTS_TOKEN_EXTRA = SearchUserFragment.class
             .getName() + ":token_extra";
@@ -144,10 +143,11 @@ public class SearchUserFragment extends TimeLineBaseFragment implements SearchAc
             switch (msg.what) {
                 case REFRESH_LISTVIEW:
                     UserListBean newList = (UserListBean) msg.obj;
-                    AppLogger.d(newList.toString());
-                    userBean.addAll(0, newList.getUsers());
-                    adapter.setList(userBean);
-                    adapter.notifyDataSetChanged();
+                    if (newList != null && newList.getUsers().size() > 0) {
+                        userBean.addAll(0, newList.getUsers());
+                        adapter.setList(userBean);
+                        adapter.notifyDataSetChanged();
+                    }
                     listView.setVisibility(View.VISIBLE);
                     listView.getFooterView().show();
                     getRefreshLayout().setRefreshing(false);
@@ -158,7 +158,7 @@ public class SearchUserFragment extends TimeLineBaseFragment implements SearchAc
                     adapter.setList(userBean);
                     adapter.notifyDataSetChanged();
                     int oldnumber = oldList.getUsers().size();
-                    if (oldnumber == 0){
+                    if (oldnumber == 0) {
                         Toast.makeText(GlobalContext.getInstance(),
                                 getString(R.string.load_complete),
                                 Toast.LENGTH_SHORT).show();
@@ -214,7 +214,7 @@ public class SearchUserFragment extends TimeLineBaseFragment implements SearchAc
         new Thread() {
             public void run() {
                 SearchUserDao dao = new SearchUserDao(token, q);
-                pager ++;
+                pager = pager + 1;
                 dao.setPage(String.valueOf(pager));
                 try {
                     UserListBean oldList = dao.getGSONMsgList();

@@ -102,7 +102,7 @@ public class MyURLSpan extends ClickableSpan implements ParcelableSpan {
 	@Override
 	public void updateDrawState(TextPaint tp) {
 		tp.setColor(GlobalContext.getInstance().getResources()
-				.getColor(R.color.colorPrimary));
+				.getColor(SettingUtility.getThemeColor()));
 
 	}
 }

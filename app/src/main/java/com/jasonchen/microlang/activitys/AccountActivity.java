@@ -33,8 +33,8 @@ import android.widget.TextView;
 import com.jasonchen.microlang.R;
 import com.jasonchen.microlang.beans.AccountBean;
 import com.jasonchen.microlang.database.AccountDBTask;
+import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.utils.GlobalContext;
-import com.jasonchen.microlang.utils.SettingUtility;
 import com.jasonchen.microlang.utils.Utility;
 import com.jasonchen.microlang.utils.ViewUtility;
 import com.jasonchen.microlang.view.FloatingActionButton;
@@ -65,6 +65,8 @@ public class AccountActivity extends ActionBarActivity implements
     private AccountAdapter listAdapter = null;
     private List<AccountBean> accountList = new ArrayList<AccountBean>();
 
+    private int theme = 0;
+
     public static Intent newIntent() {
         Intent intent = new Intent(GlobalContext.getInstance(), AccountActivity.class);
         return intent;
@@ -77,6 +79,12 @@ public class AccountActivity extends ActionBarActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            theme = SettingUtility.getTheme();
+        } else {
+            theme = savedInstanceState.getInt("theme");
+        }
+        configTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
 
@@ -92,12 +100,31 @@ public class AccountActivity extends ActionBarActivity implements
             View view = new View(this);
             LayoutParams lParams = new LayoutParams(
                     LayoutParams.MATCH_PARENT, Utility.getStatusBarHeight());
-            view.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+            view.setBackgroundColor(getResources().getColor(SettingUtility.getThemeColor()));
             view.setLayoutParams(lParams);
             ViewGroup viewGroup = (ViewGroup) getWindow().getDecorView();
             viewGroup.addView(view);
         }
         initView();
+    }
+
+    private void configTheme() {
+        if(theme == SettingUtility.getTheme()){
+            setTheme(theme);
+        }else{
+            reload();
+            return;
+        }
+    }
+
+    public void reload(){
+        Intent intent = getIntent();
+        overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
     }
 
     @SuppressLint("ResourceAsColor")
@@ -107,7 +134,7 @@ public class AccountActivity extends ActionBarActivity implements
                 .withGravity(Gravity.BOTTOM | Gravity.RIGHT)
                 .withPaddings(16, 16, 16, 16)
                 .withDrawable(getResources().getDrawable(R.drawable.ic_plus))
-                .withButtonColor(getResources().getColor(R.color.colorPrimary))
+                .withButtonColor(getResources().getColor(SettingUtility.getThemeColor()))
                 .withButtonSize(100)
                 .create();
         fab.setOnClickListener(this);
@@ -317,6 +344,7 @@ public class AccountActivity extends ActionBarActivity implements
         long id = listAdapter.getItemId(position);
         set.add(String.valueOf(id));
         accountList = AccountDBTask.removeAndGetNewAccountList(set);
+        SettingUtility.setDefaultAccountId("");
         listAdapter.notifyDataSetChanged();
     }
 

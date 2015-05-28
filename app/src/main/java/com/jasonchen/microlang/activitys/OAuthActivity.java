@@ -35,6 +35,7 @@ import com.jasonchen.microlang.dao.OAuthDao;
 import com.jasonchen.microlang.database.AccountDBTask;
 import com.jasonchen.microlang.debug.AppLogger;
 import com.jasonchen.microlang.exception.WeiboException;
+import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.swipeback.app.SwipeBackActivity;
 import com.jasonchen.microlang.tasks.MyAsyncTask;
 import com.jasonchen.microlang.utils.GlobalContext;
@@ -86,7 +87,7 @@ public class OAuthActivity extends SwipeBackActivity implements SwipeRefreshLayo
         handler = new MyHandler(this);
         getSupportActionBar().setTitle(getString(R.string.oauth));
 
-        container.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
+        container.setColorSchemeColors(getResources().getColor(SettingUtility.getThemeColor()));
         container.setOnRefreshListener(this);
 
         WebSettings settings = webView.getSettings();

@@ -13,6 +13,7 @@ import com.jasonchen.microlang.utils.*;
 public class SettingUtility {
 
     private static final String FIRSTSTART = "firststart";
+    private static final String THEME = "theme";
     private static final String FIRSTSTART_MENTIONTIMELINE = "firststart_mention_timeline";
     private static final String FIRSTSTART_MENTIONCOMMENT = "firststart_mention_comment";
     private static final String FIRSTSTART_COMMENTTOME = "firststart_comment_to_me";
@@ -50,6 +51,28 @@ public class SettingUtility {
             SettingHelper.setEditor(getContext(), FIRSTSTART, false);
         }
         return value;
+    }
+
+    public static int getTheme(){
+        int index = SettingHelper.getSharedPreferences(getContext(), THEME, 6);
+
+        return ThemeUtility.themeArr[index];
+    }
+
+    public static int getThemeIndex(){
+        int index = SettingHelper.getSharedPreferences(getContext(), THEME, 6);
+
+        return index;
+    }
+
+    public static int getThemeColor(){
+        int index = SettingHelper.getSharedPreferences(getContext(), THEME, 6);
+
+        return ThemeUtility.themeColorArr[index];
+    }
+
+    public static void setTheme(int index){
+        SettingHelper.setEditor(getContext(), THEME, index);
     }
 
     public static boolean firstOpenMentionTimeLine() {

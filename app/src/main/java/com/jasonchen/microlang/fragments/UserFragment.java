@@ -23,8 +23,11 @@ import com.jasonchen.microlang.adapter.TimeLineAdapter;
 import com.jasonchen.microlang.beans.MessageBean;
 import com.jasonchen.microlang.beans.MessageListBean;
 import com.jasonchen.microlang.beans.UserBean;
+import com.jasonchen.microlang.dao.ShowUserDao;
 import com.jasonchen.microlang.dao.StatusesTimeLineDao;
+import com.jasonchen.microlang.database.AccountDBTask;
 import com.jasonchen.microlang.exception.WeiboException;
+import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.swiperefresh.LoadListView;
 import com.jasonchen.microlang.swiperefresh.SwipeRefreshLayout;
 import com.jasonchen.microlang.utils.GlobalContext;
@@ -32,6 +35,7 @@ import com.jasonchen.microlang.utils.HackyMovementMethod;
 import com.jasonchen.microlang.utils.TimeLineUtility;
 import com.jasonchen.microlang.utils.ViewUtility;
 import com.jasonchen.microlang.utils.file.FileLocationMethod;
+import com.jasonchen.microlang.utils.http.HttpUtility;
 import com.jasonchen.microlang.view.AvatarBigImageView;
 import com.jasonchen.microlang.view.FloatingActionButton;
 import com.jasonchen.microlang.view.HackyTextView;
@@ -50,6 +54,7 @@ public class UserFragment extends AbstractAppFragment implements SwipeRefreshLay
     private static final int REFRESH_COMPLETE = 0;
     private static final int REFRESH_LOADER_ID = 1;
     private static final int LOAD_OLD_STATUSES_COMPLETE = 2;
+    private static final int REFRESH_MYINFO = 3;
     private static final int NETWORK_ERROR = 4;
 
     private View view;
@@ -106,7 +111,7 @@ public class UserFragment extends AbstractAppFragment implements SwipeRefreshLay
         refreshLayout = ViewUtility.findViewById(view, R.id.refreshLayout);
         listView = ViewUtility.findViewById(view, R.id.listView);
 
-        refreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
+        refreshLayout.setColorSchemeColors(getResources().getColor(SettingUtility.getThemeColor()));
         refreshLayout.setOnRefreshListener(this);
         listView.setXListViewListener(this);
         listView.setPullLoadEnable(true);
@@ -246,6 +251,15 @@ public class UserFragment extends AbstractAppFragment implements SwipeRefreshLay
         fan = ViewUtility.findViewById(header, R.id.fan_list);
         status = ViewUtility.findViewById(header, R.id.weibo_list);
 
+        buildContent();
+
+        follow.setOnClickListener(this);
+        status.setOnClickListener(this);
+        fan.setOnClickListener(this);
+
+    }
+
+    private void buildContent() {
         TimeLineBitmapDownloader.getInstance().display(
                 avatar.getImageView(),
                 avatar.getImageView().getWidth(),
@@ -284,10 +298,6 @@ public class UserFragment extends AbstractAppFragment implements SwipeRefreshLay
         follow.setText("关注 " + userBean.getFriends_count());
         fan.setText("粉丝 " + userBean.getFollowers_count());
         status.setText("微博 " + userBean.getStatus_count());
-        follow.setOnClickListener(this);
-        status.setOnClickListener(this);
-        fan.setOnClickListener(this);
-
     }
 
     protected LoadListView getListView(){
@@ -304,7 +314,28 @@ public class UserFragment extends AbstractAppFragment implements SwipeRefreshLay
     }
 
     private void refreshMyInfo() {
-
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                ShowUserDao dao = new ShowUserDao(GlobalContext.getInstance().getSpecialToken());
+                dao.setUid(userBean.getId());
+                try {
+                    UserBean newuserBean = dao.getUserInfo();
+                    AccountDBTask.asyncUpdateMyProfile(GlobalContext.getInstance().getAccountBean(), newuserBean);
+                    Message msg = Message.obtain();
+                    msg.what = REFRESH_MYINFO;
+                    msg.obj = newuserBean;
+                    handler.sendMessage(msg);
+                } catch (WeiboException e) {
+                    e.printStackTrace();
+                    Message msg = Message.obtain();
+                    msg.what = NETWORK_ERROR;
+                    msg.obj = e.getError();
+                    handler.sendMessage(msg);
+                }
+            }
+        }.start();
     }
 
     @Override
@@ -361,6 +392,12 @@ public class UserFragment extends AbstractAppFragment implements SwipeRefreshLay
                         listView.setPullLoadEnable(false);
                         Toast.makeText(GlobalContext.getInstance(), getString(R.string.older_message_empty), Toast.LENGTH_SHORT).show();
                     }
+                    break;
+                case REFRESH_MYINFO:
+                    UserBean newUserBean = (UserBean) msg.obj;
+                    userBean = newUserBean;
+                    buildContent();
+                    refreshLayout.setRefreshing(false);
                     break;
                 case NETWORK_ERROR:
                     listView.stopLoadMore();
