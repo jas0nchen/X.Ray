@@ -167,7 +167,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         me.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = UserActivity.newIntent(MainActivity.this, userBean);
+                Intent intent = UserActivity.newIntent(MainActivity.this, GlobalContext.getInstance().getAccountBean().getInfo());
                 startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in, R.anim.stay);
             }
@@ -176,7 +176,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         mAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = UserActivity.newIntent(MainActivity.this, userBean);
+                Intent intent = UserActivity.newIntent(MainActivity.this, GlobalContext.getInstance().getAccountBean().getInfo());
                 startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in, R.anim.stay);
             }

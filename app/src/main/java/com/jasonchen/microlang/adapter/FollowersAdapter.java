@@ -162,6 +162,8 @@ public class FollowersAdapter extends BaseAdapter {
 		if(!TextUtils.isEmpty(list.get(position).getDescription())){
 			holder.description.setVisibility(View.VISIBLE);
 			holder.description.setText(list.get(position).getDescription());
+		}else{
+			holder.description.setVisibility(View.GONE);
 		}
 		convertView.setOnClickListener(new OnClickListener() {
 			@Override

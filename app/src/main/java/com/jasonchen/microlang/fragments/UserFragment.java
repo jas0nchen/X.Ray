@@ -20,6 +20,7 @@ import com.jasonchen.microlang.activitys.FanListActivity;
 import com.jasonchen.microlang.activitys.FollowerListActivity;
 import com.jasonchen.microlang.activitys.WriteWeiboActivity;
 import com.jasonchen.microlang.adapter.TimeLineAdapter;
+import com.jasonchen.microlang.beans.AccountBean;
 import com.jasonchen.microlang.beans.MessageBean;
 import com.jasonchen.microlang.beans.MessageListBean;
 import com.jasonchen.microlang.beans.UserBean;
@@ -322,7 +323,6 @@ public class UserFragment extends AbstractAppFragment implements SwipeRefreshLay
                 dao.setUid(userBean.getId());
                 try {
                     UserBean newuserBean = dao.getUserInfo();
-                    AccountDBTask.asyncUpdateMyProfile(GlobalContext.getInstance().getAccountBean(), newuserBean);
                     Message msg = Message.obtain();
                     msg.what = REFRESH_MYINFO;
                     msg.obj = newuserBean;
@@ -396,6 +396,10 @@ public class UserFragment extends AbstractAppFragment implements SwipeRefreshLay
                 case REFRESH_MYINFO:
                     UserBean newUserBean = (UserBean) msg.obj;
                     userBean = newUserBean;
+                    AccountDBTask.asyncUpdateMyProfile(GlobalContext.getInstance().getAccountBean(), userBean);
+                    AccountBean accountBean = GlobalContext.getInstance().getAccountBean();
+                    accountBean.setInfo(userBean);
+                    GlobalContext.getInstance().setAccountBean(accountBean);
                     buildContent();
                     refreshLayout.setRefreshing(false);
                     break;
