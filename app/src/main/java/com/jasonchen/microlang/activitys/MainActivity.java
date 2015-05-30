@@ -612,19 +612,24 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if(!canExit) {
-                Toast.makeText(GlobalContext.getInstance(), "再按返回键退出", Toast.LENGTH_SHORT).show();
-                canExit = true;
-                Timer timer = new Timer();
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        canExit = false;
-                    }
-                }, 3000);
+            if(mDrawer.isDrawerOpen(mDrawerGravity)){
+                mDrawer.closeDrawers();
                 return false;
-            }else{
-                finish();
+            }else {
+                if (!canExit) {
+                    Toast.makeText(GlobalContext.getInstance(), "再按返回键退出", Toast.LENGTH_SHORT).show();
+                    canExit = true;
+                    Timer timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            canExit = false;
+                        }
+                    }, 3000);
+                    return false;
+                } else {
+                    finish();
+                }
             }
         }
         return super.onKeyDown(keyCode, event);
