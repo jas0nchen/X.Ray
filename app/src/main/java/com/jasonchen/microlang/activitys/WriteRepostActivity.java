@@ -15,6 +15,7 @@ import com.jasonchen.microlang.beans.RepostDraftBean;
 import com.jasonchen.microlang.services.SendRepostService;
 import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.TimeLineUtility;
+import com.jasonchen.microlang.utils.Utility;
 
 /**
  * jasonchen
@@ -100,8 +101,40 @@ public class WriteRepostActivity extends AbstractWriteActivity {
         }
     }
 
+    @Override
+    protected boolean canSend() {
+
+        //boolean haveContent = !TextUtils.isEmpty(content.getText().toString());
+        boolean haveToken = !TextUtils.isEmpty(token);
+
+        int sum = Utility.length(content.getText().toString());
+        int num = 140 - sum;
+
+        boolean contentNumBelow140 = (num >= 0);
+
+        if (haveToken && contentNumBelow140) {
+            return true;
+        } else {
+            if (!haveToken) {
+                Toast.makeText(this, getString(R.string.dont_have_account), Toast.LENGTH_SHORT).show();
+            }
+
+            if (!contentNumBelow140) {
+                content.setError(getString(R.string.content_words_number_too_many));
+            }
+
+        }
+
+        return false;
+    }
+
     private void repostMessage() {
-        Intent intent = SendRepostService.newIntent(WriteRepostActivity.this, messageBean, content.getText().toString(), commentToo);
+        Intent intent = null;
+        if(content.getText().toString().length() > 0) {
+            intent = SendRepostService.newIntent(WriteRepostActivity.this, messageBean, content.getText().toString(), commentToo);
+        }else{
+            intent = SendRepostService.newIntent(WriteRepostActivity.this, messageBean, "转发微博", commentToo);
+        }
         startService(intent);
         finishWithAnimation();
     }

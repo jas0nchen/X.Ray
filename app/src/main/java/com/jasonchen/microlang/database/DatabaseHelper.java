@@ -13,6 +13,7 @@ import com.jasonchen.microlang.database.table.GroupTable;
 import com.jasonchen.microlang.database.table.HomeOtherGroupTable;
 import com.jasonchen.microlang.database.table.HomeTable;
 import com.jasonchen.microlang.database.table.MentionCommentsTable;
+import com.jasonchen.microlang.database.table.NotificationTable;
 import com.jasonchen.microlang.database.table.RepostsTable;
 import com.jasonchen.microlang.utils.GlobalContext;
 
@@ -26,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "weibo.db";
 
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
     //账户表
     static final String CREATE_ACCOUNT_TABLE_SQL = "create table " + AccountTable.TABLE_NAME
@@ -310,7 +311,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "("
             + MyStatusTable.ACCOUNTID
             + ")";
-
+*/
     private static final String CREATE_NOTIFICATION_TABLE_SQL = "create table "
             + NotificationTable.TABLE_NAME
             + "("
@@ -320,7 +321,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + NotificationTable.TYPE + " text,"
             + "primary key (" + NotificationTable.ACCOUNTID + "," + NotificationTable.MSGID + ","
             + NotificationTable.TYPE + ")"
-            + ");";*/
+            + ");";
 
 
     DatabaseHelper(Context context) {
@@ -353,6 +354,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_HOME_OTHER_GROUP_TABLE_SQL);
         db.execSQL(CREATE_HOME_OTHER_GROUP_DATA_TABLE_SQL);
 
+        db.execSQL(CREATE_NOTIFICATION_TABLE_SQL);
+
         //createOtherTable(db);
     }
 
@@ -370,6 +373,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(oldVersion <=4){
             db.execSQL(CREATE_HOME_OTHER_GROUP_TABLE_SQL);
             db.execSQL(CREATE_HOME_OTHER_GROUP_DATA_TABLE_SQL);
+        }
+
+        if(oldVersion <= 5){
+            db.execSQL(CREATE_NOTIFICATION_TABLE_SQL);
         }
     }
 

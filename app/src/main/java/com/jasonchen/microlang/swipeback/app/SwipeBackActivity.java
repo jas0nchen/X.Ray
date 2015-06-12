@@ -8,6 +8,7 @@ import com.jasonchen.microlang.activitys.AbstractAppActivity;
 import com.jasonchen.microlang.beans.MessageBean;
 import com.jasonchen.microlang.swipeback.SwipeBackLayout;
 import com.jasonchen.microlang.swipeback.Utils;
+import com.jasonchen.microlang.utils.MythouCrashHandler;
 
 
 public class SwipeBackActivity extends AbstractAppActivity implements
@@ -17,6 +18,7 @@ public class SwipeBackActivity extends AbstractAppActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Thread.setDefaultUncaughtExceptionHandler(new MythouCrashHandler());
 		mHelper = new SwipeBackActivityHelper(this);
 		mHelper.onActivityCreate();
 	}

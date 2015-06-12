@@ -442,6 +442,8 @@
     <string name="pref_cache_path_title">缓存文件路径</string>
     <string name="pref_saved_pic_path_title">图片保存路径</string>
     <string name="pref_saved_log_path_title">崩溃日志保存路径</string>
+    <string name="pref_crash_now">立即崩溃</string>
+    <string name="pref_send_crash">发送崩溃信息</string>
     <string name="pref_open_source_license_title">开源协议</string>
     <string name="pref_google_plus_group_title">Google+ 社群</string>
     <string name="pref_google_plus_group_summary">获取最新测试版</string>
@@ -451,6 +453,7 @@
     <string name="pref_make_a_app_crash_title">立刻崩溃</string>
     <string name="pref_make_a_app_crash_summary">用于检测崩溃统计平台是否能成功收集到崩溃</string>
     <string name="getting_cache_size">正在统计缓存大小…</string>
+    <string name="send_crash_log_to_author">发送崩溃信息给ecjtuchend@163.com，帮助程序优化</string>
     <string name="pref_max_file_cache_size_is_300mb_current_size_is">当前缓存 %s，点击清理后，需重新下载微博图片</string>
     <string name="clean_cache_will_be_done_sure">清理缓存之后，微博图片需要重新下载，确定清理缓存？</string>
     <string name="start_clean_cache">开始清理缓存</string>

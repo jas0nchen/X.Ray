@@ -49,6 +49,7 @@ import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.tasks.MyAsyncTask;
 import com.jasonchen.microlang.utils.BundleArgsConstants;
 import com.jasonchen.microlang.utils.GlobalContext;
+import com.jasonchen.microlang.utils.MythouCrashHandler;
 import com.jasonchen.microlang.utils.Utility;
 import com.jasonchen.microlang.utils.ViewUtility;
 import com.jasonchen.microlang.utils.file.FileLocationMethod;
@@ -129,6 +130,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         setContentView(R.layout.activity_main);
         GlobalContext.getInstance().setActivity(this);
         GlobalContext.getInstance().setCurrentRunningActivity(MainActivity.this);
+        Thread.setDefaultUncaughtExceptionHandler(new MythouCrashHandler());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = getWindow();

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.jasonchen.microlang.R;
 import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.utils.GlobalContext;
+import com.jasonchen.microlang.utils.MythouCrashHandler;
 import com.jasonchen.microlang.utils.Utility;
 import com.jasonchen.microlang.utils.ViewUtility;
 import com.jasonchen.microlang.workers.TimeLineBitmapDownloader;
@@ -83,6 +84,7 @@ public class AbstractAppActivity extends ActionBarActivity {
         }
         configTheme();
         super.onCreate(savedInstanceState);
+        Thread.setDefaultUncaughtExceptionHandler(new MythouCrashHandler());
         GlobalContext.getInstance().setActivity(this);
         GlobalContext.getInstance().setCurrentRunningActivity(this);
         setContentView(mLayout);

@@ -1,26 +1,34 @@
 package com.jasonchen.microlang.preference;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.text.ClipboardManager;
 import android.view.View;
 import android.widget.Toast;
 
 import com.jasonchen.microlang.R;
 import com.jasonchen.microlang.activitys.SettingActivity;
+import com.jasonchen.microlang.debug.AppLogger;
 import com.jasonchen.microlang.fragments.MDColorsDialogFragment;
 import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.tasks.MyAsyncTask;
 import com.jasonchen.microlang.utils.GlobalContext;
+import com.jasonchen.microlang.utils.MythouCrashHandler;
+import com.jasonchen.microlang.utils.SendCrashLog;
 import com.jasonchen.microlang.utils.ThemeUtility;
 import com.jasonchen.microlang.utils.file.FileManager;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.UnknownFormatFlagsException;
 
 import me.drakeet.materialdialog.MaterialDialog;
 
@@ -39,6 +47,8 @@ public class SettingFragment extends PreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.setting_activity_pref);
+
+        Thread.setDefaultUncaughtExceptionHandler(new MythouCrashHandler());
 
         buildCacheSummary();
         buildLogSummary();
@@ -86,6 +96,31 @@ public class SettingFragment extends PreferenceFragment {
             public boolean onPreferenceClick(Preference preference) {
                 MDColorsDialogFragment.launch(getActivity());
                 return false;
+            }
+        });
+
+        findPreference("pref_crash_now").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                throw new RuntimeException();
+            }
+        });
+
+        findPreference("pref_send_crash").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setTitle(getString(R.string.pref_send_crash))
+                        .setMessage("发送log至ecjtuchend@163.com，帮助优化程序，邮箱地址已经拷贝至剪贴板").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                ClipboardManager cmb = (ClipboardManager) getActivity().getSystemService(getActivity().CLIPBOARD_SERVICE);
+                cmb.setText("ecjtuchend@163.com");
+                builder.create();
+                builder.show();
+                return true;
             }
         });
 

@@ -83,6 +83,17 @@
         </Preference>
 
         <Preference
+            android:key="pref_crash_now"
+            android:title="@string/pref_crash_now">
+        </Preference>
+
+        <Preference
+            android:key="pref_send_crash"
+            android:title="@string/pref_send_crash"
+            android:summary="@string/send_crash_log_to_author">
+        </Preference>
+
+        <Preference
             android:key="click_to_clean_cache"
             android:summary="@string/getting_cache_size"
             android:title="@string/pref_click_to_clean_cache" />

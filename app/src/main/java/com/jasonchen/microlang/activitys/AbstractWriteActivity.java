@@ -28,6 +28,7 @@ import com.jasonchen.microlang.smilepicker.SmileyPicker;
 import com.jasonchen.microlang.smilepicker.SmileyPickerUtility;
 import com.jasonchen.microlang.swipeback.app.SwipeBackActivity;
 import com.jasonchen.microlang.utils.AndroidBug5497Workaround;
+import com.jasonchen.microlang.utils.MythouCrashHandler;
 import com.jasonchen.microlang.utils.TextNumLimitWatcher;
 import com.jasonchen.microlang.utils.Utility;
 import com.jasonchen.microlang.utils.ViewUtility;
@@ -91,6 +92,7 @@ public abstract class AbstractWriteActivity extends SwipeBackActivity implements
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
             AndroidBug5497Workaround.assistActivity(this);
         }
+        Thread.setDefaultUncaughtExceptionHandler(new MythouCrashHandler());
         initView();
     }
 

@@ -35,6 +35,7 @@ import com.jasonchen.microlang.beans.AccountBean;
 import com.jasonchen.microlang.database.AccountDBTask;
 import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.utils.GlobalContext;
+import com.jasonchen.microlang.utils.MythouCrashHandler;
 import com.jasonchen.microlang.utils.Utility;
 import com.jasonchen.microlang.utils.ViewUtility;
 import com.jasonchen.microlang.view.FloatingActionButton;
@@ -89,6 +90,7 @@ public class AccountActivity extends ActionBarActivity implements
         setContentView(R.layout.activity_account);
 
         GlobalContext.getInstance().setCurrentRunningActivity(this);
+        Thread.setDefaultUncaughtExceptionHandler(new MythouCrashHandler());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = getWindow();

@@ -114,6 +114,8 @@
         <service android:name=".services.SendCommentService"></service>
         <service android:name=".services.SendRepostService"></service>
         <service android:name=".services.SendReplyToCommentService"></service>
+        <service android:name=".services.FetchUnreadService"></service>
+        <service android:name=".utils.BigTextNotificationService"></service>
     </application>
 
 </manifest>

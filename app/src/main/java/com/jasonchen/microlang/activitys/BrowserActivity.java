@@ -235,6 +235,8 @@ public class BrowserActivity extends SwipeBackActivity implements SwipeRefreshLa
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if(webView.canGoBack()){
                 webView.goBack();
+            }else{
+                finish();
             }
         }
         return false;

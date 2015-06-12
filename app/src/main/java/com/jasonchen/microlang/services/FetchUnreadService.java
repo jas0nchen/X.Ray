@@ -21,6 +21,7 @@ import com.jasonchen.microlang.database.MentionWeiboTimeLineDBTask;
 import com.jasonchen.microlang.database.NotificationDBTask;
 import com.jasonchen.microlang.debug.AppLogger;
 import com.jasonchen.microlang.settings.SettingUtility;
+import com.jasonchen.microlang.utils.AppNotificationCenter;
 import com.jasonchen.microlang.utils.GlobalContext;
 
 import java.util.Calendar;
@@ -181,7 +182,7 @@ public class FetchUnreadService extends IntentService {
         if (mentionsWeibo || mentionsComment || commentsToMe) {
             sendTwoKindsOfBroadcast(accountBean, commentResult, mentionStatusesResult,
                     mentionCommentsResult, unreadBean);
-            Toast.makeText(getApplication(), "有新消息！", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(GlobalContext.getInstance(), "有新消息！", Toast.LENGTH_SHORT).show();
         } else {
 //            NotificationManager notificationManager = (NotificationManager) getApplicationContext()
 //                    .getSystemService(NOTIFICATION_SERVICE);
@@ -214,7 +215,7 @@ public class FetchUnreadService extends IntentService {
 
         AppLogger.i("Send unread data to ");
 
-       /* if (unreadBean != null) {
+       if (unreadBean != null) {
             AppNotificationCenter.getInstance().addUnreadBean(accountBean, unreadBean);
         }
         if (mentionStatusesResult != null) {
@@ -228,8 +229,8 @@ public class FetchUnreadService extends IntentService {
         if (commentResult != null) {
             AppNotificationCenter.getInstance().addUnreadComments(accountBean, commentResult);
         }
-        AppNotificationCenter.getInstance().refreshToUI(accountBean);
+        //AppNotificationCenter.getInstance().refreshToUI(accountBean);
 
-        AppNotificationCenter.getInstance().showAndroidNotification(accountBean);*/
+        AppNotificationCenter.getInstance().showAndroidNotification(accountBean);
     }
 }
