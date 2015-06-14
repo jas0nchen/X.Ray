@@ -229,7 +229,7 @@ public class FetchUnreadService extends IntentService {
         if (commentResult != null) {
             AppNotificationCenter.getInstance().addUnreadComments(accountBean, commentResult);
         }
-        //AppNotificationCenter.getInstance().refreshToUI(accountBean);
+        AppNotificationCenter.getInstance().refreshToUI(accountBean);
 
         AppNotificationCenter.getInstance().showAndroidNotification(accountBean);
     }

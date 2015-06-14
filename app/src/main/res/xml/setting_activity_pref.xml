@@ -3,6 +3,11 @@
     android:fitsSystemWindows="true"
     android:key="root_screen">
     <PreferenceCategory android:title="@string/pref_normal_title">
+        <Preference android:title="@string/pref_notification_title">
+            <intent
+                android:targetClass="com.jasonchen.microlang.preference.NotificationActivity"
+                android:targetPackage="@string/applicationId" />
+        </Preference>
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="sound"
@@ -31,23 +36,24 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_advanced_title">
         <ListPreference
-            android:key="font_size"
-            android:title="@string/pref_font_size_title"
+            android:defaultValue="13"
             android:dialogTitle="@string/pref_font_size_title"
             android:entries="@array/font"
             android:entryValues="@array/font_value"
-            android:defaultValue="13"
-            android:summary="%s" />
+            android:key="font_size"
+            android:summary="%s"
+            android:title="@string/pref_font_size_title" />
         <Preference
-            android:key="theme" android:title="@string/pref_theme_title"/>
+            android:key="theme"
+            android:title="@string/pref_theme_title" />
         <ListPreference
-            android:key="upload_pic_quality"
-            android:title="@string/pref_upload_pic_quality_title"
+            android:defaultValue="4"
             android:dialogTitle="@string/pref_upload_pic_quality_title"
             android:entries="@array/upload_pic_quality"
             android:entryValues="@array/upload_pic_quality_value"
-            android:defaultValue="4"
-            android:summary="%s" />
+            android:key="upload_pic_quality"
+            android:summary="%s"
+            android:title="@string/pref_upload_pic_quality_title" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="auto_refresh"
@@ -69,29 +75,24 @@
 
         <Preference
             android:key="pref_cache_path_key"
-            android:title="@string/pref_cache_path_title">
-        </Preference>
+            android:title="@string/pref_cache_path_title"></Preference>
 
         <Preference
             android:key="pref_saved_pic_path_key"
-            android:title="@string/pref_saved_pic_path_title">
-        </Preference>
+            android:title="@string/pref_saved_pic_path_title"></Preference>
 
         <Preference
             android:key="pref_saved_log_path_key"
-            android:title="@string/pref_saved_log_path_title">
-        </Preference>
+            android:title="@string/pref_saved_log_path_title"></Preference>
 
         <Preference
             android:key="pref_crash_now"
-            android:title="@string/pref_crash_now">
-        </Preference>
+            android:title="@string/pref_crash_now"></Preference>
 
         <Preference
             android:key="pref_send_crash"
-            android:title="@string/pref_send_crash"
-            android:summary="@string/send_crash_log_to_author">
-        </Preference>
+            android:summary="@string/send_crash_log_to_author"
+            android:title="@string/pref_send_crash"></Preference>
 
         <Preference
             android:key="click_to_clean_cache"
@@ -100,13 +101,11 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_other_title" >
-        <Preference
-            android:title="@string/pref_about_title" >
+    <PreferenceCategory android:title="@string/pref_other_title">
+        <Preference android:title="@string/pref_about_title">
             <intent
-                android:targetPackage="@string/applicationId"
                 android:targetClass="com.jasonchen.microlang.preference.AboutActivity"
-                />
+                android:targetPackage="@string/applicationId" />
         </Preference>
     </PreferenceCategory>
 

@@ -1,10 +1,12 @@
 package com.jasonchen.microlang.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import android.widget.BaseAdapter;
 import android.widget.Toast;
 
 import com.jasonchen.microlang.R;
+import com.jasonchen.microlang.activitys.MainActivity;
 import com.jasonchen.microlang.adapter.MentionCommentAdapter;
 import com.jasonchen.microlang.beans.AccountBean;
 import com.jasonchen.microlang.beans.CommentBean;
@@ -26,7 +29,9 @@ import com.jasonchen.microlang.database.CommentToMeTimeLineDBTask;
 import com.jasonchen.microlang.exception.WeiboException;
 import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.swiperefresh.LoadListView;
+import com.jasonchen.microlang.utils.BundleArgsConstants;
 import com.jasonchen.microlang.utils.GlobalContext;
+import com.jasonchen.microlang.utils.UnreadTabIndex;
 import com.jasonchen.microlang.workers.TimeLineBitmapDownloader;
 
 import java.util.List;
@@ -321,6 +326,7 @@ public class CommentFragment extends AbstractAppFragment implements
     @Override
     public void onResume() {
         super.onResume();
+        Intent intent = getActivity().getIntent();
     }
 
     @Override

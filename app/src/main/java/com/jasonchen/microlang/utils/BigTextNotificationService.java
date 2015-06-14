@@ -269,7 +269,7 @@ public class BigTextNotificationService extends NotificationServiceHelper {
                         PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setDeleteIntent(deletedPendingIntent);
 
-        if (itemBean instanceof MessageBean) {
+        /*if (itemBean instanceof MessageBean) {
             MessageBean msg = (MessageBean) itemBean;
             Intent intent = MainActivity.newIntent(accountBean);
             PendingIntent pendingIntent = PendingIntent
@@ -285,7 +285,7 @@ public class BigTextNotificationService extends NotificationServiceHelper {
                             PendingIntent.FLAG_UPDATE_CURRENT);
             builder.addAction(R.drawable.reply_to_comment_light,
                     getApplicationContext().getString(R.string.reply), pendingIntent);
-        }
+        }*/
 
         String avatar = ((ItemBean) itemBean).getUser().getAvatar_large();
         String avatarPath = FileManager.getFilePathFromUrl(avatar, FileLocationMethod.avatar_large);
@@ -297,7 +297,7 @@ public class BigTextNotificationService extends NotificationServiceHelper {
             }
         }
 
-        if (count > 1) {
+        /*if (count > 1) {
 
             String actionName;
             int nextIndex;
@@ -321,18 +321,18 @@ public class BigTextNotificationService extends NotificationServiceHelper {
                             nextIntent,
                             PendingIntent.FLAG_UPDATE_CURRENT);
             builder.addAction(actionDrawable, actionName, retrySendIntent);
-        }
+        }*/
 
         Notification.BigTextStyle bigTextStyle = new Notification.BigTextStyle(builder);
         bigTextStyle.setBigContentTitle(
                 getItemBigContentTitle(accountBean, notificationItems, currentIndex));
         bigTextStyle.bigText(getItemBigText(notificationItems, currentIndex));
         String summaryText;
-        if (count > 1) {
-            summaryText = accountBean.getUsernick() + "(" + (currentIndex + 1) + "/" + count + ")";
-        } else {
+       // if (count > 1) {
+       //     summaryText = accountBean.getUsernick() + "(" + (currentIndex + 1) + "/" + count + ")";
+       // } else {
             summaryText = accountBean.getUsernick();
-        }
+       // }
         bigTextStyle.setSummaryText(summaryText);
 
         builder.setStyle(bigTextStyle);

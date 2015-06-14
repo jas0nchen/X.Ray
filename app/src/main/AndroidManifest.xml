@@ -108,6 +108,7 @@
         <activity android:name=".activitys.SettingActivity" />
         <activity android:name=".preference.AboutActivity" />
         <activity android:name=".preference.LicenseActivity" />
+        <activity android:name=".preference.NotificationActivity" />
 
         <!-- services -->
         <service android:name=".services.SendWeiboService" />
@@ -116,6 +117,15 @@
         <service android:name=".services.SendReplyToCommentService"></service>
         <service android:name=".services.FetchUnreadService"></service>
         <service android:name=".utils.BigTextNotificationService"></service>
+
+        <!-- recievers -->
+        <receiver
+            android:name=".receivers.ConnectionChangeReceiver"
+            android:label="NetworkConnection">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -38,7 +38,7 @@ import java.util.Vector;
  */
 @SuppressLint({"NewApi", "ResourceAsColor"})
 public class MentionTimeLineFragment extends AbstractAppFragment implements
-        SwipeRefreshLayout.OnRefreshListener, LoadListView.IXListViewListener {
+        SwipeRefreshLayout.OnRefreshListener, LoadListView.IXListViewListener, MentionFragment.refreshUnread {
 
     private View view;
 
@@ -405,4 +405,10 @@ public class MentionTimeLineFragment extends AbstractAppFragment implements
         return adapter.getList();
     }
 
+    @Override
+    public void refreshUnread() {
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(SettingUtility.getThemeColor()));
+        swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
+        onRefresh();
+    }
 }

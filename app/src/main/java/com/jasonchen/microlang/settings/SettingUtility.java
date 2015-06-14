@@ -53,25 +53,25 @@ public class SettingUtility {
         return value;
     }
 
-    public static int getTheme(){
+    public static int getTheme() {
         int index = SettingHelper.getSharedPreferences(getContext(), THEME, 6);
 
         return ThemeUtility.themeArr[index];
     }
 
-    public static int getThemeIndex(){
+    public static int getThemeIndex() {
         int index = SettingHelper.getSharedPreferences(getContext(), THEME, 6);
 
         return index;
     }
 
-    public static int getThemeColor(){
+    public static int getThemeColor() {
         int index = SettingHelper.getSharedPreferences(getContext(), THEME, 6);
 
         return ThemeUtility.themeColorArr[index];
     }
 
-    public static void setTheme(int index){
+    public static void setTheme(int index) {
         SettingHelper.setEditor(getContext(), THEME, index);
     }
 
@@ -171,12 +171,15 @@ public class SettingUtility {
     * .getSharedPreferences(getContext(),
     * SettingActivity.COMMENT_REPOST_AVATAR, "1"); return
     * Integer.valueOf(value); }
-    *
-    * public static int getListAvatarMode() { String value = SettingHelper
-    * .getSharedPreferences(getContext(), SettingActivity.LIST_AVATAR_MODE,
-    * "1"); return Integer.valueOf(value); }
-    *
-    * public static int getListPicMode() { String value = SettingHelper
+    */
+    public static int getListAvatarMode() {
+        String value = SettingHelper
+                .getSharedPreferences(getContext(), SettingActivity.LIST_AVATAR_MODE,
+                        "1");
+        return Integer.valueOf(value);
+    }
+
+    /* public static int getListPicMode() { String value = SettingHelper
     * .getSharedPreferences(getContext(), SettingActivity.LIST_PIC_MODE, "1");
     * return Integer.valueOf(value); }
     *
@@ -210,11 +213,13 @@ public class SettingUtility {
                 SettingActivity.SHOW_BIG_PIC, false);
     }
 
-    /*
-     * public static boolean getEnableFetchMSG() { return SettingHelper
-     * .getSharedPreferences(getContext(), SettingActivity.ENABLE_FETCH_MSG,
-     * false); }
-     */
+
+    public static boolean getEnableFetchMSG() {
+        return SettingHelper
+                .getSharedPreferences(getContext(), SettingActivity.ENABLE_FETCH_MSG,
+                        false);
+    }
+
     public static boolean getEnableAutoRefresh() {
         return SettingHelper
                 .getSharedPreferences(getContext(), SettingActivity.AUTO_REFRESH, false);
@@ -249,11 +254,13 @@ public class SettingUtility {
                 Utility.isSystemRinger(getContext());
     }
 
-    /* public static String getFrequency() { return
-    * SettingHelper.getSharedPreferences(getContext(),
-    * SettingActivity.FREQUENCY, "1"); }
-    *
-    * public static void setEnableBigPic(boolean value) {
+    public static String getFrequency() {
+        return
+                SettingHelper.getSharedPreferences(getContext(),
+                        SettingActivity.FREQUENCY, "1");
+    }
+
+    /* public static void setEnableBigPic(boolean value) {
     * SettingHelper.setEditor(getContext(), SettingActivity.SHOW_BIG_PIC,
     * value); }
     *
@@ -263,11 +270,12 @@ public class SettingUtility {
     *
     * public static void setEnableFilter(boolean value) {
     * SettingHelper.setEditor(getContext(), SettingActivity.FILTER, value); }
-    *
-    * public static void setEnableFetchMSG(boolean value) {
-    * SettingHelper.setEditor(getContext(), SettingActivity.ENABLE_FETCH_MSG,
-    * value); }
     */
+    public static void setEnableFetchMSG(boolean value) {
+        SettingHelper.setEditor(getContext(), SettingActivity.ENABLE_FETCH_MSG,
+                value);
+    }
+
     public static boolean allowVibrate() {
         return SettingHelper
                 .getSharedPreferences(getContext(), SettingActivity.ENABLE_VIBRATE,

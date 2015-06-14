@@ -19,7 +19,7 @@ public class NotificationUtility {
         // Forbidden being instantiated.
     }
 
-    /*public static int getCount(UnreadBean unreadBean) {
+    public static int getCount(UnreadBean unreadBean) {
         int count = 0;
 
         if (SettingUtility.allowMentionToMe()) {
@@ -35,7 +35,7 @@ public class NotificationUtility {
         }
 
         return count;
-    }*/
+    }
 
     @Deprecated
     public static String getTicker(UnreadBean unreadBean, MessageListBean mentionsWeibo,
@@ -44,7 +44,7 @@ public class NotificationUtility {
         int unreadMentionCmt = unreadBean.getMention_cmt();
         int unreadMentionStatus = unreadBean.getMention_status();
         int mention = 0;
-        /*if (SettingUtility.allowMentionToMe() && unreadMentionStatus > 0 && mentionsWeibo != null) {
+        if (SettingUtility.allowMentionToMe() && unreadMentionStatus > 0 && mentionsWeibo != null) {
             int actualFetchedSize = mentionsWeibo.getSize();
             if (actualFetchedSize < Integer.valueOf(SettingUtility.getMsgCount())) {
                 mention += actualFetchedSize;
@@ -60,7 +60,7 @@ public class NotificationUtility {
             } else {
                 mention += Math.max(actualFetchedSize, unreadMentionCmt);
             }
-        }*/
+        }
 
         StringBuilder stringBuilder = new StringBuilder();
         if (mention > 0) {
@@ -73,7 +73,7 @@ public class NotificationUtility {
 
         int cmt = 0;
 
-        /*if (SettingUtility.allowCommentToMe() && unreadCmt > 0 && commentsToMe != null) {
+        if (SettingUtility.allowCommentToMe() && unreadCmt > 0 && commentsToMe != null) {
 //
             int actualFetchedSize = commentsToMe.getSize();
             if (actualFetchedSize < Integer.valueOf(SettingUtility.getMsgCount())) {
@@ -92,7 +92,8 @@ public class NotificationUtility {
                                 String.valueOf(cmt));
                 stringBuilder.append(txt);
             }
-        }*/
+        }
+
         return stringBuilder.toString();
     }
 

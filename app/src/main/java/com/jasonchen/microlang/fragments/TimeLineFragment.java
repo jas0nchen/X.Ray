@@ -812,8 +812,10 @@ public class TimeLineFragment extends TimeLineBaseFragment {
                 FriendGroupDao dao = new FriendGroupDao(GlobalContext.getInstance().getSpecialToken());
                 try {
                     GroupListBean list = dao.getGroup();
-                    GroupDBTask.update(list, GlobalContext.getInstance().getCurrentAccountId());
-                    AppLogger.e(list.toString());
+                    if(list != null) {
+                        GroupDBTask.update(list, GlobalContext.getInstance().getCurrentAccountId());
+                        AppLogger.e(list.toString());
+                    }
                 } catch (WeiboException e) {
                     e.printStackTrace();
                 }

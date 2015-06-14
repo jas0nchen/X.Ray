@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -50,6 +51,7 @@ import com.jasonchen.microlang.tasks.MyAsyncTask;
 import com.jasonchen.microlang.utils.BundleArgsConstants;
 import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.MythouCrashHandler;
+import com.jasonchen.microlang.utils.UnreadTabIndex;
 import com.jasonchen.microlang.utils.Utility;
 import com.jasonchen.microlang.utils.ViewUtility;
 import com.jasonchen.microlang.utils.file.FileLocationMethod;
@@ -106,7 +108,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                                    MessageListBean mentionsWeiboData,
                                    CommentListBean mentionsCommentData,
                                    CommentListBean commentsToMeData, UnreadBean unreadBean) {
-        Intent intent = new Intent();
+        Intent intent = new Intent(GlobalContext.getInstance(), MainActivity.class);
         intent.putExtra(BundleArgsConstants.ACCOUNT_EXTRA, accountBean);
         intent.putExtra(BundleArgsConstants.MENTIONS_WEIBO_EXTRA,
                 mentionsWeiboData);
@@ -335,9 +337,48 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
             getSupportFragmentManager().beginTransaction().add(R.id.container, homeFragment).show(homeFragment).commit();
             getSupportFragmentManager().beginTransaction().add(homeFragment, TimeLineBaseFragment.class.getName());
         }
+        getMentionFragment();
+        getCommentFragment();
         getSupportActionBar().setTitle(accountBean.getUsernick());
         currentFragemnt = homeFragment;
 
+        if(getIntent().getSerializableExtra(BundleArgsConstants.OPEN_NAVIGATION_INDEX_EXTRA) != null) {
+            UnreadTabIndex unreadTabIndex = (UnreadTabIndex) getIntent().getSerializableExtra(BundleArgsConstants.OPEN_NAVIGATION_INDEX_EXTRA);
+            switch (unreadTabIndex){
+                case MENTION_WEIBO:
+                    Fragment fragment = getMentionFragment();
+                    if (fragment.isAdded()) {
+                        getSupportFragmentManager().beginTransaction().show(fragment).hide(currentFragemnt).commit();
+                    } else {
+                        getSupportFragmentManager().beginTransaction().add(R.id.container, fragment).show(fragment).hide(currentFragemnt).commit();
+                    }
+                    getSupportActionBar().setTitle(getString(R.string.mention));
+                    currentFragemnt = fragment;
+                    break;
+                case MENTION_COMMENT:
+                    Fragment newFragment = getMentionFragment();
+                    if (newFragment.isAdded()) {
+                        getSupportFragmentManager().beginTransaction().show(newFragment).hide(currentFragemnt).commit();
+                    } else {
+                        getSupportFragmentManager().beginTransaction().add(R.id.container, newFragment).show(newFragment).hide(currentFragemnt).commit();
+                    }
+                    getSupportActionBar().setTitle(getString(R.string.mention));
+                    currentFragemnt = newFragment;
+                    break;
+                case COMMENT_TO_ME:
+                    Fragment commentFragment = getCommentFragment();
+                    if (commentFragment.isAdded()) {
+                        getSupportFragmentManager().beginTransaction().show(commentFragment).hide(currentFragemnt).commit();
+                    } else {
+                        getSupportFragmentManager().beginTransaction().add(R.id.container, commentFragment).show(commentFragment).hide(currentFragemnt).commit();
+                    }
+                    getIntent().putExtra(BundleArgsConstants.OPEN_NAVIGATION_INDEX_EXTRA,
+                            UnreadTabIndex.NONE);
+                    getSupportActionBar().setTitle(getString(R.string.comment_me));
+                    currentFragemnt = commentFragment;
+                    break;
+            }
+        }
         // Adjust drawer layout params
         mDrawerWrapper.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -557,7 +598,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         }, 250);
     }
 
-    private android.support.v4.app.Fragment getTimeLineFragment() {
+    public android.support.v4.app.Fragment getCurrentFragment() {
+        return currentFragemnt;
+    }
+
+    public android.support.v4.app.Fragment getTimeLineFragment() {
         TimeLineBaseFragment fragment = ((TimeLineBaseFragment) getSupportFragmentManager()
                 .findFragmentByTag(TimeLineBaseFragment.class.getName()));
         if (fragment == null) {
@@ -567,7 +612,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         return fragment;
     }
 
-    private android.support.v4.app.Fragment getMentionFragment() {
+    public android.support.v4.app.Fragment getMentionFragment() {
         MentionFragment fragment = (MentionFragment) getSupportFragmentManager().findFragmentByTag(MentionFragment.class.getName());
         if (fragment == null) {
             fragment = MentionFragment.newInstance(accountBean, userBean, token);
@@ -576,7 +621,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         return fragment;
     }
 
-    private android.support.v4.app.Fragment getCommentFragment() {
+    public android.support.v4.app.Fragment getCommentFragment() {
         CommentFragment fragment = (CommentFragment) getSupportFragmentManager().findFragmentByTag(CommentFragment.class.getName());
         if (fragment == null) {
             fragment = CommentFragment.newInstance(accountBean, userBean, token);

@@ -242,8 +242,7 @@ public class AppNotificationCenter {
             MessageListBean mentionsWeiboData, CommentListBean commentsToMeData
             , CommentListBean mentionsCommentData, UnreadBean unreadBean) {
 
-        Intent clickNotificationToOpenAppPendingIntentInner = MainActivity.newIntent(accountBean, mentionsWeiboData, mentionsCommentData,
-                commentsToMeData, unreadBean);
+        Intent clickNotificationToOpenAppPendingIntentInner = MainActivity.newIntent(accountBean);
         clickNotificationToOpenAppPendingIntentInner
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 
