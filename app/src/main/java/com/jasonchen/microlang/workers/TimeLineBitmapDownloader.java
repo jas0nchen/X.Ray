@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import com.jasonchen.microlang.R;
 import com.jasonchen.microlang.beans.MessageBean;
 import com.jasonchen.microlang.beans.UserBean;
+import com.jasonchen.microlang.debug.AppLogger;
 import com.jasonchen.microlang.interfaces.IPictureWorker;
 import com.jasonchen.microlang.interfaces.ISimRayDrawable;
 import com.jasonchen.microlang.settings.SettingUtility;
@@ -40,235 +41,234 @@ import java.util.List;
  */
 public class TimeLineBitmapDownloader {
 
-	private int defaultPictureResId;
+    private int defaultPictureResId;
 
-	private Handler handler;
+    private Handler handler;
 
-	static volatile boolean pauseDownloadWork = false;
-	static final Object pauseDownloadWorkLock = new Object();
+    static volatile boolean pauseDownloadWork = false;
+    static final Object pauseDownloadWorkLock = new Object();
 
-	static volatile boolean pauseReadWork = false;
-	static final Object pauseReadWorkLock = new Object();
+    static volatile boolean pauseReadWork = false;
+    static final Object pauseReadWorkLock = new Object();
 
-	private static final Object lock = new Object();
+    private static final Object lock = new Object();
 
-	private static TimeLineBitmapDownloader instance;
+    private static TimeLineBitmapDownloader instance;
 
-	private TimeLineBitmapDownloader(Handler handler) {
-		this.handler = handler;
-		this.defaultPictureResId = R.drawable.timeline_image_loading;
-	}
+    private TimeLineBitmapDownloader(Handler handler) {
+        this.handler = handler;
+        this.defaultPictureResId = R.drawable.timeline_image_loading;
+    }
 
-	public static TimeLineBitmapDownloader getInstance() {
-		synchronized (lock) {
-			if (instance == null) {
-				instance = new TimeLineBitmapDownloader(new Handler(
-						Looper.getMainLooper()));
-			}
-		}
-		return instance;
-	}
+    public static TimeLineBitmapDownloader getInstance() {
+        synchronized (lock) {
+            if (instance == null) {
+                instance = new TimeLineBitmapDownloader(new Handler(
+                        Looper.getMainLooper()));
+            }
+        }
+        return instance;
+    }
 
-	public static void refreshThemePictureBackground() {
-		synchronized (lock) {
-			instance = new TimeLineBitmapDownloader(new Handler(
-					Looper.getMainLooper()));
-		}
-	}
+    public static void refreshThemePictureBackground() {
+        synchronized (lock) {
+            instance = new TimeLineBitmapDownloader(new Handler(
+                    Looper.getMainLooper()));
+        }
+    }
 
-	/**
-	 * Pause any ongoing background work. This can be used as a temporary
-	 * measure to improve performance. For example background work could be
-	 * paused when a ListView or GridView is being scrolled using a
-	 * {@link android.widget.AbsListView.OnScrollListener} to keep scrolling
-	 * smooth.
-	 * <p/>
-	 * If work is paused, be sure setPauseDownloadWork(false) is called again
-	 * before your fragment or activity is destroyed (for example during
-	 * {@link android.app.Activity#onPause()}), or there is a risk the
-	 * background thread will never finish.
-	 */
-	public void setPauseDownloadWork(boolean pauseWork) {
-		synchronized (pauseDownloadWorkLock) {
-			TimeLineBitmapDownloader.pauseDownloadWork = pauseWork;
-			if (!TimeLineBitmapDownloader.pauseDownloadWork) {
-				pauseDownloadWorkLock.notifyAll();
-			}
-		}
-	}
+    /**
+     * Pause any ongoing background work. This can be used as a temporary
+     * measure to improve performance. For example background work could be
+     * paused when a ListView or GridView is being scrolled using a
+     * {@link android.widget.AbsListView.OnScrollListener} to keep scrolling
+     * smooth.
+     * <p/>
+     * If work is paused, be sure setPauseDownloadWork(false) is called again
+     * before your fragment or activity is destroyed (for example during
+     * {@link android.app.Activity#onPause()}), or there is a risk the
+     * background thread will never finish.
+     */
+    public void setPauseDownloadWork(boolean pauseWork) {
+        synchronized (pauseDownloadWorkLock) {
+            TimeLineBitmapDownloader.pauseDownloadWork = pauseWork;
+            if (!TimeLineBitmapDownloader.pauseDownloadWork) {
+                pauseDownloadWorkLock.notifyAll();
+            }
+        }
+    }
 
-	public void setPauseReadWork(boolean pauseWork) {
-		synchronized (pauseReadWorkLock) {
-			TimeLineBitmapDownloader.pauseReadWork = pauseWork;
-			if (!TimeLineBitmapDownloader.pauseReadWork) {
-				pauseReadWorkLock.notifyAll();
-			}
-		}
-	}
+    public void setPauseReadWork(boolean pauseWork) {
+        synchronized (pauseReadWorkLock) {
+            TimeLineBitmapDownloader.pauseReadWork = pauseWork;
+            if (!TimeLineBitmapDownloader.pauseReadWork) {
+                pauseReadWorkLock.notifyAll();
+            }
+        }
+    }
 
-	protected Bitmap getBitmapFromMemCache(String key) {
-		if (TextUtils.isEmpty(key)) {
-			return null;
-		} else {
-			return GlobalContext.getInstance().getBitmapCache().get(key);
-		}
-	}
+    protected Bitmap getBitmapFromMemCache(String key) {
+        if (TextUtils.isEmpty(key)) {
+            return null;
+        } else {
+            return GlobalContext.getInstance().getBitmapCache().get(key);
+        }
+    }
 
-	public void downloadAvatar(ImageView view, UserBean user) {
-		downloadAvatar(view, user, false);
-	}
+    public void downloadAvatar(ImageView view, UserBean user) {
+        downloadAvatar(view, user, false);
+    }
 
-	public void downloadAvatar(ImageView view, UserBean user, Fragment fragment) {
-		// boolean isFling = fragment.isListViewFling();
-		downloadAvatar(view, user, false);
-	}
+    public void downloadAvatar(ImageView view, UserBean user, Fragment fragment) {
+        // boolean isFling = fragment.isListViewFling();
+        downloadAvatar(view, user, false);
+    }
 
-	public void downloadAvatar(ImageView view, UserBean user, boolean isFling) {
+    public void downloadAvatar(ImageView view, UserBean user, boolean isFling) {
 
-		if (user == null) {
-			view.setImageResource(defaultPictureResId);
-			return;
-		}
+        if (user == null) {
+            view.setImageResource(defaultPictureResId);
+            return;
+        }
 
-		String url;
-		FileLocationMethod method;
-		if (SettingUtility.getEnableBigAvatar()) {
-			url = user.getAvatar_large();
-			method = FileLocationMethod.avatar_large;
-		} else {
-			url = user.getProfile_image_url();
-			method = FileLocationMethod.avatar_small;
-		}
-		displayImageView(view, url, method, isFling, false);
-	}
+        String url;
+        FileLocationMethod method;
+        if (SettingUtility.getEnableBigAvatar()) {
+            url = user.getAvatar_large();
+            method = FileLocationMethod.avatar_large;
+        } else {
+            url = user.getProfile_image_url();
+            method = FileLocationMethod.avatar_small;
+        }
+        displayImageView(view, url, method, isFling, false);
+    }
 
 
+    public void downContentPic(ImageView view, MessageBean msg,
+                               Fragment fragment) {
+        String picUrl;
 
-	public void downContentPic(ImageView view, MessageBean msg,
-			Fragment fragment) {
-		String picUrl;
+        // boolean isFling = fragment.isListViewFling();
 
-		// boolean isFling = fragment.isListViewFling();
+        if (SettingUtility.getEnableBigPic()) {
+            picUrl = msg.getOriginal_pic();
+            displayImageView(view, picUrl, FileLocationMethod.picture_large,
+                    false, false);
+        } else {
+            picUrl = msg.getThumbnail_pic();
+            displayImageView(view, picUrl,
+                    FileLocationMethod.picture_thumbnail, false, false);
+        }
+    }
 
-		if (SettingUtility.getEnableBigPic()) {
-			picUrl = msg.getOriginal_pic();
-			displayImageView(view, picUrl, FileLocationMethod.picture_large,
-					false, false);
-		} else {
-			picUrl = msg.getThumbnail_pic();
-			displayImageView(view, picUrl,
-					FileLocationMethod.picture_thumbnail, false, false);
-		}
-	}
+    public void displayMultiPicture(ISimRayDrawable view, String picUrl,
+                                    FileLocationMethod method, boolean isFling) {
 
-	public void displayMultiPicture(ISimRayDrawable view, String picUrl,
-			FileLocationMethod method, boolean isFling) {
+        // boolean isFling = fragment.isListViewFling();
 
-		// boolean isFling = fragment.isListViewFling();
+        display(view, picUrl, method, isFling, true);
+    }
 
-		display(view, picUrl, method, isFling, true);
-	}
+    public void displayMultiPicture(ISimRayDrawable view, String picUrl,
+                                    FileLocationMethod method) {
 
-	public void displayMultiPicture(ISimRayDrawable view, String picUrl,
-			FileLocationMethod method) {
+        display(view, picUrl, method, false, true);
+    }
 
-		display(view, picUrl, method, false, true);
-	}
+    public void downContentPic(TimeLineImageView view, MessageBean msg,
+                               Boolean isFling) {
+        String picUrl;
 
-	public void downContentPic(TimeLineImageView view, MessageBean msg,
-			Boolean isFling) {
-		String picUrl;
+        // boolean isFling = fragment.isListViewFling();
 
-		// boolean isFling = fragment.isListViewFling();
-
-		if (SettingUtility.getEnableBigPic()) {
-			picUrl = msg.getOriginal_pic();
-			displayContentPic(view, picUrl, FileLocationMethod.picture_large, isFling,
+        if (SettingUtility.getEnableBigPic()) {
+            picUrl = msg.getOriginal_pic();
+            displayContentPic(view, picUrl, FileLocationMethod.picture_large, isFling,
                     false);
-		} else {
-			picUrl = msg.getThumbnail_pic();
-			displayContentPic(view, picUrl, FileLocationMethod.picture_thumbnail,
+        } else {
+            picUrl = msg.getThumbnail_pic();
+            displayContentPic(view, picUrl, FileLocationMethod.picture_thumbnail,
                     isFling, false);
-		}
-	}
+        }
+    }
 
-	/**
-	 * when user open weibo detail, the activity will setResult to previous
-	 * Activity, timeline will refresh at the time user press back button to
-	 * display the latest repost count and comment count. But sometimes, weibo
-	 * detail's pictures are very large that bitmap memory cache has cleared
-	 * those timeline bitmap to save memory, app have to read bitmap from sd
-	 * card again, then app play annoying animation , this method will check
-	 * whether we should read again or not.
-	 */
-	/*
+    /**
+     * when user open weibo detail, the activity will setResult to previous
+     * Activity, timeline will refresh at the time user press back button to
+     * display the latest repost count and comment count. But sometimes, weibo
+     * detail's pictures are very large that bitmap memory cache has cleared
+     * those timeline bitmap to save memory, app have to read bitmap from sd
+     * card again, then app play annoying animation , this method will check
+     * whether we should read again or not.
+     */
+    /*
      **/
-	private boolean shouldReloadPicture(ImageView view, String urlKey) {
-		if (urlKey.equals(view.getTag())
-				&& view.getDrawable() != null
-				&& view.getDrawable() instanceof BitmapDrawable
-				&& ((BitmapDrawable) view.getDrawable() != null && ((BitmapDrawable) view
-						.getDrawable()).getBitmap() != null)) {
-			// AppLogger.d("shouldReloadPicture=false");
-			return false;
-		} else {
-			view.setTag(null);
-			// AppLogger.d("shouldReloadPicture=true");
-			return true;
-		}
-	}
+    private boolean shouldReloadPicture(ImageView view, String urlKey) {
+        if (urlKey.equals(view.getTag())
+                && view.getDrawable() != null
+                && view.getDrawable() instanceof BitmapDrawable
+                && ((BitmapDrawable) view.getDrawable() != null && ((BitmapDrawable) view
+                .getDrawable()).getBitmap() != null)) {
+            // AppLogger.d("shouldReloadPicture=false");
+            return false;
+        } else {
+            view.setTag(null);
+            // AppLogger.d("shouldReloadPicture=true");
+            return true;
+        }
+    }
 
-	private void displayImageView(final ImageView view, final String urlKey,
-			final FileLocationMethod method, boolean isFling,
-			boolean isMultiPictures) {
-		view.clearAnimation();
+    private void displayImageView(final ImageView view, final String urlKey,
+                                  final FileLocationMethod method, boolean isFling,
+                                  boolean isMultiPictures) {
+        view.clearAnimation();
 
-		if (!shouldReloadPicture(view, urlKey)) {
-			return;
-		}
+        if (!shouldReloadPicture(view, urlKey)) {
+            return;
+        }
 
-		final Bitmap bitmap = getBitmapFromMemCache(urlKey);
-		if (bitmap != null) {
-			view.setImageBitmap(bitmap);
-			view.setTag(urlKey);
-			if (view.getAlpha() != 1.0f) {
-				view.setAlpha(1.0f);
-			}
-			cancelPotentialDownload(urlKey, view);
-		} else {
+        final Bitmap bitmap = getBitmapFromMemCache(urlKey);
+        if (bitmap != null) {
+            view.setImageBitmap(bitmap);
+            view.setTag(urlKey);
+            if (view.getAlpha() != 1.0f) {
+                view.setAlpha(1.0f);
+            }
+            cancelPotentialDownload(urlKey, view);
+        } else {
 
-			if (isFling) {
-				view.setImageResource(defaultPictureResId);
-				return;
-			}
+            if (isFling) {
+                view.setImageResource(defaultPictureResId);
+                return;
+            }
 
-			if (!cancelPotentialDownload(urlKey, view)) {
-				return;
-			}
+            if (!cancelPotentialDownload(urlKey, view)) {
+                return;
+            }
 
-			final LocalOrNetworkChooseWorker newTask = new LocalOrNetworkChooseWorker(
-					view, urlKey, method, isMultiPictures);
-			PictureBitmapDrawable downloadedDrawable = new PictureBitmapDrawable(
-					newTask);
-			view.setImageDrawable(downloadedDrawable);
+            final LocalOrNetworkChooseWorker newTask = new LocalOrNetworkChooseWorker(
+                    view, urlKey, method, isMultiPictures);
+            PictureBitmapDrawable downloadedDrawable = new PictureBitmapDrawable(
+                    newTask);
+            view.setImageDrawable(downloadedDrawable);
 
-			// listview fast scroll performance
-			handler.postDelayed(new Runnable() {
-				@Override
-				public void run() {
+            // listview fast scroll performance
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
 
-					if (getBitmapDownloaderTask(view) == newTask) {
-						newTask.executeOnNormal();
-					}
-					return;
-				}
-			}, 400);
-		}
-	}
+                    if (getBitmapDownloaderTask(view) == newTask) {
+                        newTask.executeOnNormal();
+                    }
+                    return;
+                }
+            }, 400);
+        }
+    }
 
     private void displayContentPic(final TimeLineImageView view, final String urlKey,
-                         final FileLocationMethod method, boolean isFling,
-                         boolean isMultiPictures) {
+                                   final FileLocationMethod method, boolean isFling,
+                                   boolean isMultiPictures) {
         view.getImageView().clearAnimation();
 
         if (!shouldReloadPicture(view.getImageView(), urlKey)) {
@@ -286,10 +286,21 @@ public class TimeLineBitmapDownloader {
 
             params.height = result.get(1).intValue();
             params.width = result.get(0).intValue();
-            view.setLayoutParams(params);
-            view.requestLayout();
-            System.out.println("view params height:" + params.height + "width:" + params.width);
-            view.getImageView().setScaleType(ImageView.ScaleType.FIT_XY);
+            float mResult = result.get(1) / result.get(0);
+            AppLogger.e("高宽比：" + mResult);
+            if (mResult >= 5.0) {
+                params.height = Utility.dip2px(157);
+                params.width = Utility.dip2px(157) / 2;
+                view.setLayoutParams(params);
+                view.requestLayout();
+                view.getImageView().setScaleType(ImageView.ScaleType.CENTER_CROP);
+                AppLogger.e("宽度：："+params.width);
+            }else{
+                view.setLayoutParams(params);
+                view.requestLayout();
+                System.out.println("view params height:" + params.height + "width:" + params.width);
+                view.getImageView().setScaleType(ImageView.ScaleType.FIT_XY);
+            }
             view.setImageBitmap(bitmap);
             view.getImageView().setTag(urlKey);
             if (view.getProgressBar() != null) {
@@ -335,315 +346,315 @@ public class TimeLineBitmapDownloader {
         }
     }
 
-	private void display(final ISimRayDrawable view, final String urlKey,
-			final FileLocationMethod method, boolean isFling,
-			boolean isMultiPictures) {
-		view.getImageView().clearAnimation();
+    private void display(final ISimRayDrawable view, final String urlKey,
+                         final FileLocationMethod method, boolean isFling,
+                         boolean isMultiPictures) {
+        view.getImageView().clearAnimation();
 
-		if (!shouldReloadPicture(view.getImageView(), urlKey)) {
-			return;
-		}
+        if (!shouldReloadPicture(view.getImageView(), urlKey)) {
+            return;
+        }
 
-		final Bitmap bitmap = getBitmapFromMemCache(urlKey);
-		if (bitmap != null) {
-			view.setImageBitmap(bitmap);
-			view.getImageView().setTag(urlKey);
-			if (view.getProgressBar() != null) {
-				view.getProgressBar().setVisibility(View.INVISIBLE);
-			}
-			if (view.getImageView().getAlpha() != 1.0f) {
-				view.getImageView().setAlpha(1.0f);
-			}
-			view.setGifFlag(ImageUtility.isThisPictureGif(urlKey));
-			cancelPotentialDownload(urlKey, view.getImageView());
-		} else {
+        final Bitmap bitmap = getBitmapFromMemCache(urlKey);
+        if (bitmap != null) {
+            view.setImageBitmap(bitmap);
+            view.getImageView().setTag(urlKey);
+            if (view.getProgressBar() != null) {
+                view.getProgressBar().setVisibility(View.INVISIBLE);
+            }
+            if (view.getImageView().getAlpha() != 1.0f) {
+                view.getImageView().setAlpha(1.0f);
+            }
+            view.setGifFlag(ImageUtility.isThisPictureGif(urlKey));
+            cancelPotentialDownload(urlKey, view.getImageView());
+        } else {
 
-			if (isFling) {
-				view.getImageView().setImageResource(defaultPictureResId);
-				if (view.getProgressBar() != null) {
-					view.getProgressBar().setVisibility(View.INVISIBLE);
-				}
-				view.setGifFlag(ImageUtility.isThisPictureGif(urlKey));
-				// return;
-			}
+            if (isFling) {
+                view.getImageView().setImageResource(defaultPictureResId);
+                if (view.getProgressBar() != null) {
+                    view.getProgressBar().setVisibility(View.INVISIBLE);
+                }
+                view.setGifFlag(ImageUtility.isThisPictureGif(urlKey));
+                // return;
+            }
 
-			if (!cancelPotentialDownload(urlKey, view.getImageView())) {
-				return;
-			}
+            if (!cancelPotentialDownload(urlKey, view.getImageView())) {
+                return;
+            }
 
-			final LocalOrNetworkChooseWorker newTask = new LocalOrNetworkChooseWorker(
-					view, urlKey, method, isMultiPictures);
-			PictureBitmapDrawable downloadedDrawable = new PictureBitmapDrawable(
-					newTask);
-			view.setImageDrawable(downloadedDrawable);
+            final LocalOrNetworkChooseWorker newTask = new LocalOrNetworkChooseWorker(
+                    view, urlKey, method, isMultiPictures);
+            PictureBitmapDrawable downloadedDrawable = new PictureBitmapDrawable(
+                    newTask);
+            view.setImageDrawable(downloadedDrawable);
 
-			// listview fast scroll performance
-			handler.postDelayed(new Runnable() {
-				@Override
-				public void run() {
+            // listview fast scroll performance
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
 
-					if (getBitmapDownloaderTask(view.getImageView()) == newTask) {
-						newTask.executeOnNormal();
-					}
-					return;
-				}
-			}, 400);
-		}
-	}
+                    if (getBitmapDownloaderTask(view.getImageView()) == newTask) {
+                        newTask.executeOnNormal();
+                    }
+                    return;
+                }
+            }, 400);
+        }
+    }
 
-	public void totalStopLoadPicture() {
+    public void totalStopLoadPicture() {
 
-	}
+    }
 
-	private static boolean cancelPotentialDownload(String url,
-			ImageView imageView) {
-		IPictureWorker bitmapDownloaderTask = getBitmapDownloaderTask(imageView);
+    private static boolean cancelPotentialDownload(String url,
+                                                   ImageView imageView) {
+        IPictureWorker bitmapDownloaderTask = getBitmapDownloaderTask(imageView);
 
-		if (bitmapDownloaderTask != null) {
-			String bitmapUrl = bitmapDownloaderTask.getUrl();
-			if ((bitmapUrl == null) || (!bitmapUrl.equals(url))) {
-				if (bitmapDownloaderTask instanceof MyAsyncTask) {
-					((MyAsyncTask) bitmapDownloaderTask).cancel(true);
-				}
-			} else {
-				return false;
-			}
-		}
-		return true;
-	}
+        if (bitmapDownloaderTask != null) {
+            String bitmapUrl = bitmapDownloaderTask.getUrl();
+            if ((bitmapUrl == null) || (!bitmapUrl.equals(url))) {
+                if (bitmapDownloaderTask instanceof MyAsyncTask) {
+                    ((MyAsyncTask) bitmapDownloaderTask).cancel(true);
+                }
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
 
-	private static IPictureWorker getBitmapDownloaderTask(ImageView imageView) {
-		if (imageView != null) {
-			Drawable drawable = imageView.getDrawable();
-			if (drawable instanceof PictureBitmapDrawable) {
-				PictureBitmapDrawable downloadedDrawable = (PictureBitmapDrawable) drawable;
-				return downloadedDrawable.getBitmapDownloaderTask();
-			}
-		}
-		return null;
-	}
+    private static IPictureWorker getBitmapDownloaderTask(ImageView imageView) {
+        if (imageView != null) {
+            Drawable drawable = imageView.getDrawable();
+            if (drawable instanceof PictureBitmapDrawable) {
+                PictureBitmapDrawable downloadedDrawable = (PictureBitmapDrawable) drawable;
+                return downloadedDrawable.getBitmapDownloaderTask();
+            }
+        }
+        return null;
+    }
 
-	public void display(final ImageView imageView, final int width,
-			final int height, final String url,
-			final FileLocationMethod method, boolean isFling) {
-		ArrayList<ImageView> imageViewArrayList = new ArrayList<ImageView>();
-		imageViewArrayList.add(imageView);
-		display(imageViewArrayList, width, height, url, method, null, isFling);
-	}
+    public void display(final ImageView imageView, final int width,
+                        final int height, final String url,
+                        final FileLocationMethod method, boolean isFling) {
+        ArrayList<ImageView> imageViewArrayList = new ArrayList<ImageView>();
+        imageViewArrayList.add(imageView);
+        display(imageViewArrayList, width, height, url, method, null, isFling);
+    }
 
-	public void displayRoundAvatar(final ImageView imageView, final int width,
-			final int height, final String url,
-			final FileLocationMethod method, boolean isFling) {
+    public void displayRoundAvatar(final ImageView imageView, final int width,
+                                   final int height, final String url,
+                                   final FileLocationMethod method, boolean isFling) {
 
-		//displayImageView(imageView, url, method, isFling, false);
-		displayReoundAvatar(imageView, width, height, url, method, null,
-				isFling);
-	}
+        //displayImageView(imageView, url, method, isFling, false);
+        displayReoundAvatar(imageView, width, height, url, method, null,
+                isFling);
+    }
 
-	public void displayReoundAvatar(final ImageView view, final int width,
-			final int height, final String url,
-			final FileLocationMethod method,
-			final ArrayList<Animation> animations, boolean isFling) {
-		if (TextUtils.isEmpty(url)) {
-			return;
-		}
-		if (!shouldReloadPicture(view, url)) {
-			return;
-		}
+    public void displayReoundAvatar(final ImageView view, final int width,
+                                    final int height, final String url,
+                                    final FileLocationMethod method,
+                                    final ArrayList<Animation> animations, boolean isFling) {
+        if (TextUtils.isEmpty(url)) {
+            return;
+        }
+        if (!shouldReloadPicture(view, url)) {
+            return;
+        }
 
-		final Bitmap bitmap = getBitmapFromMemCache(url);
-		if (bitmap != null) {
-			view.setImageBitmap(bitmap);
-			view.setTag(url);
+        final Bitmap bitmap = getBitmapFromMemCache(url);
+        if (bitmap != null) {
+            view.setImageBitmap(bitmap);
+            view.setTag(url);
 
-			if (view.getAlpha() != 1.0f) {
-				view.setAlpha(1.0f);
-			}
-			cancelPotentialDownload(url, view);
-			return;
-		}
+            if (view.getAlpha() != 1.0f) {
+                view.setAlpha(1.0f);
+            }
+            cancelPotentialDownload(url, view);
+            return;
+        }
 
-		if (isFling) {
-			view.setImageResource(defaultPictureResId);
-		}
+        if (isFling) {
+            view.setImageResource(defaultPictureResId);
+        }
 
-		new MyAsyncTask<Void, Bitmap, Bitmap>() {
+        new MyAsyncTask<Void, Bitmap, Bitmap>() {
 
-			@Override
-			protected Bitmap doInBackground(Void... params) {
-				Bitmap bitmap = null;
+            @Override
+            protected Bitmap doInBackground(Void... params) {
+                Bitmap bitmap = null;
 
-				String path = FileManager.getFilePathFromUrl(url, method);
+                String path = FileManager.getFilePathFromUrl(url, method);
 
-				if (!(ImageUtility.isThisBitmapCanRead(path) && TaskCache
-						.isThisUrlTaskFinished(url))) {
+                if (!(ImageUtility.isThisBitmapCanRead(path) && TaskCache
+                        .isThisUrlTaskFinished(url))) {
 
-					boolean downloaded = TaskCache.waitForPictureDownload(url,
+                    boolean downloaded = TaskCache.waitForPictureDownload(url,
                             null, FileManager.generateDownloadFileName(url),
                             method);
-					if (downloaded) {
-						path = FileManager.getFilePathFromUrl(url, method);
-					}
-				}
+                    if (downloaded) {
+                        path = FileManager.getFilePathFromUrl(url, method);
+                    }
+                }
 
-				if (!TextUtils.isEmpty(path)) {
-					bitmap = ImageUtility.readNormalPic(path, width, height);
-				}
-				return bitmap;
-			}
+                if (!TextUtils.isEmpty(path)) {
+                    bitmap = ImageUtility.readNormalPic(path, width, height);
+                }
+                return bitmap;
+            }
 
-			@Override
-			protected void onPostExecute(Bitmap bitmap) {
-				super.onPostExecute(bitmap);
-				if (bitmap != null) {
-					GlobalContext.getInstance().getBitmapCache()
-							.put(url, bitmap);
-					view.setImageDrawable(new BitmapDrawable(GlobalContext
-							.getInstance().getResources(), bitmap));
-					view.setTag(url);
-					// Animation animation = animations.get(0);
-					// view.startAnimation(animation);
-				}
-			}
-		}.executeOnExecutor(MyAsyncTask.THREAD_POOL_EXECUTOR);
-	}
+            @Override
+            protected void onPostExecute(Bitmap bitmap) {
+                super.onPostExecute(bitmap);
+                if (bitmap != null) {
+                    GlobalContext.getInstance().getBitmapCache()
+                            .put(url, bitmap);
+                    view.setImageDrawable(new BitmapDrawable(GlobalContext
+                            .getInstance().getResources(), bitmap));
+                    view.setTag(url);
+                    // Animation animation = animations.get(0);
+                    // view.startAnimation(animation);
+                }
+            }
+        }.executeOnExecutor(MyAsyncTask.THREAD_POOL_EXECUTOR);
+    }
 
-	public void display(final ArrayList<ImageView> imageView, final int width,
-			final int height, final String url,
-			final FileLocationMethod method,
-			final ArrayList<Animation> animations, boolean isFling) {
-		if (TextUtils.isEmpty(url)) {
-			return;
-		}
+    public void display(final ArrayList<ImageView> imageView, final int width,
+                        final int height, final String url,
+                        final FileLocationMethod method,
+                        final ArrayList<Animation> animations, boolean isFling) {
+        if (TextUtils.isEmpty(url)) {
+            return;
+        }
 
-		final Bitmap bitmap = getBitmapFromMemCache(url);
-		if (bitmap != null && bitmap.getHeight() == height
-				&& bitmap.getWidth() == width) {
-			for (int i = 0; i < imageView.size(); i++) {
-				ImageView imageView1 = imageView.get(i);
-				imageView1.setImageDrawable(new BitmapDrawable(GlobalContext
-						.getInstance().getResources(), bitmap));
-				if (animations != null && animations.size() > i) {
-					Animation animation = animations.get(i);
-					imageView1.startAnimation(animation);
-				}
-			}
-			return;
-		}
+        final Bitmap bitmap = getBitmapFromMemCache(url);
+        if (bitmap != null && bitmap.getHeight() == height
+                && bitmap.getWidth() == width) {
+            for (int i = 0; i < imageView.size(); i++) {
+                ImageView imageView1 = imageView.get(i);
+                imageView1.setImageDrawable(new BitmapDrawable(GlobalContext
+                        .getInstance().getResources(), bitmap));
+                if (animations != null && animations.size() > i) {
+                    Animation animation = animations.get(i);
+                    imageView1.startAnimation(animation);
+                }
+            }
+            return;
+        }
 
-		new MyAsyncTask<Void, Bitmap, Bitmap>() {
+        new MyAsyncTask<Void, Bitmap, Bitmap>() {
 
-			@Override
-			protected Bitmap doInBackground(Void... params) {
-				Bitmap bitmap = null;
+            @Override
+            protected Bitmap doInBackground(Void... params) {
+                Bitmap bitmap = null;
 
-				String path = FileManager.getFilePathFromUrl(url, method);
+                String path = FileManager.getFilePathFromUrl(url, method);
 
-				if (!(ImageUtility.isThisBitmapCanRead(path) && TaskCache
-						.isThisUrlTaskFinished(url))) {
+                if (!(ImageUtility.isThisBitmapCanRead(path) && TaskCache
+                        .isThisUrlTaskFinished(url))) {
 
-					boolean downloaded = TaskCache.waitForPictureDownload(url,
+                    boolean downloaded = TaskCache.waitForPictureDownload(url,
                             null, FileManager.generateDownloadFileName(url),
                             method);
-					if (downloaded) {
-						path = FileManager.getFilePathFromUrl(url, method);
-					}
-				}
+                    if (downloaded) {
+                        path = FileManager.getFilePathFromUrl(url, method);
+                    }
+                }
 
-				if (!TextUtils.isEmpty(path)) {
-					bitmap = ImageUtility.readNormalPic(path, width, height);
-				}
-				return bitmap;
-			}
+                if (!TextUtils.isEmpty(path)) {
+                    bitmap = ImageUtility.readNormalPic(path, width, height);
+                }
+                return bitmap;
+            }
 
-			@Override
-			protected void onPostExecute(Bitmap bitmap) {
-				super.onPostExecute(bitmap);
-				if (bitmap != null) {
-					GlobalContext.getInstance().getBitmapCache()
-							.put(url, bitmap);
-					for (int i = 0; i < imageView.size(); i++) {
-						ImageView imageView1 = imageView.get(i);
-						imageView1.setImageDrawable(new BitmapDrawable(
-								GlobalContext.getInstance().getResources(),
-								bitmap));
+            @Override
+            protected void onPostExecute(Bitmap bitmap) {
+                super.onPostExecute(bitmap);
+                if (bitmap != null) {
+                    GlobalContext.getInstance().getBitmapCache()
+                            .put(url, bitmap);
+                    for (int i = 0; i < imageView.size(); i++) {
+                        ImageView imageView1 = imageView.get(i);
+                        imageView1.setImageDrawable(new BitmapDrawable(
+                                GlobalContext.getInstance().getResources(),
+                                bitmap));
 
-						if (animations != null && animations.size() > i) {
-							Animation animation = animations.get(i);
-							imageView1.startAnimation(animation);
-						}
-					}
-				}
-			}
-		}.executeOnExecutor(MyAsyncTask.THREAD_POOL_EXECUTOR);
-	}
+                        if (animations != null && animations.size() > i) {
+                            Animation animation = animations.get(i);
+                            imageView1.startAnimation(animation);
+                        }
+                    }
+                }
+            }
+        }.executeOnExecutor(MyAsyncTask.THREAD_POOL_EXECUTOR);
+    }
 
-	public static class DownloadCallback {
+    public static class DownloadCallback {
 
-		public void onSubmitJobButNotBegin() {
+        public void onSubmitJobButNotBegin() {
 
-		}
+        }
 
-		public void onSubmitJobButAlreadyBegin() {
+        public void onSubmitJobButAlreadyBegin() {
 
-		}
+        }
 
-		public void onBegin() {
+        public void onBegin() {
 
-		}
+        }
 
-		public void onUpdate(int value, int max) {
+        public void onUpdate(int value, int max) {
 
-		}
+        }
 
-		public void onComplete(String localPath) {
+        public void onComplete(String localPath) {
 
-		}
-	}
+        }
+    }
 
-	public void download(final Activity activity, final String url,
-			final FileLocationMethod method, final DownloadCallback callback) {
-		downloadInner(activity, url, method, callback);
-	}
+    public void download(final Activity activity, final String url,
+                         final FileLocationMethod method, final DownloadCallback callback) {
+        downloadInner(activity, url, method, callback);
+    }
 
-	public void download(final Fragment fragment, final String url,
-			final FileLocationMethod method, final DownloadCallback callback) {
-		downloadInner(fragment, url, method, callback);
-	}
+    public void download(final Fragment fragment, final String url,
+                         final FileLocationMethod method, final DownloadCallback callback) {
+        downloadInner(fragment, url, method, callback);
+    }
 
-	@SuppressLint("NewApi")
-	private void downloadInner(final Object object, final String url,
-			final FileLocationMethod method, final DownloadCallback callback) {
+    @SuppressLint("NewApi")
+    private void downloadInner(final Object object, final String url,
+                               final FileLocationMethod method, final DownloadCallback callback) {
 
-		if (TextUtils.isEmpty(url)) {
-			return;
-		}
+        if (TextUtils.isEmpty(url)) {
+            return;
+        }
 
-		if (TaskCache.isThisUrlTaskFinished(url)) {
-			callback.onSubmitJobButNotBegin();
-		} else {
-			callback.onSubmitJobButAlreadyBegin();
-		}
+        if (TaskCache.isThisUrlTaskFinished(url)) {
+            callback.onSubmitJobButNotBegin();
+        } else {
+            callback.onSubmitJobButAlreadyBegin();
+        }
 
-		new MyAsyncTask<Void, Integer, String>() {
+        new MyAsyncTask<Void, Integer, String>() {
 
-			WeakReference<Object> activityRef;
+            WeakReference<Object> activityRef;
 
-			@Override
-			protected void onPreExecute() {
-				super.onPreExecute();
-				activityRef = new WeakReference<Object>(object);
-				callback.onBegin();
-			}
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                activityRef = new WeakReference<Object>(object);
+                callback.onBegin();
+            }
 
-			@Override
-			protected String doInBackground(Void... params) {
+            @Override
+            protected String doInBackground(Void... params) {
 
-				String path = FileManager.getFilePathFromUrl(url, method);
+                String path = FileManager.getFilePathFromUrl(url, method);
 
-				if (!(ImageUtility.isThisBitmapCanRead(path) && TaskCache
-						.isThisUrlTaskFinished(url))) {
-					boolean downloaded = TaskCache.waitForPictureDownload(url,
+                if (!(ImageUtility.isThisBitmapCanRead(path) && TaskCache
+                        .isThisUrlTaskFinished(url))) {
+                    boolean downloaded = TaskCache.waitForPictureDownload(url,
                             new FileDownloaderHttpHelper.DownloadListener() {
                                 @Override
                                 public void pushProgress(final int progress,
@@ -667,52 +678,52 @@ public class TimeLineBitmapDownloader {
                                 }
                             }, FileManager.getFilePathFromUrl(url, method),
                             method);
-					if (downloaded) {
-						path = FileManager.getFilePathFromUrl(url, method);
-					}
-				}
+                    if (downloaded) {
+                        path = FileManager.getFilePathFromUrl(url, method);
+                    }
+                }
 
-				return path;
-			}
+                return path;
+            }
 
-			@Override
-			protected void onProgressUpdate(Integer... values) {
-				super.onProgressUpdate(values);
-				if (!isComponentLifeCycleFinished()) {
-					int progress = values[0];
-					int max = values[1];
-					callback.onUpdate(progress, max);
-				}
-			}
+            @Override
+            protected void onProgressUpdate(Integer... values) {
+                super.onProgressUpdate(values);
+                if (!isComponentLifeCycleFinished()) {
+                    int progress = values[0];
+                    int max = values[1];
+                    callback.onUpdate(progress, max);
+                }
+            }
 
-			@Override
-			protected void onPostExecute(String value) {
-				super.onPostExecute(value);
-				if (!isComponentLifeCycleFinished()) {
-					callback.onComplete(value);
-				}
-			}
+            @Override
+            protected void onPostExecute(String value) {
+                super.onPostExecute(value);
+                if (!isComponentLifeCycleFinished()) {
+                    callback.onComplete(value);
+                }
+            }
 
-			boolean isComponentLifeCycleFinished() {
-				Object object = activityRef.get();
-				if (object == null) {
-					return true;
-				}
+            boolean isComponentLifeCycleFinished() {
+                Object object = activityRef.get();
+                if (object == null) {
+                    return true;
+                }
 
-				if (object instanceof Fragment) {
-					Fragment fragment = (Fragment) object;
-					if (fragment.getActivity() == null) {
-						return true;
-					}
-				} else if (object instanceof Activity) {
-					Activity activity = (Activity) object;
-					if (activity.isDestroyed()) {
-						return true;
-					}
-				}
+                if (object instanceof Fragment) {
+                    Fragment fragment = (Fragment) object;
+                    if (fragment.getActivity() == null) {
+                        return true;
+                    }
+                } else if (object instanceof Activity) {
+                    Activity activity = (Activity) object;
+                    if (activity.isDestroyed()) {
+                        return true;
+                    }
+                }
 
-				return false;
-			}
-		}.executeOnExecutor(MyAsyncTask.THREAD_POOL_EXECUTOR);
-	}
+                return false;
+            }
+        }.executeOnExecutor(MyAsyncTask.THREAD_POOL_EXECUTOR);
+    }
 }

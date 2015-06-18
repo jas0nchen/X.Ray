@@ -40,6 +40,7 @@ import com.jasonchen.microlang.dao.GroupListDao;
 import com.jasonchen.microlang.database.AccountDBTask;
 import com.jasonchen.microlang.database.FriendsTimeLineDBTask;
 import com.jasonchen.microlang.database.GroupDBTask;
+import com.jasonchen.microlang.database.NotificationDBTask;
 import com.jasonchen.microlang.exception.WeiboException;
 import com.jasonchen.microlang.fragments.CommentFragment;
 import com.jasonchen.microlang.fragments.FavFragment;
@@ -56,6 +57,7 @@ import com.jasonchen.microlang.utils.Utility;
 import com.jasonchen.microlang.utils.ViewUtility;
 import com.jasonchen.microlang.utils.file.FileLocationMethod;
 import com.jasonchen.microlang.view.AvatarBigImageView;
+import com.jasonchen.microlang.view.CircleImageView;
 import com.jasonchen.microlang.workers.TimeLineBitmapDownloader;
 
 import java.util.ArrayList;
@@ -88,6 +90,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     private List<AccountBean> accountBeanList;
     private LoadAccountTask loadAccountTask;
     private PopupMenu popupMenu;
+
+    private CircleImageView mentionFlag;
+    private CircleImageView commentFlag;
 
     private int theme = 0;
     private boolean canExit = false;
@@ -164,6 +169,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         mName = ViewUtility.findViewById(this, R.id.my_name);
         mAvatar = ViewUtility.findViewById(this, R.id.my_avatar);
         mExchange = ViewUtility.findViewById(this, R.id.exchange);
+        mentionFlag = ViewUtility.findViewById(this, R.id.mention_flag);
+        commentFlag = ViewUtility.findViewById(this, R.id.comment_flag);
 
         View me = ViewUtility.findViewById(this, R.id.my_account);
         View home = ViewUtility.findViewById(this, R.id.drawer_home);
@@ -470,6 +477,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
             Utility.showExpiredTokenDialogOrNotification();
         }
         configTheme();
+
     }
 
     private class LoadAccountTask extends MyAsyncTask<Void, Void, List<AccountBean>> {
@@ -510,11 +518,24 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     }
 
     public void openOrCloseDrawer() {
+        if(NotificationDBTask.getUnreadFlag(GlobalContext.getInstance().getCurrentAccountId(), NotificationDBTask.UnreadDBType.mentionsComment) == 1 || NotificationDBTask.getUnreadFlag(GlobalContext.getInstance().getCurrentAccountId(), NotificationDBTask.UnreadDBType.mentionsWeibo) == 1){
+            mentionFlag.setVisibility(View.VISIBLE);
+        }else{
+            mentionFlag.setVisibility(View.GONE);
+        }
+
+        if(NotificationDBTask.getUnreadFlag(GlobalContext.getInstance().getCurrentAccountId(), NotificationDBTask.UnreadDBType.commentsToMe) == 1){
+            commentFlag.setVisibility(View.VISIBLE);
+        }else{
+            commentFlag.setVisibility(View.GONE);
+        }
+
         if (mDrawer.isDrawerOpen(mDrawerGravity)) {
             mDrawer.closeDrawer(mDrawerGravity);
         } else {
             mDrawer.openDrawer(mDrawerGravity);
         }
+
     }
 
     @Override

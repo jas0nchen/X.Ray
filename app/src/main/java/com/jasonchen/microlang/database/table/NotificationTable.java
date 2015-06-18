@@ -15,9 +15,8 @@ public class NotificationTable {
 
     public static final String MSGID = "msgid";
 
-
     //type '0' mentions to me weibo; '1' mentions to me comment; '2' comments to me; '3' direct message
     public static final String TYPE = "type";
 
-
+    public static final String FLAG = "flag";
 }

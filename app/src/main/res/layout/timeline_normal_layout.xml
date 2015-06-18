@@ -71,6 +71,14 @@
                             android:text="test"
                             android:textColor="@color/secondaryText"
                             android:textSize="9sp" />
+
+                        <ImageView
+                            android:id="@+id/pic"
+                            android:visibility="gone"
+                            android:layout_marginLeft="5dp"
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_editor_pic"/>
                     </LinearLayout>
                 </LinearLayout>
 

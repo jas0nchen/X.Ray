@@ -61,6 +61,11 @@
             android:title="@string/pref_auto_refresh_title" />
         <CheckBoxPreference
             android:defaultValue="false"
+            android:key="show_big_avatar"
+            android:summary="@string/pref_show_big_avator"
+            android:title="@string/pref_show_big_avator_summary" />
+        <CheckBoxPreference
+            android:defaultValue="false"
             android:key="show_big_pic"
             android:summary="@string/pref_msg_detail_show_big_pic_summary"
             android:title="@string/pref_msg_detail_show_big_pic" />
@@ -69,6 +74,11 @@
             android:key="intelligence_pic"
             android:summary="@string/pref_intelligence_pic_summary"
             android:title="@string/pref_intelligence_pic" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="show_pic_when_intelligent"
+            android:summary="@string/pref_show_pic_when_intelligence_summary"
+            android:title="@string/pref_show_pic_when_intelligence" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_storage_title">

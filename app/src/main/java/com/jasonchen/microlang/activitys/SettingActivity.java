@@ -65,6 +65,7 @@ public class SettingActivity extends SwipeBackActivity {
     public static final String WIFI_UNLIMITED_MSG_COUNT = "enable_wifi_unlimited_msg_count";
     public static final String WIFI_AUTO_DOWNLOAD_PIC = "enable_wifi_auto_download_pic";
     public static final String INTELLIGENCE_PIC = "intelligence_pic";
+    public static final String SHOW_PIC_WHEN_INTELLIGENT = "show_pic_when_intelligent";
 
     //performance
     public static final String DISABLE_HARDWARE_ACCELERATED

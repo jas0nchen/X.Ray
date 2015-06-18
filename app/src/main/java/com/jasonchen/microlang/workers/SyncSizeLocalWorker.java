@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.jasonchen.microlang.R;
+import com.jasonchen.microlang.debug.AppLogger;
 import com.jasonchen.microlang.debug.DebugColor;
 import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.Utility;
@@ -95,7 +96,7 @@ public class SyncSizeLocalWorker extends AbstractWorker<String, Integer, Bitmap>
             case picture_large:
             case picture_bmiddle:
                 if (!isMultiPictures) {
-                    DisplayMetrics metrics = GlobalContext.getInstance().getDisplayMetrics();
+                    /*DisplayMetrics metrics = GlobalContext.getInstance().getDisplayMetrics();
 
                     float reSize = GlobalContext.getInstance().getResources()
                             .getDisplayMetrics().density;
@@ -103,7 +104,11 @@ public class SyncSizeLocalWorker extends AbstractWorker<String, Integer, Bitmap>
                     height = GlobalContext.getInstance().getResources()
                             .getDimensionPixelSize(R.dimen.timeline_pic_high_thumbnail_height);
                     //8 is  layout padding
-                    width = (int) (metrics.widthPixels - (8 + 8) * reSize);
+                    width = (int) (metrics.widthPixels - (8 + 8) * reSize);*/
+                    width = GlobalContext.getInstance().getResources()
+                            .getDimensionPixelSize(R.dimen.timeline_pic_thumbnail_width);
+                    height = GlobalContext.getInstance().getResources()
+                            .getDimensionPixelSize(R.dimen.timeline_pic_thumbnail_height);
                 } else {
                     height = width = Utility.dip2px(120);
                 }
@@ -165,9 +170,18 @@ public class SyncSizeLocalWorker extends AbstractWorker<String, Integer, Bitmap>
 
             params.height = result.get(1).intValue();
             params.width = result.get(0).intValue();
-            IWeiciyuanDrawable.setLayoutParams(params);
-            IWeiciyuanDrawable.getImageView().setScaleType(ImageView.ScaleType.FIT_XY);
-            IWeiciyuanDrawable.requestLayout();
+            float mResult = result.get(1) / result.get(0);
+            if (mResult >= 5.0) {
+                params.height = Utility.dip2px(157);
+                params.width = Utility.dip2px(157) / 2;
+                IWeiciyuanDrawable.setLayoutParams(params);
+                IWeiciyuanDrawable.requestLayout();
+                IWeiciyuanDrawable.getImageView().setScaleType(ImageView.ScaleType.CENTER_CROP);
+            }else{
+                IWeiciyuanDrawable.setLayoutParams(params);
+                IWeiciyuanDrawable.requestLayout();
+                IWeiciyuanDrawable.getImageView().setScaleType(ImageView.ScaleType.FIT_XY);
+            }
             if (IWeiciyuanDrawable != null) {
                 IWeiciyuanDrawable.setGifFlag(ImageUtility.isThisPictureGif(getUrl()));
             }

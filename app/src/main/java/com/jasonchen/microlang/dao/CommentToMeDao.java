@@ -106,7 +106,7 @@ public class CommentToMeDao {
 
     protected void clearUnread() {
         try {
-            new ClearUnreadDao(access_token, ClearUnreadDao.MENTION_CMT).clearUnread();
+            new ClearUnreadDao(access_token, ClearUnreadDao.CMT).clearUnread();
         } catch (WeiboException ignored) {
 
         }

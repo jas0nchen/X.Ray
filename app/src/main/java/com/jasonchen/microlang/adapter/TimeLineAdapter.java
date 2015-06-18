@@ -276,6 +276,7 @@ public class TimeLineAdapter extends BaseAdapter {
                     R.id.repost_msg_repost_count);
             holder.repost_msg_comment_count = ViewUtility.findViewById(convertView,
                     R.id.repost_msg_comment_count);
+            holder.pic = ViewUtility.findViewById(convertView, R.id.pic);
 
             //set tag for convertview
             convertView.setTag(R.drawable.ic_launcher + getItemViewType(position), holder);
@@ -453,6 +454,7 @@ public class TimeLineAdapter extends BaseAdapter {
         }
 
         holder.repost_layout.setVisibility(View.GONE);
+        final MessageBean repost_msg = msg.getRetweeted_status();
 
         if (!SettingUtility.getIntelligencePic()) {
             if (msg.havePicture()) {
@@ -467,6 +469,7 @@ public class TimeLineAdapter extends BaseAdapter {
                 holder.content_pic.setVisibility(View.GONE);
                 holder.content_pic_multi.setVisibility(View.GONE);
             }
+            holder.pic.setVisibility(View.GONE);
         } else {
             if (Utility.isWifi(getActivity())) {
                 if (msg.havePicture()) {
@@ -482,12 +485,15 @@ public class TimeLineAdapter extends BaseAdapter {
                     holder.content_pic_multi.setVisibility(View.GONE);
                 }
             } else {
+                if(msg.havePicture() || (repost_msg != null && repost_msg.havePicture())){
+                    holder.pic.setVisibility(View.VISIBLE);
+                }else{
+                    holder.pic.setVisibility(View.GONE);
+                }
                 holder.content_pic.setVisibility(View.GONE);
                 holder.content_pic_multi.setVisibility(View.GONE);
             }
         }
-
-        final MessageBean repost_msg = msg.getRetweeted_status();
 
         if (repost_msg != null && showOriStatus) {
             if (holder.repost_layout != null) {
@@ -838,6 +844,7 @@ public class TimeLineAdapter extends BaseAdapter {
         GridLayout repost_content_pic_multi;
         TextView repost_msg_repost_count;
         TextView repost_msg_comment_count;
+        ImageView pic;
     }
 
     private class FavTask extends MyAsyncTask<Void, Void, FavBean> {

@@ -1,5 +1,6 @@
 package com.jasonchen.microlang.database;
 
+import android.app.Notification;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -27,7 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "weibo.db";
 
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 9;
 
     //账户表
     static final String CREATE_ACCOUNT_TABLE_SQL = "create table " + AccountTable.TABLE_NAME
@@ -319,8 +320,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + NotificationTable.ACCOUNTID + " text,"
             + NotificationTable.MSGID + " text,"
             + NotificationTable.TYPE + " text,"
+            + NotificationTable.FLAG + " long,"
             + "primary key (" + NotificationTable.ACCOUNTID + "," + NotificationTable.MSGID + ","
-            + NotificationTable.TYPE + ")"
+            + NotificationTable.TYPE + "," + NotificationTable.FLAG + ")"
             + ");";
 
 
@@ -376,6 +378,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         if(oldVersion <= 5){
+            db.execSQL(CREATE_NOTIFICATION_TABLE_SQL);
+        }
+
+        if(oldVersion <= 9){
+            db.execSQL("DROP TABLE IF EXISTS " + NotificationTable.TABLE_NAME);
             db.execSQL(CREATE_NOTIFICATION_TABLE_SQL);
         }
     }

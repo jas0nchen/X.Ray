@@ -213,6 +213,10 @@ public class SettingUtility {
                 SettingActivity.SHOW_BIG_PIC, false);
     }
 
+    public static boolean getEnablePicWhenIntelligent() {
+        return SettingHelper.getSharedPreferences(getContext(),
+                SettingActivity.SHOW_PIC_WHEN_INTELLIGENT, false);
+    }
 
     public static boolean getEnableFetchMSG() {
         return SettingHelper

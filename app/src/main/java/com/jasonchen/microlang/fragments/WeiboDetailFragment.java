@@ -37,13 +37,13 @@ import com.jasonchen.microlang.dao.TimeLineReCmtCountDao;
 import com.jasonchen.microlang.exception.WeiboException;
 import com.jasonchen.microlang.gallery.GalleryAnimationActivity;
 import com.jasonchen.microlang.interfaces.ISimRayDrawable;
+import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.swiperefresh.LoadListView;
 import com.jasonchen.microlang.tasks.MyAsyncTask;
 import com.jasonchen.microlang.utils.AnimationRect;
 import com.jasonchen.microlang.utils.AppEventAction;
 import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.HackyMovementMethod;
-import com.jasonchen.microlang.utils.SettingUtility;
 import com.jasonchen.microlang.utils.Utility;
 import com.jasonchen.microlang.utils.ViewUtility;
 import com.jasonchen.microlang.utils.file.FileLocationMethod;
@@ -274,6 +274,10 @@ public class WeiboDetailFragment extends AbstractAppFragment implements LoadList
                 if (messageBean.havePicture() && messageBean.getRetweeted_status() == null) {
                     displayPictures(messageBean, detail_multi_image, detail_image, true);
                 }
+            }else if(SettingUtility.getEnablePicWhenIntelligent()){
+                if (messageBean.havePicture() && messageBean.getRetweeted_status() == null) {
+                    displayPictures(messageBean, detail_multi_image, detail_image, true);
+                }
             }
         } else {
             if (messageBean.havePicture() && messageBean.getRetweeted_status() == null) {
@@ -317,6 +321,10 @@ public class WeiboDetailFragment extends AbstractAppFragment implements LoadList
 
             if (SettingUtility.getIntelligencePic()) {
                 if (Utility.isWifi(getActivity())) {
+                    if (repostMsg.havePicture()) {
+                        displayPictures(repostMsg, repost_image_multi, repost_image, true);
+                    }
+                }else if(SettingUtility.getEnablePicWhenIntelligent()){
                     if (repostMsg.havePicture()) {
                         displayPictures(repostMsg, repost_image_multi, repost_image, true);
                     }

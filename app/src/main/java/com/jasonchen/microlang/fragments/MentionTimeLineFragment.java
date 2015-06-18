@@ -23,6 +23,7 @@ import com.jasonchen.microlang.beans.MessageListBean;
 import com.jasonchen.microlang.beans.UserBean;
 import com.jasonchen.microlang.dao.MentionsStatusTimeLineDao;
 import com.jasonchen.microlang.database.MentionWeiboTimeLineDBTask;
+import com.jasonchen.microlang.database.NotificationDBTask;
 import com.jasonchen.microlang.exception.WeiboException;
 import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.swiperefresh.LoadListView;
@@ -110,21 +111,9 @@ public class MentionTimeLineFragment extends AbstractAppFragment implements
                     case REFRESH_LISTVIEW:
                         MessageListBean newList = (MessageListBean) msg.obj;
                         list.addNewData(newList);
-                        int number = newList.getItemList().size();
                         msgBean.addAll(0, newList.getItemList());
-                        newList = null;
                         adapter.notifyDataSetChanged();
-                        if (number == 0) {
-                            Toast.makeText(GlobalContext.getInstance(),
-                                    getString(R.string.no_new_message),
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(
-                                    GlobalContext.getInstance(),
-                                    String.format(
-                                            getString(R.string.new_messages_count),
-                                            number), Toast.LENGTH_SHORT).show();
-                        }
+                        NotificationDBTask.cleanUnreadFlag(GlobalContext.getInstance().getCurrentAccountId(), NotificationDBTask.UnreadDBType.mentionsWeibo);
                         swipeRefreshLayout.setRefreshing(false);
                         break;
                     case LOAD_OLD_MESSAGE:
@@ -328,6 +317,17 @@ public class MentionTimeLineFragment extends AbstractAppFragment implements
     @Override
     public void onResume() {
         super.onResume();
+        long result = NotificationDBTask.getUnreadFlag(GlobalContext.getInstance().getCurrentAccountId(), NotificationDBTask.UnreadDBType.mentionsWeibo);
+        if(result == 1){
+            swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, getResources().getDisplayMetrics()));
+            swipeRefreshLayout.setRefreshing(true);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    onRefresh();
+                }
+            }, 500);
+        }
     }
 
     @Override
@@ -362,19 +362,9 @@ public class MentionTimeLineFragment extends AbstractAppFragment implements
                         list.getItemList().addAll(
                                 newlist.getItemList().subList(0,
                                         newlist.getItemList().size()));
-                        int totalCount = 50 > getList().size() ? getList()
-                                .size() : 50;
+                        int total = 50 >= adapter.getList().size() ? adapter.getList().size() : 50;
                         if(adapter.getList() != null && adapter.getList().size() > 0) {
-                            list.getItemList()
-                                    .addAll(newlist.getItemList().size(),
-                                            adapter.getList().subList(
-                                                    0,
-                                                    totalCount
-                                                            - newlist.getItemList()
-                                                            .size()));
-                        }else{
-                            list.getItemList()
-                                    .addAll(newlist.getItemList());
+                            list.getItemList().addAll(newlist.getItemList().size(), adapter.getList().subList(0, total - newlist.getItemList().size()));
                         }
                     }
                     MentionWeiboTimeLineDBTask.asyncReplace(list, accountBean

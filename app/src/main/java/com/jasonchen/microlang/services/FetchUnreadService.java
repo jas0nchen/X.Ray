@@ -7,6 +7,7 @@ import android.os.IBinder;
 import android.widget.Toast;
 
 import com.jasonchen.microlang.beans.AccountBean;
+import com.jasonchen.microlang.beans.CommentBean;
 import com.jasonchen.microlang.beans.CommentListBean;
 import com.jasonchen.microlang.beans.MessageListBean;
 import com.jasonchen.microlang.beans.UnreadBean;
@@ -24,6 +25,7 @@ import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.utils.AppNotificationCenter;
 import com.jasonchen.microlang.utils.GlobalContext;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -124,6 +126,8 @@ public class FetchUnreadService extends IntentService {
         int unreadMentionStatusCount = unreadBean.getMention_status();
         int unreadMentionCommentCount = unreadBean.getMention_cmt();
 
+        AppLogger.e("评论：" + unreadCommentCount + ",提及微博:" + unreadMentionStatusCount + ",提及评论: "+ unreadMentionCommentCount);
+
         if (unreadCommentCount > 0 && SettingUtility.allowCommentToMe()) {
             CommentToMeDao dao = new CommentToMeDao(token);
             CommentListBean oldData = null;
@@ -136,7 +140,7 @@ public class FetchUnreadService extends IntentService {
             if (oldData != null && oldData.getSize() > 0) {
                 dao.setSince_id(oldData.getItem(0).getId());
             }
-
+            NotificationDBTask.addUnreadFlag(GlobalContext.getInstance().getCurrentAccountId(), NotificationDBTask.UnreadDBType.commentsToMe);
             commentResult = dao.getGSONMsgListWithoutClearUnread();
         }
 
@@ -152,6 +156,7 @@ public class FetchUnreadService extends IntentService {
             if (oldData != null && oldData.getSize() > 0) {
                 dao.setSince_id(oldData.getItem(0).getId());
             }
+            NotificationDBTask.addUnreadFlag(GlobalContext.getInstance().getCurrentAccountId(), NotificationDBTask.UnreadDBType.mentionsWeibo);
             mentionStatusesResult = dao.getGSONMsgListWithoutClearUnread();
         }
 
@@ -167,6 +172,8 @@ public class FetchUnreadService extends IntentService {
             if (oldData != null && oldData.getSize() > 0) {
                 dao.setSince_id(oldData.getItem(0).getId());
             }
+            AppLogger.e("ready to write unread mention comment flag!!!");
+            NotificationDBTask.addUnreadFlag(GlobalContext.getInstance().getCurrentAccountId(), NotificationDBTask.UnreadDBType.mentionsComment);
             mentionCommentsResult = dao.getGSONMsgListWithoutClearUnread();
         }
 
@@ -192,7 +199,7 @@ public class FetchUnreadService extends IntentService {
     }
 
     private void clearDatabaseUnreadInfo(String accountId, int mentionsWeibo, int mentionsComment,
-            int cmt) {
+                                         int cmt) {
         if (mentionsWeibo == 0) {
             NotificationDBTask
                     .asyncCleanUnread(accountId, NotificationDBTask.UnreadDBType.mentionsWeibo);
@@ -208,14 +215,14 @@ public class FetchUnreadService extends IntentService {
     }
 
     private void sendTwoKindsOfBroadcast(AccountBean accountBean,
-            CommentListBean commentResult,
-            MessageListBean mentionStatusesResult,
-            CommentListBean mentionCommentsResult,
-            UnreadBean unreadBean) {
+                                         CommentListBean commentResult,
+                                         MessageListBean mentionStatusesResult,
+                                         CommentListBean mentionCommentsResult,
+                                         UnreadBean unreadBean) {
 
         AppLogger.i("Send unread data to ");
 
-       if (unreadBean != null) {
+        if (unreadBean != null) {
             AppNotificationCenter.getInstance().addUnreadBean(accountBean, unreadBean);
         }
         if (mentionStatusesResult != null) {
@@ -225,6 +232,7 @@ public class FetchUnreadService extends IntentService {
         if (mentionCommentsResult != null) {
             AppNotificationCenter.getInstance()
                     .addUnreadMentionsComment(accountBean, mentionCommentsResult);
+
         }
         if (commentResult != null) {
             AppNotificationCenter.getInstance().addUnreadComments(accountBean, commentResult);

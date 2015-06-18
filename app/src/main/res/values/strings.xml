@@ -394,8 +394,12 @@
     <string name="pref_invert_read_summary">主页微博逆序阅读开关，开启后微博阅读方式将是逆序，刷新微博后将显示刷新的最后一条微博</string>
     <string name="pref_msg_detail_show_big_pic">大图显示</string>
     <string name="pref_msg_detail_show_big_pic_summary">微博大图显示开关，建议wifi网络开启</string>
+    <string name="pref_show_big_avator">高清头像</string>
+    <string name="pref_show_big_avator_summary">微博头像高清显示</string>
     <string name="pref_intelligence_pic">智能无图</string>
     <string name="pref_intelligence_pic_summary">移动网络下不显示微博图片，wifi网络下自动显示图片</string>
+    <string name="pref_show_pic_when_intelligence">微博正文图片显示</string>
+    <string name="pref_show_pic_when_intelligence_summary">当开启智能无图后，开启显示微博正文图片</string>
     <string name="pref_advanced_title">高级设置</string>
     <string name="have_selected">已经选择了%s项</string>
     <string name="pref_other_title">其他</string>

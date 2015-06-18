@@ -1,5 +1,6 @@
 package com.jasonchen.microlang.database;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.SQLException;
@@ -47,8 +48,48 @@ public class NotificationDBTask {
         return databaseHelper.getReadableDatabase();
     }
 
+    public static void addUnreadFlag(String accountId, UnreadDBType type) {
+        try {
+            ContentValues values = new ContentValues();
+            getWsd().beginTransaction();
+            for (int i = 0; i < 1000; i++) {
+                values.put(NotificationTable.FLAG, 1);
+                values.put(NotificationTable.ACCOUNTID, accountId);
+                values.put(NotificationTable.TYPE, type.getValue());
+                getWsd().insert(NotificationTable.TABLE_NAME, null, values);
+            }
+            getWsd().setTransactionSuccessful();
+        } catch (SQLException ignored) {
+        } finally {
+            getWsd().endTransaction();
+            getWsd().close();
+        }
+    }
+
+    public static long getUnreadFlag(String accountId, UnreadDBType type) {
+        long result = 0;
+        String sql = "select * from " + NotificationTable.TABLE_NAME + " where "
+                + NotificationTable.ACCOUNTID + "  = "
+                + accountId + " and " + NotificationTable.TYPE + " = " + type.getValue()
+                + " order by " + NotificationTable.ID + " asc";
+        Cursor c = getRsd().rawQuery(sql, null);
+        while (c.moveToNext()) {
+            result = c.getLong(c.getColumnIndex(NotificationTable.FLAG));
+        }
+        c.close();
+        return result;
+    }
+
+    public static void cleanUnreadFlag(String accountId, UnreadDBType type) {
+        String sql = "delete from " + NotificationTable.TABLE_NAME
+                + " where " + NotificationTable.ACCOUNTID + " in " + "("
+                + accountId + ")"
+                + " and " + NotificationTable.TYPE + " = " + type.getValue();
+        getWsd().execSQL(sql);
+    }
+
     public static void addUnreadNotification(String accountId, ArrayList<String> msgIds,
-            UnreadDBType type) {
+                                             UnreadDBType type) {
 
         DatabaseUtils.InsertHelper ih = new DatabaseUtils.InsertHelper(getWsd(),
                 NotificationTable.TABLE_NAME);

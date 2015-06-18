@@ -411,9 +411,7 @@ public class MentionCommentAdapter extends BaseAdapter {
             view.setVisibility(View.VISIBLE);
             LayoutParams params = view.getLayoutParams();
 
-            TimeLineBitmapDownloader.getInstance().displayRoundAvatar(view,
-                    params.width, params.height, user.getProfile_image_url(),
-                    FileLocationMethod.avatar_small, isFling);
+            TimeLineBitmapDownloader.getInstance().downloadAvatar(view, user, false);
 
         } else {
             view.setVisibility(View.GONE);

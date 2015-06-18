@@ -26,6 +26,8 @@ import com.jasonchen.microlang.beans.CommentListBean;
 import com.jasonchen.microlang.beans.UserBean;
 import com.jasonchen.microlang.dao.CommentToMeDao;
 import com.jasonchen.microlang.database.CommentToMeTimeLineDBTask;
+import com.jasonchen.microlang.database.NotificationDBTask;
+import com.jasonchen.microlang.debug.AppLogger;
 import com.jasonchen.microlang.exception.WeiboException;
 import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.swiperefresh.LoadListView;
@@ -34,7 +36,11 @@ import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.UnreadTabIndex;
 import com.jasonchen.microlang.workers.TimeLineBitmapDownloader;
 
+import org.w3c.dom.Comment;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 
@@ -116,23 +122,11 @@ public class CommentFragment extends AbstractAppFragment implements
                     case REFRESH_LISTVIEW:
                         CommentListBean newList = (CommentListBean) msg.obj;
                         list.addNewData(newList);
-                        int number = newList.getItemList().size();
                         msgBean.addAll(0, newList.getItemList());
-                        newList = null;
                         adapter.notifyDataSetChanged();
-                        if (number == 0) {
-                            Toast.makeText(GlobalContext.getInstance(),
-                                    getString(R.string.no_new_message),
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(
-                                    GlobalContext.getInstance(),
-                                    String.format(
-                                            getString(R.string.new_messages_count),
-                                            number), Toast.LENGTH_SHORT).show();
-                        }
                         swipeRefreshLayout.setRefreshing(false);
                         mListView.getFooterView().show();
+                        NotificationDBTask.cleanUnreadFlag(GlobalContext.getInstance().getCurrentAccountId(), NotificationDBTask.UnreadDBType.commentsToMe);
                         break;
                     case LOAD_OLD_MESSAGE:
                         CommentListBean oldList = (CommentListBean) msg.obj;
@@ -326,7 +320,18 @@ public class CommentFragment extends AbstractAppFragment implements
     @Override
     public void onResume() {
         super.onResume();
-        Intent intent = getActivity().getIntent();
+        long result = NotificationDBTask.getUnreadFlag(GlobalContext.getInstance().getCurrentAccountId(), NotificationDBTask.UnreadDBType.commentsToMe);
+        AppLogger.e("result::" + result);
+        if(result == 1){
+            swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, getResources().getDisplayMetrics()));
+            swipeRefreshLayout.setRefreshing(true);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    onRefresh();
+                }
+            }, 500);
+        }
     }
 
     @Override
@@ -371,9 +376,6 @@ public class CommentFragment extends AbstractAppFragment implements
                                                     totalCount
                                                             - newlist.getItemList()
                                                             .size()));
-                        }else{
-                            list.getItemList()
-                                    .addAll(newlist.getItemList());
                         }
                     }
                     CommentToMeTimeLineDBTask.asyncReplace(list, accountBean
@@ -401,7 +403,11 @@ public class CommentFragment extends AbstractAppFragment implements
     }
 
     private List<CommentBean> getList() {
-        return adapter.getList();
+        if(adapter != null) {
+            return adapter.getList();
+        }else{
+            return new ArrayList<CommentBean>();
+        }
     }
 
 }

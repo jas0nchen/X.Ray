@@ -355,12 +355,21 @@ public class BigTextNotificationService extends NotificationServiceHelper {
             CommentBean commentBean = (CommentBean) itemBean;
             MessageBean messageBean = commentBean.getStatus();
             if (messageBean != null) {
-                UserBean userBean = messageBean.getUser();
+                AppLogger.e(commentBean.getText());
+                if(accountBean.getInfo().equals(messageBean.getUser())){
+                    unreadTabIndex = UnreadTabIndex.COMMENT_TO_ME;
+                }else{
+                    unreadTabIndex = UnreadTabIndex.MENTION_COMMENT;
+                }
+                if(commentBean.getText().contains("回复@")){
+                    unreadTabIndex = UnreadTabIndex.COMMENT_TO_ME;
+                }
+                /*UserBean userBean = messageBean.getUser();
                 if (accountBean.getInfo().equals(userBean)) {
                     unreadTabIndex = UnreadTabIndex.COMMENT_TO_ME;
                 } else {
                     unreadTabIndex = UnreadTabIndex.MENTION_COMMENT;
-                }
+                }*/
             } else {
                 unreadTabIndex = UnreadTabIndex.MENTION_COMMENT;
             }

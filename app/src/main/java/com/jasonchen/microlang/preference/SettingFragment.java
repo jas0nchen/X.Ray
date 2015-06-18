@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.Preference;
@@ -20,6 +21,7 @@ import com.jasonchen.microlang.debug.AppLogger;
 import com.jasonchen.microlang.fragments.MDColorsDialogFragment;
 import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.tasks.MyAsyncTask;
+import com.jasonchen.microlang.utils.AppNewMsgAlarm;
 import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.MythouCrashHandler;
 import com.jasonchen.microlang.utils.SendCrashLog;
@@ -37,7 +39,7 @@ import me.drakeet.materialdialog.MaterialDialog;
  * jasonchen
  * 2015/04/10
  */
-public class SettingFragment extends PreferenceFragment {
+public class SettingFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private BroadcastReceiver sdCardReceiver;
     private Preference cleanCachePre;
@@ -53,6 +55,7 @@ public class SettingFragment extends PreferenceFragment {
         buildCacheSummary();
         buildLogSummary();
 
+        findPreference("pref_crash_now").setEnabled(false);
         findPreference(SettingActivity.SAVED_PIC_PATH)
                 .setSummary(Environment.getExternalStoragePublicDirectory(
                         Environment.DIRECTORY_PICTURES).getAbsolutePath() + "/x_ray");
@@ -60,6 +63,7 @@ public class SettingFragment extends PreferenceFragment {
         cleanCachePre = findPreference(SettingActivity.CLICK_TO_CLEAN_CACHE);
         theme = (Preference) findPreference(SettingActivity.THEME);
         theme.setSummary(getResources().getStringArray(R.array.mdColorNames)[SettingUtility.getThemeIndex()]);
+        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 
         if (FileManager.isExternalStorageMounted()) {
             new CalcCacheSize(cleanCachePre)
@@ -155,6 +159,9 @@ public class SettingFragment extends PreferenceFragment {
         filter.addDataScheme("file");
 
         getActivity().registerReceiver(sdCardReceiver, filter);
+        if(!SettingUtility.getIntelligencePic()){
+            findPreference(SettingActivity.SHOW_PIC_WHEN_INTELLIGENT).setEnabled(false);
+        }
     }
 
     @Override
@@ -182,6 +189,18 @@ public class SettingFragment extends PreferenceFragment {
         } else {
             findPreference(SettingActivity.SAVED_LOG_PATH)
                     .setSummary(getString(R.string.sd_card_in_not_mounted));
+        }
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(SettingActivity.INTELLIGENCE_PIC)) {
+            boolean value = sharedPreferences.getBoolean(key, false);
+            if (value) {
+                findPreference(SettingActivity.SHOW_PIC_WHEN_INTELLIGENT).setEnabled(true);
+            } else {
+                findPreference(SettingActivity.SHOW_PIC_WHEN_INTELLIGENT).setEnabled(false);
+            }
         }
     }
 

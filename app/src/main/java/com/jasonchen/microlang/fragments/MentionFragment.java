@@ -142,34 +142,6 @@ public class MentionFragment extends AbstractAppFragment {
             }
         });
         tab.notifyIndicatorColorChanged();
-        if (((MainActivity) getActivity()).getIntent().getSerializableExtra(BundleArgsConstants.OPEN_NAVIGATION_INDEX_EXTRA) != null) {
-            UnreadTabIndex unreadTabIndex = (UnreadTabIndex) ((MainActivity) getActivity()).getIntent().getSerializableExtra(BundleArgsConstants.OPEN_NAVIGATION_INDEX_EXTRA);
-            switch (unreadTabIndex) {
-                case MENTION_WEIBO:
-                    mPager.setCurrentItem(0);
-                    Fragment statusfragment = getChildFragmentManager().findFragmentByTag(MentionTimeLineFragment.class.getName());
-                    //((MentionTimeLineFragment) ((FragmentStatePagerAdapter) mPager.getAdapter()).getItem(0)).refreshUnread();
-                    if (statusfragment != null) {
-                        AppLogger.e("提及微博！！！！！");
-                        ((MentionTimeLineFragment) statusfragment).refreshUnread();
-                    }
-                    ((MainActivity) getActivity()).getIntent().putExtra(BundleArgsConstants.OPEN_NAVIGATION_INDEX_EXTRA,
-                            UnreadTabIndex.NONE);
-                    break;
-                case MENTION_COMMENT:
-                    mPager.setCurrentItem(1);
-                    Fragment commentfragment = getChildFragmentManager().findFragmentByTag(MentionCommentFragment.class.getName());
-                    //((MentionTimeLineFragment) ((FragmentStatePagerAdapter) mPager.getAdapter()).getItem(0)).refreshUnread();
-                    if (commentfragment != null) {
-
-                        ((MentionCommentFragment) commentfragment).refreshUnread();
-                    }
-                    //((MentionCommentFragment) ((FragmentStatePagerAdapter) mPager.getAdapter()).getItem(1)).refreshUnread();
-                    ((MainActivity) getActivity()).getIntent().putExtra(BundleArgsConstants.OPEN_NAVIGATION_INDEX_EXTRA,
-                            UnreadTabIndex.NONE);
-                    break;
-            }
-        }
     }
 
     @Override
@@ -185,7 +157,34 @@ public class MentionFragment extends AbstractAppFragment {
     @Override
     public void onResume() {
         super.onResume();
-
+        if (((MainActivity) getActivity()).getIntent().getSerializableExtra(BundleArgsConstants.OPEN_NAVIGATION_INDEX_EXTRA) != null) {
+            UnreadTabIndex unreadTabIndex = (UnreadTabIndex) ((MainActivity) getActivity()).getIntent().getSerializableExtra(BundleArgsConstants.OPEN_NAVIGATION_INDEX_EXTRA);
+            switch (unreadTabIndex) {
+                case MENTION_WEIBO:
+                    mPager.setCurrentItem(0);
+//                    Fragment statusfragment = getChildFragmentManager().findFragmentByTag(MentionTimeLineFragment.class.getName());
+//                    //((MentionTimeLineFragment) ((FragmentStatePagerAdapter) mPager.getAdapter()).getItem(0)).refreshUnread();
+//                    if (statusfragment != null) {
+//                        AppLogger.e("提及微博！！！！！");
+//                        ((MentionTimeLineFragment) statusfragment).refreshUnread();
+//                    }
+                    ((MainActivity) getActivity()).getIntent().putExtra(BundleArgsConstants.OPEN_NAVIGATION_INDEX_EXTRA,
+                            UnreadTabIndex.NONE);
+                    break;
+                case MENTION_COMMENT:
+                    mPager.setCurrentItem(1);
+//                    Fragment commentfragment = getChildFragmentManager().findFragmentByTag(MentionCommentFragment.class.getName());
+//                    //((MentionTimeLineFragment) ((FragmentStatePagerAdapter) mPager.getAdapter()).getItem(0)).refreshUnread();
+//                    if (commentfragment != null) {
+//
+//                        ((MentionCommentFragment) commentfragment).refreshUnread();
+//                    }
+                    //((MentionCommentFragment) ((FragmentStatePagerAdapter) mPager.getAdapter()).getItem(1)).refreshUnread();
+                    ((MainActivity) getActivity()).getIntent().putExtra(BundleArgsConstants.OPEN_NAVIGATION_INDEX_EXTRA,
+                            UnreadTabIndex.NONE);
+                    break;
+            }
+        }
     }
 
     @Override
