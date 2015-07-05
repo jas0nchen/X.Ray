@@ -78,8 +78,8 @@ public class TaskCache {
     }
 
     public static boolean waitForPictureDownload(String url,
-            FileDownloaderHttpHelper.DownloadListener downloadListener, String savedPath,
-            FileLocationMethod method) {
+                                                 FileDownloaderHttpHelper.DownloadListener downloadListener, String savedPath,
+                                                 FileLocationMethod method) {
         while (true) {
             DownloadFutureTask downloadFutureTask = TaskCache.downloadTasks.get(url);
 

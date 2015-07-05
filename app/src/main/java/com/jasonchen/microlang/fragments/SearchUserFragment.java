@@ -154,7 +154,9 @@ public class SearchUserFragment extends TimeLineBaseFragment implements SearchAc
                     break;
                 case LOAD_OLD_MESSAGE:
                     UserListBean oldList = (UserListBean) msg.obj;
-                    userBean.addAll(oldList.getUsers());
+                    if(oldList != null && oldList.getUsers().size() > 0) {
+                        userBean.addAll(oldList.getUsers());
+                    }
                     adapter.setList(userBean);
                     adapter.notifyDataSetChanged();
                     int oldnumber = oldList.getUsers().size();

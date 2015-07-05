@@ -23,6 +23,7 @@ public class SettingActivity extends SwipeBackActivity {
 	public static final String SOUND = "sound";
 
     public static final String AUTO_REFRESH = "auto_refresh";
+    public static final String SHOW_REPOST_CONTENT = "show_repost_content";
 
     //appearance
     public static final String THEME = "theme";

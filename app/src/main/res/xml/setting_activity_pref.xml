@@ -20,6 +20,11 @@
             android:title="@string/pref_vibrate_title" />
         <CheckBoxPreference
             android:defaultValue="true"
+            android:key="show_repost_content"
+            android:summary="转发微博时添加右边信息"
+            android:title="@string/pref_show_repost_content" />
+        <CheckBoxPreference
+            android:defaultValue="true"
             android:key="enable_internal_web_browser"
             android:summary="使用内置浏览器浏览微博链接"
             android:title="@string/pref_internal_web_browser" />

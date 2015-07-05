@@ -389,6 +389,7 @@
     <string name="pref_sound_title">音效</string>
     <string name="pref_auto_refresh_title">自动刷新</string>
     <string name="pref_internal_web_browser">内置浏览器</string>
+    <string name="pref_show_repost_content">转发右边微博</string>
     <string name="pref_auto_refresh_summary">首次进入首页自动刷新微博</string>
     <string name="pref_invert_read">逆序阅读</string>
     <string name="pref_invert_read_summary">主页微博逆序阅读开关，开启后微博阅读方式将是逆序，刷新微博后将显示刷新的最后一条微博</string>

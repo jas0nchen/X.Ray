@@ -172,7 +172,9 @@ public class SearchStatusFragment extends TimeLineBaseFragment implements Search
                     break;
                 case LOAD_OLD_MESSAGE:
                     MessageListBean oldList = (MessageListBean) msg.obj;
-                    msgBean.addAll(oldList.getItemList());
+                    if(oldList != null && oldList.getSize() > 0) {
+                        msgBean.addAll(oldList.getItemList());
+                    }
                     adapter.setList(msgBean);
                     adapter.notifyDataSetChanged();
                     int oldnumber = oldList.getItemList().size();

@@ -96,7 +96,7 @@ public class SyncSizeLocalWorker extends AbstractWorker<String, Integer, Bitmap>
             case picture_large:
             case picture_bmiddle:
                 if (!isMultiPictures) {
-                    /*DisplayMetrics metrics = GlobalContext.getInstance().getDisplayMetrics();
+                    DisplayMetrics metrics = GlobalContext.getInstance().getDisplayMetrics();
 
                     float reSize = GlobalContext.getInstance().getResources()
                             .getDisplayMetrics().density;
@@ -104,11 +104,7 @@ public class SyncSizeLocalWorker extends AbstractWorker<String, Integer, Bitmap>
                     height = GlobalContext.getInstance().getResources()
                             .getDimensionPixelSize(R.dimen.timeline_pic_high_thumbnail_height);
                     //8 is  layout padding
-                    width = (int) (metrics.widthPixels - (8 + 8) * reSize);*/
-                    width = GlobalContext.getInstance().getResources()
-                            .getDimensionPixelSize(R.dimen.timeline_pic_thumbnail_width);
-                    height = GlobalContext.getInstance().getResources()
-                            .getDimensionPixelSize(R.dimen.timeline_pic_thumbnail_height);
+                    width = (int) (metrics.widthPixels - (8 + 8) * reSize);
                 } else {
                     height = width = Utility.dip2px(120);
                 }

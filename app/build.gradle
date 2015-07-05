@@ -8,8 +8,8 @@ android {
         applicationId "com.jasonchen.microlang"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 4
-        versionName "1.1.0"
+        versionCode 12
+        versionName "1.1.1"
     }
     buildTypes {
         release {

@@ -229,6 +229,11 @@ public class SettingUtility {
                 .getSharedPreferences(getContext(), SettingActivity.AUTO_REFRESH, false);
     }
 
+    public static boolean getShowRepostContent() {
+        return SettingHelper
+                .getSharedPreferences(getContext(), SettingActivity.SHOW_REPOST_CONTENT, false);
+    }
+
     public static boolean getIntelligencePic() {
         return SettingHelper
                 .getSharedPreferences(getContext(), SettingActivity.INTELLIGENCE_PIC, false);

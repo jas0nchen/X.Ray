@@ -13,6 +13,7 @@ import com.jasonchen.microlang.beans.AccountBean;
 import com.jasonchen.microlang.beans.MessageBean;
 import com.jasonchen.microlang.beans.RepostDraftBean;
 import com.jasonchen.microlang.services.SendRepostService;
+import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.TimeLineUtility;
 import com.jasonchen.microlang.utils.Utility;
@@ -89,8 +90,12 @@ public class WriteRepostActivity extends AbstractWriteActivity {
             accountBean = getIntent().getParcelableExtra("account");
             messageBean = getIntent().getParcelableExtra("message");
             token = getIntent().getStringExtra("token");
-
-            content.setHint(messageBean.getText());
+            if(SettingUtility.getShowRepostContent()) {
+                content.setText("//@" + messageBean.getUser().getName() + ":" + messageBean.getText());
+                content.setSelection(0);
+            }else{
+                content.setHint("//@" + messageBean.getUser().getName() + ":" + messageBean.getText());
+            }
         }
     }
 
