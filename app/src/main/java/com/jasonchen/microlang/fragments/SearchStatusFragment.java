@@ -177,7 +177,10 @@ public class SearchStatusFragment extends TimeLineBaseFragment implements Search
                     }
                     adapter.setList(msgBean);
                     adapter.notifyDataSetChanged();
-                    int oldnumber = oldList.getItemList().size();
+                    int oldnumber = 0;
+                    if(oldList != null && oldList.getSize() > 0) {
+                        oldnumber = oldList.getItemList().size();
+                    }
                     if (oldnumber == 0){
                         Toast.makeText(GlobalContext.getInstance(),
                                 getString(R.string.load_complete),

@@ -129,7 +129,7 @@ public class MentionFragment extends AbstractAppFragment {
         // Initialize indicator
         tab.setDistributeEvenly(true);
         tab.setViewPager(mPager);
-        final int color = getResources().getColor(R.color.white);
+        final int color = SettingUtility.getIsNightTheme() ? getResources().getColor(R.color.light_gray) : getResources().getColor(R.color.white);
         tab.setCustomTabColorizer(new SlidingTabStrip.SimpleTabColorizer() {
             @Override
             public int getIndicatorColor(int position) {

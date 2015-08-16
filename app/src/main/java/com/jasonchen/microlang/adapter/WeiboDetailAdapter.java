@@ -350,7 +350,7 @@ public class WeiboDetailAdapter extends BaseAdapter {
 				if (isCommentList && commentList != null && commentList.getItemList().size() > 0) {
 					final CommentBean msg = commentList.getItemList().get(position - 1);
 					final ViewHolder finalHolder = holder;
-					convertView.setOnClickListener(new OnClickListener() {
+					holder.layout.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
 							PopupMenu popupMenu = new PopupMenu(getActivity(), finalHolder.more);

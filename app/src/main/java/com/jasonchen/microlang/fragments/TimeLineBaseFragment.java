@@ -61,7 +61,7 @@ public class TimeLineBaseFragment extends AbstractAppFragment implements SwipeRe
                 .withGravity(Gravity.BOTTOM | Gravity.RIGHT)
                 .withPaddings(16, 16, 16, 16)
                 .withDrawable(getResources().getDrawable(R.drawable.ic_edit_white))
-                .withButtonColor(getResources().getColor(SettingUtility.getThemeColor()))
+                .withButtonColor(SettingUtility.getIsNightTheme() ? getResources().getColor(R.color.listview_pic_background_dark) : getResources().getColor(SettingUtility.getThemeColor()))
                 .withButtonSize(100)
                 .create();
         fab.setOnClickListener(this);

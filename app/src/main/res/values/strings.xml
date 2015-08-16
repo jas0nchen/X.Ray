@@ -65,6 +65,7 @@
     <string name="login_success">授权成功啦！</string>
     <string name="update_account_success">更新账号信息成功啦！</string>
     <string name="account_management">帐号管理</string>
+    <string name="theme_exchange">夜间模式</string>
     <string name="account_exchange">切换账号</string>
     <string name="remove_successfully">删除成功</string>
     <string name="remove_fail">删除失败</string>

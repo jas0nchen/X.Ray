@@ -2,13 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/commonBackgroundColor"
     android:orientation="vertical">
 
     <com.jasonchen.microlang.view.SlidingTabLayout
         android:id="@+id/tab"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="?attr/theme_color"></com.jasonchen.microlang.view.SlidingTabLayout>
+        android:background="?attr/weibodetailCommentBackground"></com.jasonchen.microlang.view.SlidingTabLayout>
 
     <View
         android:id="@+id/action_shadow"

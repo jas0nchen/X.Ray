@@ -82,7 +82,6 @@ public abstract class AbstractWriteActivity extends SwipeBackActivity implements
     protected LinearLayout commentMsgToo;
     protected LinearLayout repostMsgToo;
     protected static MenuItem send;
-    protected Spinner visib;
     protected int visibility = 0;
 
     @Override
@@ -111,7 +110,6 @@ public abstract class AbstractWriteActivity extends SwipeBackActivity implements
         repostMsgToo = ViewUtility.findViewById(this, R.id.repost_msg);
         commentBtn = ViewUtility.findViewById(this, R.id.comment_too);
         repostBtn = ViewUtility.findViewById(this, R.id.repost_too);
-        visib = ViewUtility.findViewById(this, R.id.editor_visib);
 
         addPic.setOnClickListener(this);
         addTopic.setOnClickListener(this);
@@ -127,22 +125,6 @@ public abstract class AbstractWriteActivity extends SwipeBackActivity implements
 
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, visiArr);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        visib.setAdapter(spinnerAdapter);
-        visib.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i == 1){
-                    visibility = 2;
-                }else {
-                    visibility = 0;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
     }
 
     @Override

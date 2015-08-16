@@ -10,12 +10,33 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.jasonchen.microlang.R;
+import com.jasonchen.microlang.activitys.SettingActivity;
+import com.jasonchen.microlang.settings.*;
 
 /**
  * jasonchen
  * 2015/04/10
  */
 public class ThemeUtility {
+
+    private static Context getContext() {
+        return GlobalContext.getInstance();
+    }
+
+    public static void switchNightTheme(){
+        String  value = com.jasonchen.microlang.settings.SettingUtility.getNightTheme();
+        switch (Integer.valueOf(value)) {
+            case 1:
+                SettingHelper.setEditor(getContext(), SettingActivity.NIGHT_THEME, "2");
+                break;
+            case 2:
+                SettingHelper.setEditor(getContext(), SettingActivity.NIGHT_THEME, "1");
+                break;
+            default:
+                SettingHelper.setEditor(getContext(), SettingActivity.NIGHT_THEME, "1");
+                break;
+        }
+    }
 
     public static int getColor(int attr) {
         return getColor(GlobalContext.getInstance().getActivity(), attr);

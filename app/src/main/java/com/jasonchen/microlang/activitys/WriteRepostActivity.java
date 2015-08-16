@@ -60,7 +60,6 @@ public class WriteRepostActivity extends AbstractWriteActivity {
         getSupportActionBar().setTitle(getString(R.string.write_repost));
         commentMsgToo.setVisibility(View.VISIBLE);
         addPic.setVisibility(View.GONE);
-        visib.setVisibility(View.GONE);
 
         String action = getIntent().getAction();
         token = GlobalContext.getInstance().getSpecialToken();
@@ -90,7 +89,7 @@ public class WriteRepostActivity extends AbstractWriteActivity {
             accountBean = getIntent().getParcelableExtra("account");
             messageBean = getIntent().getParcelableExtra("message");
             token = getIntent().getStringExtra("token");
-            if(SettingUtility.getShowRepostContent()) {
+            if(SettingUtility.getShowRepostContent() && messageBean.getRetweeted_status() != null) {
                 content.setText("//@" + messageBean.getUser().getName() + ":" + messageBean.getText());
                 content.setSelection(0);
             }else{

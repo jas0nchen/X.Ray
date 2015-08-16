@@ -2,7 +2,7 @@
 <com.jasonchen.microlang.view.SquareFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/emotion_bg_size"
     android:layout_height="@dimen/emotion_bg_size"
-    android:background="@color/light_gray"
+    android:background="?attr/writeBackgroundColor"
     android:gravity="center"
     android:minHeight="@dimen/emotion_bg_size"
     android:minWidth="@dimen/emotion_bg_size"

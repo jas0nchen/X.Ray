@@ -33,7 +33,7 @@
                 android:text="test"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:textColor="@color/primaryText"
+                android:textColor="?attr/textColor"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -45,7 +45,7 @@
                 android:maxLines="3"
                 android:ellipsize="end"
                 android:visibility="gone"
-                android:textColor="@color/secondaryText"
+                android:textColor="?attr/secondTextColor"
                 android:textIsSelectable="false"
                 android:textSize="10sp" />
         </LinearLayout>
@@ -57,6 +57,6 @@
         android:layout_height="0.2dp"
         android:layout_marginLeft="72dp"
         android:layout_marginRight="16dp"
-        android:background="@color/dividerColor" />
+        android:background="?attr/dividerColor" />
 
 </LinearLayout>

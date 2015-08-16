@@ -60,7 +60,6 @@ public class WriteReplyActivity extends AbstractWriteActivity {
         getSupportActionBar().setTitle(getString(R.string.write_reply));
         repostMsgToo.setVisibility(View.VISIBLE);
         addPic.setVisibility(View.GONE);
-        visib.setVisibility(View.GONE);
 
         String action = getIntent().getAction();
         token = GlobalContext.getInstance().getSpecialToken();

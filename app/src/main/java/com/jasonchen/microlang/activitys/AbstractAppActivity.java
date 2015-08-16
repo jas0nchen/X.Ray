@@ -32,11 +32,12 @@ public class AbstractAppActivity extends ActionBarActivity {
     protected int mLayout = 0;
     protected int theme = 0;
     protected Toolbar mToolbar;
+
     @Override
     protected void onResume() {
         super.onResume();
         GlobalContext.getInstance().setCurrentRunningActivity(this);
-        if(!(GlobalContext.getInstance().getCurrentRunningActivity() instanceof OAuthActivity)){
+        if (!(GlobalContext.getInstance().getCurrentRunningActivity() instanceof OAuthActivity)) {
             if (!Utility.isTokenValid(GlobalContext.getInstance().getAccountBean())) {
                 Utility.showExpiredTokenDialogOrNotification();
             }
@@ -53,15 +54,15 @@ public class AbstractAppActivity extends ActionBarActivity {
     }
 
     private void configTheme() {
-        if(theme == SettingUtility.getTheme()){
+        if (theme == SettingUtility.getTheme()) {
             setTheme(theme);
-        }else{
+        } else {
             reload();
             return;
         }
     }
 
-    public void reload(){
+    public void reload() {
         Intent intent = getIntent();
         overridePendingTransition(0, 0);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -98,10 +99,15 @@ public class AbstractAppActivity extends ActionBarActivity {
             LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, Utility.getStatusBarHeight());
             int color = SettingUtility.getThemeColor();
-            view.setBackgroundColor(getResources().getColor(color));
+            if (SettingUtility.getIsNightTheme()) {
+                view.setBackgroundColor(getResources().getColor(R.color.listview_pic_background_dark));
+            } else {
+                view.setBackgroundColor(getResources().getColor(color));
+            }
             view.setLayoutParams(lParams);
             root.addView(view, 0);
         }
+
         configTheme();
 
         mToolbar = ViewUtility.findViewById(this, R.id.toolbar);
@@ -138,11 +144,11 @@ public class AbstractAppActivity extends ActionBarActivity {
         Toast.makeText(this, e.getError(), Toast.LENGTH_SHORT).show();
     }
 
-    protected void openActivityWithAnimation(){
+    protected void openActivityWithAnimation() {
         overridePendingTransition(R.anim.push_left_in, R.anim.stay);
     }
 
-    protected void finishWithAnimation(){
+    protected void finishWithAnimation() {
         finish();
         overridePendingTransition(R.anim.stay, R.anim.push_right_out);
     }
@@ -150,7 +156,7 @@ public class AbstractAppActivity extends ActionBarActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if(!(GlobalContext.getInstance().getCurrentRunningActivity() instanceof BrowserActivity)){
+            if (!(GlobalContext.getInstance().getCurrentRunningActivity() instanceof BrowserActivity)) {
                 finish();
                 overridePendingTransition(R.anim.stay, R.anim.push_right_out);
             }

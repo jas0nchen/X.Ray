@@ -52,6 +52,7 @@ import com.jasonchen.microlang.tasks.MyAsyncTask;
 import com.jasonchen.microlang.utils.BundleArgsConstants;
 import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.utils.MythouCrashHandler;
+import com.jasonchen.microlang.utils.ThemeUtility;
 import com.jasonchen.microlang.utils.UnreadTabIndex;
 import com.jasonchen.microlang.utils.Utility;
 import com.jasonchen.microlang.utils.ViewUtility;
@@ -86,6 +87,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     private TextView mName;
     private AvatarBigImageView mAvatar;
     private TextView mExchange;
+    private TextView mNightTheme;
     private Toolbar mToolbar;
     private List<AccountBean> accountBeanList;
     private LoadAccountTask loadAccountTask;
@@ -148,7 +150,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
             LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, Utility.getStatusBarHeight());
             int color = SettingUtility.getThemeColor();
-            view.setBackgroundColor(getResources().getColor(color));
+            if(SettingUtility.getIsNightTheme()){
+                view.setBackgroundColor(getResources().getColor(R.color.listview_pic_background_dark));
+            }else {
+                view.setBackgroundColor(getResources().getColor(color));
+            }
             view.setLayoutParams(lParams);
             contentLayout.addView(view, 0);
         }
@@ -169,6 +175,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         mName = ViewUtility.findViewById(this, R.id.my_name);
         mAvatar = ViewUtility.findViewById(this, R.id.my_avatar);
         mExchange = ViewUtility.findViewById(this, R.id.exchange);
+        mNightTheme = ViewUtility.findViewById(this, R.id.theme);
         mentionFlag = ViewUtility.findViewById(this, R.id.mention_flag);
         commentFlag = ViewUtility.findViewById(this, R.id.comment_flag);
 
@@ -182,6 +189,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         if (Utility.isTaskStopped(loadAccountTask)) {
             loadAccountTask = new LoadAccountTask();
             loadAccountTask.executeOnExecutor(MyAsyncTask.THREAD_POOL_EXECUTOR);
+        }
+        boolean value = SettingUtility.getIsNightTheme();
+        if (value) {
+            mNightTheme.setText("白天模式");
+        } else {
+            mNightTheme.setText("夜间模式");
         }
         me.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,6 +219,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                 if (currentFragemnt instanceof TimeLineBaseFragment) {
                     Utility.stopListViewScrollingAndScrollToTop(((TimeLineBaseFragment) currentFragemnt).getListView());
                 }
+            }
+        });
+        mNightTheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ThemeUtility.switchNightTheme();
+                reload();
             }
         });
         mExchange.setOnClickListener(new View.OnClickListener() {
@@ -349,9 +369,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         getSupportActionBar().setTitle(accountBean.getUsernick());
         currentFragemnt = homeFragment;
 
-        if(getIntent().getSerializableExtra(BundleArgsConstants.OPEN_NAVIGATION_INDEX_EXTRA) != null) {
+        if (getIntent().getSerializableExtra(BundleArgsConstants.OPEN_NAVIGATION_INDEX_EXTRA) != null) {
             UnreadTabIndex unreadTabIndex = (UnreadTabIndex) getIntent().getSerializableExtra(BundleArgsConstants.OPEN_NAVIGATION_INDEX_EXTRA);
-            switch (unreadTabIndex){
+            switch (unreadTabIndex) {
                 case MENTION_WEIBO:
                     Fragment fragment = getMentionFragment();
                     if (fragment.isAdded()) {
@@ -400,12 +420,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         });
     }
 
-    private void showFab(){
+    private void showFab() {
         TimeLineFragment homeFragment = (TimeLineFragment) getTimeLineFragment();
         homeFragment.showFab();
     }
 
-    private void hideFab(){
+    private void hideFab() {
         TimeLineFragment homeFragment = (TimeLineFragment) getTimeLineFragment();
         homeFragment.hideFab();
     }
@@ -434,7 +454,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     }
 
     private void asyncGetGroupInfo() {
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 super.run();
@@ -518,15 +538,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     }
 
     public void openOrCloseDrawer() {
-        if(NotificationDBTask.getUnreadFlag(GlobalContext.getInstance().getCurrentAccountId(), NotificationDBTask.UnreadDBType.mentionsComment) == 1 || NotificationDBTask.getUnreadFlag(GlobalContext.getInstance().getCurrentAccountId(), NotificationDBTask.UnreadDBType.mentionsWeibo) == 1){
+        if (NotificationDBTask.getUnreadFlag(GlobalContext.getInstance().getCurrentAccountId(), NotificationDBTask.UnreadDBType.mentionsComment) == 1 || NotificationDBTask.getUnreadFlag(GlobalContext.getInstance().getCurrentAccountId(), NotificationDBTask.UnreadDBType.mentionsWeibo) == 1) {
             mentionFlag.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             mentionFlag.setVisibility(View.GONE);
         }
 
-        if(NotificationDBTask.getUnreadFlag(GlobalContext.getInstance().getCurrentAccountId(), NotificationDBTask.UnreadDBType.commentsToMe) == 1){
+        if (NotificationDBTask.getUnreadFlag(GlobalContext.getInstance().getCurrentAccountId(), NotificationDBTask.UnreadDBType.commentsToMe) == 1) {
             commentFlag.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             commentFlag.setVisibility(View.GONE);
         }
 
@@ -564,14 +584,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
             case R.id.drawer_home:
                 newFragment = getTimeLineFragment();
                 String currentGroupId = FriendsTimeLineDBTask.getRecentGroupId(GlobalContext.getInstance().getCurrentAccountId());
-                if("0".equals(currentGroupId)) {
+                if ("0".equals(currentGroupId)) {
                     mToolbar.setTitle(accountBean.getUsernick());
-                }else if("1".equals(currentGroupId)){
+                } else if ("1".equals(currentGroupId)) {
                     mToolbar.setTitle("好友圈");
-                }else{
+                } else {
                     GroupListBean groupListBean = GroupDBTask.get(GlobalContext.getInstance().getCurrentAccountId());
-                    for(GroupBean bean : groupListBean.getLists()){
-                        if(currentGroupId.equals(bean.getIdstr())){
+                    for (GroupBean bean : groupListBean.getLists()) {
+                        if (currentGroupId.equals(bean.getIdstr())) {
                             mToolbar.setTitle(bean.getName());
                         }
                     }
@@ -680,10 +700,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if(mDrawer.isDrawerOpen(mDrawerGravity)){
+            if (mDrawer.isDrawerOpen(mDrawerGravity)) {
                 mDrawer.closeDrawers();
                 return false;
-            }else {
+            } else {
                 if (!canExit) {
                     Toast.makeText(GlobalContext.getInstance(), "再按返回键退出", Toast.LENGTH_SHORT).show();
                     canExit = true;

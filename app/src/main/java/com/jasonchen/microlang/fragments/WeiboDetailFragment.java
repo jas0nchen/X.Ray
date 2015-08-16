@@ -262,7 +262,7 @@ public class WeiboDetailFragment extends AbstractAppFragment implements LoadList
         if (Utility.sp2px(prefFontSizeSp) != currentWidgetTextSizePx) {
             content.setTextSize(prefFontSizeSp);
         }
-        content.setText(messageBean.getWeiboDetailSpannableString());
+        content.setText(messageBean.getListViewSpannableString());
         content.setMovementMethod(HackyMovementMethod.getInstance());
         time.setTime(messageBean.getMills());
         if (source != null) {
@@ -312,7 +312,7 @@ public class WeiboDetailFragment extends AbstractAppFragment implements LoadList
             if (Utility.sp2px(prefFontSizeSp - 2) != currentWidgetTextSizePx) {
                 repost_content.setTextSize(prefFontSizeSp - 2);
             }
-            repost_content.setText(repostMsg.getWeiboDetailSpannableString());
+            repost_content.setText(repostMsg.getListViewSpannableString());
             repost_content.setMovementMethod(HackyMovementMethod.getInstance());
             repost_comment_count.setText(String.valueOf(repostMsg.getCommentscountString()));
             repost_repost_count.setText(String.valueOf(repostMsg.getRepostscountString()));

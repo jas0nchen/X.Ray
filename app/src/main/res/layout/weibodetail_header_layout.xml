@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/weibodetailBackgroundColor"
     android:paddingBottom="5dp"
-    android:background="?attr/theme_color"
     android:orientation="vertical">
 
     <LinearLayout
@@ -30,10 +30,10 @@
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="?attr/textColor"
                 android:text="test"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:textColor="@color/white"
                 android:textSize="13sp"
                 android:textStyle="bold" />
 
@@ -47,7 +47,7 @@
                     android:id="@+id/time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/textColor"
                     android:text="test"
                     android:textIsSelectable="false"
                     android:textSize="9sp" />
@@ -56,9 +56,9 @@
                     android:id="@+id/source"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="?attr/textColor"
                     android:layout_marginLeft="5dp"
                     android:text="test"
-                    android:textColor="@color/white"
                     android:textIsSelectable="false"
                     android:textSize="9sp" />
             </LinearLayout>
@@ -77,9 +77,9 @@
             android:id="@+id/content"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:lineSpacingMultiplier="1.3"
+            android:textColor="?attr/textColor"
+            android:lineSpacingMultiplier="1.5"
             android:text="testcontenttestcontenttestcontenttestcontenttestcontenttestcontenttestcontent"
-            android:textColor="@color/white"
             android:textIsSelectable="true"
             android:textSize="13sp" />
 
@@ -141,16 +141,16 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.2dp"
-            android:background="@color/white" />
+            android:background="?attr/dividerColor"/>
 
         <com.jasonchen.microlang.view.HackyTextView
             android:id="@+id/repost_content"
             android:layout_marginTop="5dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:textColor="?attr/textColor"
             android:text="testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest"
-            android:lineSpacingMultiplier="1.3"
-            android:textColor="@color/white"
+            android:lineSpacingMultiplier="1.5"
             android:textSize="11sp"
             android:visibility="visible" />
 
@@ -210,40 +210,40 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="?attr/textColor"
                 android:text="@string/repost"
-                android:textColor="@color/white"
                 android:textSize="9sp" />
 
             <TextView
                 android:id="@+id/repost_msg_repost_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="?attr/textColor"
                 android:layout_marginLeft="3dp"
                 android:text="000"
-                android:textColor="@color/white"
                 android:textSize="9sp" />
 
             <View
                 android:layout_width="1dp"
                 android:layout_marginLeft="5dp"
-                android:layout_height="match_parent"
-                android:background="@color/white" />
+                android:background="?attr/dividerColor"
+                android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="?attr/textColor"
                 android:layout_marginLeft="5dp"
                 android:text="@string/comment"
-                android:textColor="@color/white"
                 android:textSize="9sp" />
 
             <TextView
                 android:id="@+id/repost_msg_comment_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="?attr/textColor"
                 android:layout_marginLeft="3dp"
                 android:text="000"
-                android:textColor="@color/white"
                 android:textSize="9sp" />
         </LinearLayout>
     </LinearLayout>
@@ -254,7 +254,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:clickable="true"
-        android:textColor="@color/white"
         android:visibility="gone" />
 
     <ImageView

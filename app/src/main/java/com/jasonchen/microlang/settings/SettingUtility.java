@@ -2,6 +2,7 @@ package com.jasonchen.microlang.settings;
 
 import android.content.Context;
 
+import com.jasonchen.microlang.R;
 import com.jasonchen.microlang.activitys.SettingActivity;
 import com.jasonchen.microlang.utils.*;
 
@@ -54,19 +55,22 @@ public class SettingUtility {
     }
 
     public static int getTheme() {
-        int index = SettingHelper.getSharedPreferences(getContext(), THEME, 6);
-
-        return ThemeUtility.themeArr[index];
+        boolean value = SettingUtility.getIsNightTheme();
+        if(!value){
+            int index = SettingHelper.getSharedPreferences(getContext(), THEME, 17);
+            return ThemeUtility.themeArr[index];
+        }else{
+            return R.style.NightTheme;
+        }
     }
 
     public static int getThemeIndex() {
-        int index = SettingHelper.getSharedPreferences(getContext(), THEME, 6);
-
+        int index = SettingHelper.getSharedPreferences(getContext(), THEME, 17);
         return index;
     }
 
     public static int getThemeColor() {
-        int index = SettingHelper.getSharedPreferences(getContext(), THEME, 6);
+        int index = SettingHelper.getSharedPreferences(getContext(), THEME, 17);
 
         return ThemeUtility.themeColorArr[index];
     }
@@ -222,6 +226,23 @@ public class SettingUtility {
         return SettingHelper
                 .getSharedPreferences(getContext(), SettingActivity.ENABLE_FETCH_MSG,
                         false);
+    }
+
+    public static boolean getIsNightTheme() {
+        String value = SettingHelper
+                .getSharedPreferences(getContext(), SettingActivity.NIGHT_THEME,
+                        "1");
+        if("1".equals(value)){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public static String getNightTheme(){
+        return SettingHelper
+                .getSharedPreferences(getContext(), SettingActivity.NIGHT_THEME,
+                        "1");
     }
 
     public static boolean getEnableAutoRefresh() {

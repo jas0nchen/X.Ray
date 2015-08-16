@@ -16,6 +16,7 @@ import com.jasonchen.microlang.debug.AppLogger;
 import com.jasonchen.microlang.fragments.SearchStatusFragment;
 import com.jasonchen.microlang.fragments.SearchUserFragment;
 import com.jasonchen.microlang.gallery.ViewPagerFixed;
+import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.swipeback.app.SwipeBackActivity;
 import com.jasonchen.microlang.utils.ViewUtility;
 import com.jasonchen.microlang.view.SlidingTabLayout;
@@ -98,7 +99,7 @@ public class SearchActivity extends SwipeBackActivity {
         tab.setDistributeEvenly(true);
         tab.setViewPager(pager);
 
-        final int color = getResources().getColor(R.color.white);
+        final int color = SettingUtility.getIsNightTheme() ? getResources().getColor(R.color.light_gray) : getResources().getColor(R.color.white);
         tab.setCustomTabColorizer(new SlidingTabStrip.SimpleTabColorizer() {
             @Override
             public int getIndicatorColor(int position) {

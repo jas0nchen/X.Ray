@@ -7,8 +7,8 @@
         <!-- 状态栏颜色 -->
         <item name="colorPrimaryDark">?attr/theme_color</item>
         <!-- 窗口的背景颜色 -->
-        <item name="android:windowBackground">@color/light_gray</item>
-        <item name="theme_color">@color/md_light_blue_500</item>
+        <item name="android:windowBackground">?attr/commonBackgroundColor</item>
+        <item name="theme_color">@color/md_grey_500</item>
         <item name="android:windowAnimationStyle">@style/FeelyouWindowAnimTheme</item>
         <item name="android:windowActionBarOverlay">false</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -30,12 +30,12 @@
         <item name="android:windowIsTranslucent">false</item>
     </style>
 
-    <style name="MainActivityTheme" parent="AppTheme.LightBlue">
+    <style name="MainActivityTheme" parent="DayTheme">
         <item name="colorAccent">#FFFFFF</item>
         <item name="android:windowIsTranslucent">false</item>
     </style>
 
-    <style name="CommonGalleryTheme" parent="AppTheme">
+    <style name="CommonGalleryTheme" parent="DayTheme">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowFullscreen">false</item>
@@ -94,6 +94,43 @@
         <item name="android:layout_width">50dp</item>
         <item name="android:padding">10dp</item>
         <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="DayTheme" parent="AppTheme">>
+        <item name="commonBackgroundColor">@color/light_gray</item>
+        <item name="writeBackgroundColor">@color/snow</item>
+        <item name="writeEditerBackgroundColor">@color/white</item>
+        <item name="weibodetailBackgroundColor">@color/white</item>
+        <item name="weibodetailAdapterBackgroundColor">@color/light_gray</item>
+        <item name="commonCardBackgroundColor">@color/white</item>
+        <item name="commonImageBackground">@color/gainsboro</item>
+        <item name="actionbarColor">?attr/colorPrimary</item>
+        <item name="accountTextColor">@color/white</item>
+        <item name="textColor">@color/primaryText</item>
+        <item name="writeTextColor">@color/primaryText</item>
+        <item name="weibodetailCommentTextColor">@color/white</item>
+        <item name="weibodetailCommentBackground">?attr/theme_color</item>
+        <item name="secondTextColor">@color/secondaryText</item>
+        <item name="accountBackgroundColor">?attr/theme_color</item>
+        <item name="dividerColor">@color/dividerColor</item>
+    </style>
+    <style name="NightTheme" parent="AppTheme">
+        <item name="commonBackgroundColor">@color/listview_pic_background_dark</item>
+        <item name="writeBackgroundColor">@color/listview_pic_background_dark</item>
+        <item name="writeEditerBackgroundColor">@color/gray</item>
+        <item name="commonCardBackgroundColor">@color/dark_gray</item>
+        <item name="weibodetailBackgroundColor">@color/listview_pic_background_dark</item>
+        <item name="weibodetailAdapterBackgroundColor">@color/listview_pic_background_dark</item>
+        <item name="commonImageBackground">@color/listview_pic_background_dark</item>
+        <item name="actionbarColor">@color/listview_pic_background_dark</item>
+        <item name="accountTextColor">@color/gray</item>
+        <item name="textColor">@color/gray</item>
+        <item name="writeTextColor">@color/primaryText</item>
+        <item name="weibodetailCommentBackground">@color/listview_pic_background_dark</item>
+        <item name="weibodetailCommentTextColor">@color/gray</item>
+        <item name="secondTextColor">@color/secondaryText</item>
+        <item name="accountBackgroundColor">@color/listview_pic_background_dark</item>
+        <item name="dividerColor">@color/gray</item>
     </style>
 
 </resources>

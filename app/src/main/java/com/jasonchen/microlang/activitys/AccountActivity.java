@@ -70,6 +70,7 @@ public class AccountActivity extends ActionBarActivity implements
 
     public static Intent newIntent() {
         Intent intent = new Intent(GlobalContext.getInstance(), AccountActivity.class);
+        intent.setAction(ACTION_OPEN_FROM_APP_INNER);
         return intent;
     }
 
@@ -88,7 +89,6 @@ public class AccountActivity extends ActionBarActivity implements
         configTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
-
         GlobalContext.getInstance().setCurrentRunningActivity(this);
         Thread.setDefaultUncaughtExceptionHandler(new MythouCrashHandler());
 
@@ -102,25 +102,37 @@ public class AccountActivity extends ActionBarActivity implements
             View view = new View(this);
             LayoutParams lParams = new LayoutParams(
                     LayoutParams.MATCH_PARENT, Utility.getStatusBarHeight());
-
-            view.setBackgroundColor(getResources().getColor(SettingUtility.getThemeColor()));
+            if (SettingUtility.getIsNightTheme()) {
+                view.setBackgroundColor(getResources().getColor(R.color.listview_pic_background_dark));
+            } else {
+                view.setBackgroundColor(getResources().getColor(SettingUtility.getThemeColor()));
+            }
             view.setLayoutParams(lParams);
             ViewGroup viewGroup = (ViewGroup) getWindow().getDecorView();
             viewGroup.addView(view);
         }
         initView();
+
+        if(getIntent().getAction() != null && ACTION_OPEN_FROM_APP_INNER.equals(getIntent().getAction())){
+
+        }else{
+            if (!TextUtils.isEmpty(SettingUtility.getDefaultAccountId())) {
+                // if has default account,jump to the maintimeline activity.
+                jumpToMainActivity();
+            }
+        }
     }
 
     private void configTheme() {
-        if(theme == SettingUtility.getTheme()){
+        if (theme == SettingUtility.getTheme()) {
             setTheme(theme);
-        }else{
+        } else {
             reload();
             return;
         }
     }
 
-    public void reload(){
+    public void reload() {
         Intent intent = getIntent();
         overridePendingTransition(0, 0);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -136,7 +148,7 @@ public class AccountActivity extends ActionBarActivity implements
                 .withGravity(Gravity.BOTTOM | Gravity.RIGHT)
                 .withPaddings(16, 16, 16, 16)
                 .withDrawable(getResources().getDrawable(R.drawable.ic_plus))
-                .withButtonColor(getResources().getColor(SettingUtility.getThemeColor()))
+                .withButtonColor(SettingUtility.getIsNightTheme() ? getResources().getColor(R.color.listview_pic_background_dark) : getResources().getColor(SettingUtility.getThemeColor()))
                 .withButtonSize(100)
                 .create();
         fab.setOnClickListener(this);
@@ -206,7 +218,7 @@ public class AccountActivity extends ActionBarActivity implements
             if (!Utility.isTokenValid(accountList.get(i))) {
                 jumpToOAuthActivity();
                 return;
-            } else if(!accountList.get(i).isBlack_magic() || !Utility.isHacyTokenValid(accountList.get(i))){
+            } else if (!accountList.get(i).isBlack_magic() || !Utility.isHacyTokenValid(accountList.get(i))) {
                 jumToBlackActivity();
             } else {
                 jumpToMainActivity(accountList.get(i));
@@ -317,12 +329,12 @@ public class AccountActivity extends ActionBarActivity implements
 
     public void jumpToMainActivity(AccountBean accountBean) {
         SettingUtility.setDefaultAccountId(accountBean.getUid());
-		GlobalContext.getInstance().setAccountBean(accountBean);
+        GlobalContext.getInstance().setAccountBean(accountBean);
 
-		Intent intent = MainActivity.newIntent(accountBean);
-		startActivity(intent);
+        Intent intent = MainActivity.newIntent(accountBean);
+        startActivity(intent);
         overridePendingTransition(R.anim.push_left_in, R.anim.stay);
-		finish();
+        finish();
     }
 
     public void jumpToOAuthActivity() {
@@ -348,6 +360,13 @@ public class AccountActivity extends ActionBarActivity implements
         accountList = AccountDBTask.removeAndGetNewAccountList(set);
         SettingUtility.setDefaultAccountId("");
         listAdapter.notifyDataSetChanged();
+    }
+
+    protected void jumpToMainActivity() {
+        Intent intent = MainActivity.newIntent(GlobalContext.getInstance().getAccountBean());
+        startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.push_left_in, R.anim.stay);
     }
 
 }

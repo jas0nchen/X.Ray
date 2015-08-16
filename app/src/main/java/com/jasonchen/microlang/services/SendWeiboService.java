@@ -124,7 +124,6 @@ public class SendWeiboService extends Service {
             this.account = account;
             this.content = content;
             this.picPath = picPath;
-            this.visible = visible;
             this.geoBean = geoBean;
             this.statusDraftBean = statusDraftBean;
         }
@@ -324,7 +323,7 @@ public class SendWeiboService extends Service {
                     .setOngoing(false);
 
             Intent notifyIntent = WriteWeiboActivity.startBecauseSendFailed(SendWeiboService.this,
-                    account, content, picPath, geoBean, visible, statusDraftBean,
+                    account, content, picPath, geoBean, statusDraftBean,
                     String.format(SendWeiboService.this.getString(R.string.failed_reason),
                             e.getError()));
 

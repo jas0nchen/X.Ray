@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +27,7 @@ import com.jasonchen.microlang.debug.AppLogger;
 import com.jasonchen.microlang.exception.WeiboException;
 import com.jasonchen.microlang.settings.SettingUtility;
 import com.jasonchen.microlang.swiperefresh.LoadListView;
+import com.jasonchen.microlang.swiperefresh.SwipeRefreshLayout;
 import com.jasonchen.microlang.utils.GlobalContext;
 import com.jasonchen.microlang.workers.TimeLineBitmapDownloader;
 

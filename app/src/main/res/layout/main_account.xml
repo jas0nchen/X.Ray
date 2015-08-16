@@ -8,12 +8,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:background="?attr/theme_color"/>
+        android:background="?attr/accountBackgroundColor"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/theme_color" />
+        android:background="?attr/accountBackgroundColor" />
 
     <RelativeLayout
         android:id="@+id/my_account"
@@ -36,8 +36,22 @@
             android:layout_below="@id/my_avatar"
             android:layout_marginTop="16dp"
             android:text="@string/app_name"
-            android:textColor="@color/white"
+            android:textColor="?attr/accountTextColor"
             android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/theme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:padding="10dp"
+            android:textSize="12sp"
+            android:text="@string/theme_exchange"
+            android:textColor="?attr/accountTextColor" />
 
         <TextView
             android:id="@+id/exchange"
@@ -51,7 +65,7 @@
             android:padding="10dp"
             android:textSize="12sp"
             android:text="@string/account_exchange"
-            android:textColor="@color/white" />
+            android:textColor="?attr/accountTextColor" />
 
     </RelativeLayout>
 

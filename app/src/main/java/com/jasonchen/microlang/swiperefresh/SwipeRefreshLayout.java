@@ -18,6 +18,8 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Transformation;
 import android.widget.AbsListView;
 
+import com.jasonchen.microlang.settings.SettingUtility;
+
 /**
  * The SwipeRefreshLayout should be used whenever the user can refresh the
  * contents of a view via a vertical swipe gesture. The activity that
@@ -71,6 +73,7 @@ public class SwipeRefreshLayout extends ViewGroup {
 
     // Default background for the progress spinner
     private static final int CIRCLE_BG_LIGHT = 0xFFFAFAFA;
+    private static final int CIRCLE_BG_DARK = 0xFF454545;
     // Default offset in dips from the top of the view to where the progress spinner should stop
     private static final int DEFAULT_CIRCLE_TARGET = 64;
 
@@ -290,9 +293,9 @@ public class SwipeRefreshLayout extends ViewGroup {
     }
 
     private void createProgressView() {
-        mCircleView = new CircleImageView(getContext(), CIRCLE_BG_LIGHT, CIRCLE_DIAMETER/2);
+        mCircleView = SettingUtility.getIsNightTheme() ? new CircleImageView(getContext(), CIRCLE_BG_DARK, CIRCLE_DIAMETER/2) : new CircleImageView(getContext(), CIRCLE_BG_LIGHT, CIRCLE_DIAMETER/2);
         mProgress = new MaterialProgressDrawable(getContext(), this);
-        mProgress.setBackgroundColor(CIRCLE_BG_LIGHT);
+        mProgress.setBackgroundColor(SettingUtility.getIsNightTheme() ? CIRCLE_BG_DARK : CIRCLE_BG_LIGHT);
         mCircleView.setImageDrawable(mProgress);
         mCircleView.setVisibility(View.GONE);
         addView(mCircleView);

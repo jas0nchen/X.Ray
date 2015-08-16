@@ -3,7 +3,7 @@
     android:id="@+id/drawer_wrapper"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="?attr/commonBackgroundColor"
     android:clickable="true">
 
     <RelativeLayout
@@ -20,7 +20,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="15dp"
                 android:gravity="left"
                 android:orientation="vertical">
 
@@ -45,7 +45,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:text="@string/home"
-                        android:textColor="@color/primaryText"
+                        android:textColor="?attr/textColor"
                         android:textSize="15sp" />
 
                 </LinearLayout>
@@ -72,7 +72,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:text="@string/mention"
-                        android:textColor="@color/primaryText"
+                        android:textColor="?attr/textColor"
                         android:textSize="15sp" />
 
                     <com.jasonchen.microlang.view.CircleImageView
@@ -106,7 +106,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:text="@string/comment_me"
-                        android:textColor="@color/primaryText"
+                        android:textColor="?attr/textColor"
                         android:textSize="15sp" />
 
                     <com.jasonchen.microlang.view.CircleImageView
@@ -140,7 +140,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:text="@string/fav"
-                        android:textColor="@color/primaryText"
+                        android:textColor="?attr/textColor"
                         android:textSize="15sp" />
                 </LinearLayout>
 
@@ -166,7 +166,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:text="@string/search"
-                        android:textColor="@color/primaryText"
+                        android:textColor="?attr/textColor"
                         android:textSize="15sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -194,7 +194,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:text="@string/setting"
-                android:textColor="@color/primaryText"
+                android:textColor="?attr/textColor"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -202,6 +202,6 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_above="@id/drawer_set"
-            android:background="@color/dividerColor" />
+            android:background="?attr/dividerColor" />
     </RelativeLayout>
 </FrameLayout>

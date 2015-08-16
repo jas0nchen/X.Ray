@@ -38,4 +38,22 @@
         <attr name="border_width" format="dimension" />
         <attr name="border_color" format="color" />
     </declare-styleable>
+
+    <attr name="commonBackgroundColor" format="color" />
+    <attr name="writeBackgroundColor" format="color" />
+    <attr name="writeEditerBackgroundColor" format="color" />
+    <attr name="weibodetailBackgroundColor" format="color" />
+    <attr name="weibodetailAdapterBackgroundColor" format="color" />
+    <attr name="commonCardBackgroundColor" format="color" />
+    <attr name="commonImageBackground" format="color" />
+    <attr name="actionbarColor" format="color" />
+    <attr name="accountTextColor" format="color" />
+    <attr name="textColor" format="color" />
+    <attr name="writeTextColor" format="color" />
+    <attr name="weibodetailCommentBackground" format="color" />
+    <attr name="weibodetailCommentTextColor" format="color" />
+    <attr name="weibodetailNameTextColor" format="color" />
+    <attr name="secondTextColor" format="color" />
+    <attr name="accountBackgroundColor" format="color" />
+    <attr name="dividerColor" format="color" />
 </resources>

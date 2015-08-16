@@ -7,7 +7,7 @@
 
     <include layout="@layout/common_toolbar" />
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.jasonchen.microlang.swiperefresh.SwipeRefreshLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -16,6 +16,6 @@
             android:id="@+id/webView"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.jasonchen.microlang.swiperefresh.SwipeRefreshLayout>
 
 </LinearLayout>

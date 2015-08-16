@@ -27,7 +27,7 @@ public class WriteWeiboActivity extends AbstractWriteActivity {
 
     public static Intent startBecauseSendFailed(Context context,
                                                 AccountBean accountBean, String content, String picPath,
-                                                GeoBean geoBean, int visible, StatusDraftBean statusDraftBean,
+                                                GeoBean geoBean, StatusDraftBean statusDraftBean,
                                                 String failedReason) {
         Intent intent = new Intent(context, WriteWeiboActivity.class);
         intent.setAction(ACTION_SEND_FAILED);
@@ -36,7 +36,6 @@ public class WriteWeiboActivity extends AbstractWriteActivity {
         intent.putExtra("failedReason", failedReason);
         intent.putExtra("picPath", picPath);
         intent.putExtra("geoBean", geoBean);
-        intent.putExtra("visible", visible);
         intent.putExtra("statusDraftBean", statusDraftBean);
         return intent;
     }
@@ -95,7 +94,6 @@ public class WriteWeiboActivity extends AbstractWriteActivity {
                 hasPicture = true;
             }
             visibility = getIntent().getIntExtra("visible", 0);
-            setWeiboVisible(visibility);
             if(!TextUtils.isEmpty(getIntent().getStringExtra("failedReason"))){
                 Toast.makeText(WriteWeiboActivity.this, getIntent().getStringExtra("failedReason"), Toast.LENGTH_SHORT).show();
             }
@@ -113,14 +111,6 @@ public class WriteWeiboActivity extends AbstractWriteActivity {
             content.setSelection(content.getText().toString().length());
         }
 
-    }
-
-    private void setWeiboVisible(int visibility) {
-        if(visibility == 0){
-            visib.setSelection(0);
-        }else{
-            visib.setSelection(1);
-        }
     }
 
     private void handleSendText(Intent intent) {
@@ -159,7 +149,6 @@ public class WriteWeiboActivity extends AbstractWriteActivity {
         Intent intent = new Intent(WriteWeiboActivity.this,
                 SendWeiboService.class);
         intent.putExtra("token", token);
-        intent.putExtra("visible", visibility);
         intent.putExtra("picPath", picPath);
         intent.putExtra("account", accountBean);
         intent.putExtra("content", content.getText().toString());

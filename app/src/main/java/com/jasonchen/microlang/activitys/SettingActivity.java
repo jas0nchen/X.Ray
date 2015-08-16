@@ -24,6 +24,7 @@ public class SettingActivity extends SwipeBackActivity {
 
     public static final String AUTO_REFRESH = "auto_refresh";
     public static final String SHOW_REPOST_CONTENT = "show_repost_content";
+    public static final String NIGHT_THEME = "night_theme";
 
     //appearance
     public static final String THEME = "theme";
