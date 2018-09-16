@@ -1,7 +1,7 @@
-#X.Ray
-####A Sina Weibo Client
+## X.Ray
+### A Sina Weibo Client
 
-学习项目，感谢之前的大神
+个人学习项目
 
 Feature
 -----
